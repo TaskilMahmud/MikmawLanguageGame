@@ -19,6 +19,12 @@ import questionImage11 from "../assets/questionImage11.png";
 import questionImage12 from "../assets/questionImage12.png";
 import questionImage13 from "../assets/questionImage13.png";
 import questionImage14 from "../assets/questionImage14.png";
+import questionImage15 from "../assets/questionImage15.png";
+import questionImage16 from "../assets/questionImage16.png";
+import questionImage17 from "../assets/questionImage17.png";
+import questionImage18 from "../assets/questionImage18.png";
+import questionImage19 from "../assets/questionImage19.png";
+import questionImage20 from "../assets/questionImage20.png";
 
 function Game1() {
   const navigate = useNavigate();
@@ -119,6 +125,55 @@ function Game1() {
       answers: ["Mother", "Dad", "him or her"],
       correctAnswer: "Mother",
     },
+
+                    {
+      text: "Give the book to ___",
+      image: questionImage15,
+      answers: ["Mother", "Dad", "him or her"],
+      correctAnswer: "him or her",
+    },
+
+                        {
+      text: "___ Backpack",
+      image: questionImage16,
+      answers: ["Mother", "I Love you", "I have it"],
+      correctAnswer: "I have it",
+    },
+
+    {
+           text: "___ board",
+      image: questionImage17,
+      answers: ["Look at this", "I Love you", "I am coming from"],
+      correctAnswer: "Look at this",
+    },
+
+        {
+           text: "___ daughter",
+      image: questionImage18,
+      answers: ["Look at this", "I Love you", "I am coming from"],
+      correctAnswer: "I love you",
+    },
+
+        {
+           text: "I won! ___",
+      image: questionImage19,
+      answers: ["I am happy", "who", "I am coming from"],
+      correctAnswer: "I am happy",
+    },
+
+            {
+           text: "___ are you?",
+      image: questionImage20,
+      answers: ["I am happy", "who", "I am coming from"],
+      correctAnswer: "I am happy",
+    },
+
+    
+
+    
+
+
+
   ];
 
   const [currentQuestion, setCurrentQuestion] = useState(0);

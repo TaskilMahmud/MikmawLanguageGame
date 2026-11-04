@@ -11,6 +11,7 @@ import questionImage3 from "../assets/questionImage3.png";
 import questionImage4 from "../assets/questionImage4.png";
 import questionImage5 from "../assets/questionImage5.png";
 import questionImage6 from "../assets/questionImage6.png";
+import questionImage7 from "../assets/questionImage7.png";
 
 function Game1() {
   const navigate = useNavigate();
@@ -49,10 +50,17 @@ function Game1() {
     },
 
         {
-      text: "Ji'm _ Sarah are friends.",
+      text: "Ji'm ___ Sarah are friends.",
       image: questionImage6,
       answers: ["and", "I", "you"],
       correctAnswer: "and",
+    },
+
+    {
+      text: "___ to School",
+      image: questionImage7,
+      answers: ["I am going", "I love", "and"],
+      correctAnswer: "I am going",
     },
   ];
 

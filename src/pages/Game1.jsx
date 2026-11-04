@@ -25,6 +25,7 @@ import questionImage17 from "../assets/questionImage17.png";
 import questionImage18 from "../assets/questionImage18.png";
 import questionImage19 from "../assets/questionImage19.png";
 import questionImage20 from "../assets/questionImage20.png";
+import questionImage21 from "../assets/questionImage21.png";
 
 function Game1() {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ function Game1() {
     },
 
         {
-      text: " ___ you",
+      text: " ___ pizza",
       image: questionImage8,
       answers: ["Make it", "I love", "and"],
       correctAnswer: "I love",
@@ -150,7 +151,7 @@ function Game1() {
         {
            text: "___ daughter",
       image: questionImage18,
-      answers: ["Look at this", "I Love you", "I am coming from"],
+      answers: ["Look at this", "I love you", "I am coming from"],
       correctAnswer: "I love you",
     },
 
@@ -164,13 +165,16 @@ function Game1() {
             {
            text: "___ are you?",
       image: questionImage20,
-      answers: ["I am happy", "who", "I am coming from"],
-      correctAnswer: "I am happy",
+      answers: ["who", "I am happy", "Look at this"],
+      correctAnswer: "who",
     },
 
-    
-
-    
+                {
+           text: "___ in Canada",
+      image: questionImage21,
+      answers: ["who", "I live", "I am happy"],
+      correctAnswer: "I live",
+    } 
 
 
 

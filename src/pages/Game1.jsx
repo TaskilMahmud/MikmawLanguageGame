@@ -12,6 +12,13 @@ import questionImage4 from "../assets/questionImage4.png";
 import questionImage5 from "../assets/questionImage5.png";
 import questionImage6 from "../assets/questionImage6.png";
 import questionImage7 from "../assets/questionImage7.png";
+import questionImage8 from "../assets/questionImage8.png";
+import questionImage9 from "../assets/questionImage9.png";
+import questionImage10 from "../assets/questionImage10.png";
+import questionImage11 from "../assets/questionImage11.png";
+import questionImage12 from "../assets/questionImage12.png";
+import questionImage13 from "../assets/questionImage13.png";
+import questionImage14 from "../assets/questionImage14.png";
 
 function Game1() {
   const navigate = useNavigate();
@@ -61,6 +68,56 @@ function Game1() {
       image: questionImage7,
       answers: ["I am going", "I love", "and"],
       correctAnswer: "I am going",
+    },
+
+        {
+      text: " ___ you",
+      image: questionImage8,
+      answers: ["Make it", "I love", "and"],
+      correctAnswer: "I love",
+    },
+
+  
+{
+  text: "I ____ paper airplane",
+  image: questionImage9,
+  answers: ["make it", "eat", "you"],
+  correctAnswer: "make it",
+},
+
+{
+  text: "__ home",
+  image: questionImage10,
+  answers: ["make it", "you", "I am coming from"],
+  correctAnswer: "I am coming from",
+},
+
+{
+  text: "I __ moon",
+  image: questionImage11,
+  answers: ["make it", "I", "I see it"],
+  correctAnswer: "I see it",
+},
+
+{
+  text: " __ music",
+  image: questionImage12,
+  answers: ["I like", "I see it", "I am coming from"],
+  correctAnswer: "I like",
+},
+
+            {
+      text: "Bye __",
+      image: questionImage13,
+      answers: ["Mother", "Dad", "him or her"],
+      correctAnswer: "Dad",
+    },
+
+                {
+      text: " Me and __ eating together",
+      image: questionImage14,
+      answers: ["Mother", "Dad", "him or her"],
+      correctAnswer: "Mother",
     },
   ];
 

@@ -49,7 +49,7 @@ function Game1() {
     },
 
         {
-      text: "Ji'm ____ Sarah are friends  .",
+      text: "Ji'm _ Sarah are friends.",
       image: questionImage6,
       answers: ["and", "I", "you"],
       correctAnswer: "and",

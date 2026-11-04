@@ -9,6 +9,8 @@ import questionImage1 from "../assets/questionImage1.png";
 import questionImage2 from "../assets/questionImage2.png";
 import questionImage3 from "../assets/questionImage3.png";
 import questionImage4 from "../assets/questionImage4.png";
+import questionImage5 from "../assets/questionImage5.png";
+import questionImage6 from "../assets/questionImage6.png";
 
 function Game1() {
   const navigate = useNavigate();
@@ -37,6 +39,20 @@ function Game1() {
       image: questionImage4,
       answers: ["eat", "I", "you"],
       correctAnswer: "I",
+    },
+
+        {
+      text: "____ Ice-cream .",
+      image: questionImage5,
+      answers: ["I like the taste of", "I", "and"],
+      correctAnswer: "I like the taste of",
+    },
+
+        {
+      text: "Ji'm ____ Sarah are friends  .",
+      image: questionImage6,
+      answers: ["and", "I", "you"],
+      correctAnswer: "and",
     },
   ];
 

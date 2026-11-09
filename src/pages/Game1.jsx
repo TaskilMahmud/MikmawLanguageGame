@@ -29,10 +29,10 @@ import questionImage20 from "../assets/questionImage20.png";
 import questionImage21 from "../assets/questionImage21.png";
 
 // ========================================
-// AUDIO FILE MAPPING
+// AUDIO FILES
 // ========================================
-// Files are stored inside public/audio/
-// Filenames are case-sensitive on GitHub Pages.
+// Audio files are stored in public/audio/
+// The same file is reused for repeated words.
 
 const audioFiles = {
   "and": "w1-and.mp3",
@@ -192,7 +192,7 @@ const questions = [
 ];
 
 // ========================================
-// GAME 1
+// GAME 1 COMPONENT
 // ========================================
 
 function Game1() {
@@ -204,7 +204,6 @@ function Game1() {
   const [score, setScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
-  // Stores the currently playing audio
   const audioRef = useRef(null);
 
   const question = questions[currentQuestion];
@@ -222,17 +221,15 @@ function Game1() {
   }
 
   // ========================================
-  // PLAY ANSWER AUDIO
+  // PLAY ANSWER PRONUNCIATION
   // ========================================
 
   function playAnswerAudio(answer) {
-    // Stop previous audio first
     stopAudio();
 
-    // Convert answer to lowercase for lookup
+    // Match words regardless of capitalization
     const word = answer.trim().toLowerCase();
 
-    // Find the matching file
     const filename = audioFiles[word];
 
     if (!filename) {
@@ -240,19 +237,15 @@ function Game1() {
       return;
     }
 
-    // Correct path for Vite and GitHub Pages
+    // Works on localhost and GitHub Pages
     const audioPath =
       `${import.meta.env.BASE_URL}audio/${filename}`;
 
-    // Create audio player
     const audio = new Audio(audioPath);
 
-    // Save reference
     audioRef.current = audio;
 
-    // Play sound
     audio.play().catch((error) => {
-      // Ignore errors caused by switching sounds quickly
       if (error.name !== "AbortError") {
         console.warn(
           "Unable to play audio:",
@@ -263,10 +256,7 @@ function Game1() {
     });
   }
 
-  // ========================================
-  // CLEANUP AUDIO ON PAGE EXIT
-  // ========================================
-
+  // Stop audio when leaving the game
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -281,33 +271,54 @@ function Game1() {
   // ========================================
 
   function handleAnswerClick(answer) {
-    if (feedback !== null) return;
 
-    // Highlight the answer
+    // Only lock choices after the correct answer
+    if (feedback === "correct") return;
+
+    // Highlight selected answer
     setSelectedAnswer(answer);
 
-    // Play the pronunciation
+    // Remove previous incorrect feedback
+    setFeedback(null);
+
+    // Play pronunciation
     playAnswerAudio(answer);
   }
 
   // ========================================
-  // CHECK ANSWER
+  // CHECK ANSWER - RETRY UNTIL CORRECT
   // ========================================
 
   function handleSelectAnswer() {
-    if (selectedAnswer === null || feedback !== null) {
+
+    if (
+      selectedAnswer === null ||
+      feedback === "correct"
+    ) {
       return;
     }
 
-    // Stop audio when submitting
     stopAudio();
 
     if (selectedAnswer === question.correctAnswer) {
+
+      // CORRECT ANSWER
       setFeedback("correct");
 
+      // Add score only once
       setScore((previousScore) => previousScore + 1);
+
     } else {
+
+      // WRONG ANSWER
       setFeedback("incorrect");
+
+      // Remove current selection
+      // Player must choose an answer again
+      setSelectedAnswer(null);
+
+      // Do NOT move to next question
+      // Do NOT reveal the correct answer
     }
   }
 
@@ -316,14 +327,23 @@ function Game1() {
   // ========================================
 
   function handleNextQuestion() {
+
+    // Only move forward after correct answer
+    if (feedback !== "correct") return;
+
     stopAudio();
 
     if (currentQuestion < questions.length - 1) {
+
       setCurrentQuestion((previous) => previous + 1);
+
       setSelectedAnswer(null);
       setFeedback(null);
+
     } else {
+
       setIsComplete(true);
+
     }
   }
 
@@ -342,7 +362,7 @@ function Game1() {
   }
 
   // ========================================
-  // BACK BUTTON
+  // BACK TO MENU
   // ========================================
 
   function handleBack() {
@@ -361,6 +381,7 @@ function Game1() {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
+
       {/* BACK BUTTON */}
 
       <button
@@ -370,7 +391,9 @@ function Game1() {
         Back
       </button>
 
-      {/* QUESTION BOX */}
+      {/* ===================================
+          QUESTION BOX
+          =================================== */}
 
       <div className="question-box">
 
@@ -384,6 +407,8 @@ function Game1() {
         <div className="question-content">
 
           {isComplete ? (
+
+            // GAME COMPLETE
             <>
               <div className="question-text">
                 Game Complete! Score: {score}/{questions.length}
@@ -396,13 +421,59 @@ function Game1() {
                 Play Again
               </button>
             </>
+
           ) : (
+
             <>
+              {/* QUESTION TEXT */}
+
               <div className="question-text">
                 {question.text}
               </div>
 
-              {feedback === null ? (
+              {/* WRONG ANSWER FEEDBACK */}
+
+              {feedback === "incorrect" && (
+                <div
+                  className="feedback-message incorrect"
+                  role="status"
+                >
+                  Not quite! Try again!
+                </div>
+              )}
+
+              {/* CORRECT ANSWER FEEDBACK */}
+
+              {feedback === "correct" && (
+                <div
+                  className="feedback-message correct"
+                  role="status"
+                >
+                  Correct! Great job!
+                </div>
+              )}
+
+              {/* BUTTONS */}
+
+              {feedback === "correct" ? (
+
+                // Next button only appears
+                // after the correct answer
+
+                <button
+                  className="select-answer-button"
+                  onClick={handleNextQuestion}
+                >
+                  {currentQuestion === questions.length - 1
+                    ? "Finish Game"
+                    : "Next Question"}
+                </button>
+
+              ) : (
+
+                // Select Answer stays available
+                // while the student is trying
+
                 <button
                   className="select-answer-button"
                   onClick={handleSelectAnswer}
@@ -410,41 +481,22 @@ function Game1() {
                 >
                   Select Answer
                 </button>
-              ) : (
-                <>
-                  <div
-                    className={
-                      feedback === "correct"
-                        ? "feedback-message correct"
-                        : "feedback-message incorrect"
-                    }
-                    role="status"
-                  >
-                    {feedback === "correct"
-                      ? "Correct! Great job!"
-                      : `Incorrect! The answer is ${question.correctAnswer}.`}
-                  </div>
 
-                  <button
-                    className="select-answer-button"
-                    onClick={handleNextQuestion}
-                  >
-                    {currentQuestion === questions.length - 1
-                      ? "Finish Game"
-                      : "Next Question"}
-                  </button>
-                </>
               )}
+
             </>
           )}
 
         </div>
       </div>
 
-      {/* QUESTION IMAGE AND ANSWERS */}
+      {/* ===================================
+          QUESTION IMAGE AND ANSWER BUTTONS
+          =================================== */}
 
       {!isComplete && (
         <>
+
           <img
             className="questionImage"
             src={question.image}
@@ -452,22 +504,31 @@ function Game1() {
           />
 
           <div className="game1-answer-buttons">
+
             {question.answers.map((answer) => (
+
               <button
                 key={answer}
                 type="button"
-                disabled={feedback !== null}
+
+                // Disable choices only when correct
+                disabled={feedback === "correct"}
+
                 className={
                   selectedAnswer === answer
                     ? "selected-answer"
                     : ""
                 }
+
                 onClick={() => handleAnswerClick(answer)}
               >
                 {answer}
               </button>
+
             ))}
+
           </div>
+
         </>
       )}
 

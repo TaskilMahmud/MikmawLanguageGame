@@ -1,0 +1,544 @@
+
+/*
+==========================================
+GAME 1 - PICTIONARY STYLES
+==========================================
+
+DESKTOP LAYOUT:
+
+[ Back ]       [ Question Image ]
+[      ]       [                ]
+[Question Box] [ Answer Buttons ]
+
+TABLET / MOBILE LAYOUT:
+
+[ Back ]
+[ Question Image ]
+[ Question Box ]
+[ Answer Buttons ]
+
+Responsive design uses:
+- CSS Grid
+- Flexbox
+- clamp()
+- Media queries
+
+==========================================
+*/
+
+/* ========================================
+   MAIN GAME CONTAINER
+   ======================================== */
+
+.game1-shell {
+  --game-padding: clamp(12px, 1.5vw, 24px);
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+
+  width: min(100%, 1700px);
+
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  margin-inline: auto;
+
+  padding: var(--game-padding);
+}
+
+/* ========================================
+   BACK BUTTON
+   ========================================
+
+   The button is absolutely positioned
+   on desktop so it does not push the
+   question image box downward.
+
+   ======================================== */
+
+.game1-header {
+  position: absolute;
+  z-index: 5;
+
+  top: var(--game-padding);
+  left: var(--game-padding);
+
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* ========================================
+   MAIN RESPONSIVE GAME GRID
+   ======================================== */
+
+.game1-layout {
+  display: grid;
+
+  flex: 1;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    minmax(0, 1.15fr);
+
+  grid-template-rows:
+    minmax(0, 1fr)
+    minmax(220px, auto);
+
+  gap: clamp(12px, 1.5vw, 20px);
+
+  width: 100%;
+
+  height: calc(
+    100dvh - var(--game-padding) - var(--game-padding)
+  );
+
+  min-height: 570px;
+  max-height: 1100px;
+}
+
+/* ========================================
+   QUESTION IMAGE BOX
+   ========================================
+
+   Positioned at the top-right.
+
+   To make the image box wider:
+   Increase the second grid column above.
+
+   To make the box taller:
+   Reduce the height of the answer row.
+
+   object-position aligns artwork toward
+   the top of its frame.
+
+   ======================================== */
+
+.game1-image {
+  grid-column: 2;
+  grid-row: 1;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  min-height: 0;
+
+  padding: clamp(8px, 1vw, 14px);
+
+  object-fit: contain;
+  object-position: center top;
+
+  border: 8px solid #31384b;
+  border-radius: 12px;
+
+  background: rgba(244, 240, 223, 0.9);
+
+  box-shadow:
+    inset 0 0 0 5px #a8adb5,
+    0 6px 0 #1e2634;
+}
+
+/* ========================================
+   QUESTION BOX
+   ========================================
+
+   Turquoise question and feedback box
+   located at the bottom-left.
+
+   ======================================== */
+
+.question-box {
+  grid-column: 1;
+  grid-row: 2;
+
+  display: flex;
+  align-items: center;
+
+  gap: clamp(10px, 1.5vw, 22px);
+
+  min-width: 0;
+  min-height: 220px;
+
+  padding: clamp(12px, 1.4vw, 22px);
+
+  border: 8px solid #30394c;
+  border-radius: 8px;
+
+  background: #55b4b8;
+
+  box-shadow:
+    inset 0 0 0 5px #df3f32,
+    0 5px 0 #1e2634;
+}
+
+/* ========================================
+   CHARACTER THUMBNAIL
+   ======================================== */
+
+.question-picture {
+  display: flex;
+  flex: 0 0 auto;
+
+  align-items: center;
+  justify-content: center;
+
+  width: clamp(90px, 11vw, 150px);
+
+  aspect-ratio: 1 / 1;
+
+  overflow: hidden;
+
+  border: 6px solid #e8eeee;
+
+  background: #bfe9e5;
+}
+
+.question-picture img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+
+  image-rendering: pixelated;
+}
+
+/* ========================================
+   QUESTION CONTENT
+   ========================================
+
+   Holds:
+   - Question text
+   - Feedback message
+   - Action button
+
+   ======================================== */
+
+.question-content {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex: 1;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+  justify-content: center;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+/* ========================================
+   QUESTION TEXT
+   ======================================== */
+
+.question-text {
+  max-width: 100%;
+
+  margin: 0;
+
+  color: white;
+
+  font-family: monospace;
+  font-size: clamp(20px, 2.2vw, 35px);
+  font-weight: 700;
+  line-height: 1.25;
+
+  overflow-wrap: anywhere;
+
+  text-shadow: 3px 3px 0 #424b79;
+}
+
+/* ========================================
+   ANSWER BUTTON BOX
+   ========================================
+
+   Cream box located at bottom-right.
+
+   Three choices are displayed in a
+   two-column grid.
+
+   AnswerButton styles are defined
+   in components.css.
+
+   ======================================== */
+
+.game1-answers {
+  grid-column: 2;
+  grid-row: 2;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  grid-auto-rows: minmax(0, 1fr);
+
+  gap: clamp(8px, 1vw, 14px);
+
+  min-width: 0;
+  min-height: 220px;
+
+  padding: clamp(10px, 1.3vw, 20px);
+
+  border: 8px solid #31384b;
+  border-radius: 8px;
+
+  background: #f4f0df;
+
+  box-shadow:
+    inset 0 0 0 5px #a8adb5,
+    0 5px 0 #1e2634;
+}
+
+/* ========================================
+   GAME COMPLETE SCREEN
+   ======================================== */
+
+.game1-complete {
+  display: flex;
+  flex: 1;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 20px;
+
+  align-self: center;
+
+  width: min(100%, 650px);
+
+  margin: 75px 0 24px;
+
+  padding: clamp(18px, 3vw, 32px);
+
+  border: 8px solid #30394c;
+  border-radius: 12px;
+
+  background: #55b4b8;
+  color: white;
+
+  text-align: center;
+
+  box-shadow:
+    inset 0 0 0 5px #df3f32,
+    0 5px 0 #1e2634;
+}
+
+.game1-complete img {
+  width: clamp(96px, 12vw, 145px);
+  aspect-ratio: 1;
+
+  object-fit: contain;
+}
+
+.game1-complete h1,
+.game1-complete p {
+  margin: 0;
+  font-family: monospace;
+}
+
+.game1-complete h1 {
+  font-size: clamp(24px, 3vw, 42px);
+}
+
+.game1-complete p {
+  font-size: clamp(20px, 2vw, 26px);
+  font-weight: 700;
+}
+
+/* ========================================
+   RESPONSIVE - TABLET / SMALL LAPTOP
+   ========================================
+
+   At widths below 1024px:
+   - Back button joins normal page flow
+   - Game changes to vertical layout
+   - Everything remains visible
+   - Scrolling is allowed
+
+   ======================================== */
+
+@media (max-width: 1023px) {
+
+  .game1-header {
+    position: static;
+  }
+
+  .game1-layout {
+    display: flex;
+    flex: 1;
+
+    flex-direction: column;
+
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .game1-image {
+    flex: 0 0 auto;
+
+    width: 100%;
+
+    height: clamp(260px, 42dvh, 520px);
+  }
+
+  .question-box {
+    width: 100%;
+    min-height: 160px;
+  }
+
+  .game1-answers {
+    width: 100%;
+    min-height: 180px;
+  }
+
+  .game1-complete {
+    margin-top: 20px;
+  }
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ========================================
+
+   Smaller font sizes and thumbnail
+   help everything fit narrow screens.
+
+   ======================================== */
+
+@media (max-width: 560px) {
+
+  .question-box {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .question-picture {
+    width: 76px;
+    border-width: 4px;
+  }
+
+  .question-content {
+    gap: 10px;
+  }
+
+  .question-text {
+    font-size: 20px;
+  }
+
+  .question-box .wooden-button {
+    padding: 9px 12px;
+    font-size: 16px;
+  }
+
+  .game1-answers .answer-button {
+    font-size: 18px;
+    padding: 8px 4px;
+  }
+}
+
+/* ========================================
+   SHORT DESKTOP SCREENS
+   ========================================
+
+   Allow scrolling rather than clipping
+   the question and answer boxes.
+
+   ======================================== */
+
+@media (min-width: 1024px) and (max-height: 650px) {
+
+  .game1-layout {
+    min-height: 540px;
+  }
+}
+
+
+
+/* ==========================================
+   GAME 1 - FIT EVERYTHING ON ONE SCREEN
+   ==========================================
+
+   Applies to desktop and laptop screens.
+
+   The question image uses the available
+   space above the question/answer boxes.
+
+   No image resizing is necessary.
+
+   ========================================== */
+
+@media (min-width: 1024px) {
+
+  /* MAIN GAME LAYOUT */
+
+  .game1-layout {
+    display: grid;
+
+    /* Keep everything within the viewport */
+    height: calc(100dvh - 48px);
+
+    min-height: 0;
+    max-height: none;
+
+    flex: 0 0 auto;
+
+    grid-template-columns:
+      minmax(0, 1fr)
+      minmax(0, 1.15fr);
+
+    /* Top image grows; bottom boxes stay visible */
+    grid-template-rows:
+      minmax(0, 1fr)
+      clamp(190px, 25dvh, 240px);
+
+    gap: 16px;
+  }
+
+  /* QUESTION IMAGE */
+
+  .game1-image {
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    max-width: 100%;
+    max-height: 100%;
+
+    /* Preserve image proportions */
+    object-fit: contain;
+    object-position: center;
+
+    padding: 8px;
+  }
+
+  /* QUESTION BOX */
+
+  .question-box {
+    min-height: 0;
+    height: 100%;
+  }
+
+  /* ANSWER BOX */
+
+  .game1-answers {
+    min-height: 0;
+    height: 100%;
+  }
+
+}

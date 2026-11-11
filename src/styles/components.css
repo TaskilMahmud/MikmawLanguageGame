@@ -1,0 +1,155 @@
+
+/*
+==========================================
+SHARED COMPONENT STYLES
+==========================================
+
+Used by:
+- WoodenButton.jsx
+- AnswerButton.jsx
+- FeedbackMessage.jsx
+
+These classes can be reused by all games.
+
+==========================================
+*/
+
+/* ========================================
+   WOODEN BUTTONS
+   ======================================== */
+
+.wooden-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 0.5rem;
+
+  max-width: 100%;
+
+  border: 3px solid #7a4a24;
+  border-radius: 12px;
+
+  padding: 10px clamp(18px, 2vw, 28px);
+
+  background: #e7c48d;
+  color: #2f6b3a;
+
+  font-family: monospace;
+  font-size: clamp(16px, 1.5vw, 24px);
+  font-weight: 700;
+  line-height: 1.25;
+
+  text-align: center;
+
+  box-shadow: 0 4px 0 #5b351b;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+}
+
+/* BUTTON HOVER */
+
+.wooden-button:hover:not(:disabled) {
+  background: #f5d69f;
+}
+
+/* BUTTON PRESS */
+
+.wooden-button:active:not(:disabled) {
+  transform: translateY(2px);
+}
+
+/* DISABLED BUTTON */
+
+.wooden-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   ANSWER BUTTONS
+   ======================================== */
+
+.answer-button {
+  min-width: 0;
+
+  border: 4px solid transparent;
+  border-radius: 8px;
+
+  padding: 10px;
+
+  background: transparent;
+  color: #252525;
+
+  font-family: monospace;
+  font-size: clamp(17px, 1.8vw, 36px);
+  font-weight: 700;
+  line-height: 1.15;
+
+  overflow-wrap: anywhere;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* ANSWER HOVER */
+
+.answer-button:hover:not(:disabled) {
+  border-color: #e63c32;
+  background: #fffdf5;
+}
+
+/* SELECTED ANSWER */
+
+.answer-button.is-selected,
+.answer-button.is-selected:hover:not(:disabled) {
+  border-color: #e63c32;
+  background: #f5d69f;
+}
+
+/* DISABLED ANSWER */
+
+.answer-button:disabled {
+  cursor: default;
+}
+
+/* ========================================
+   FEEDBACK MESSAGES
+   ======================================== */
+
+.feedback-message {
+  max-width: 100%;
+
+  border: 3px solid;
+  border-radius: 10px;
+
+  padding: 8px 12px;
+
+  font-family: monospace;
+  font-size: clamp(15px, 1.5vw, 24px);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+/* CORRECT FEEDBACK */
+
+.feedback-message--correct {
+  color: #155724;
+  border-color: #28a745;
+  background: #d4edda;
+}
+
+/* INCORRECT FEEDBACK */
+
+.feedback-message--incorrect {
+  color: #721c24;
+  border-color: #dc3545;
+  background: #f8d7da;
+}

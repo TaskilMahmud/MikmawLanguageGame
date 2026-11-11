@@ -1,0 +1,63 @@
+
+/*
+==========================================
+GLOBAL CSS
+==========================================
+
+Applies to the entire website.
+
+Includes:
+- Basic CSS reset
+- Shared page background
+- Keyboard focus styling
+
+==========================================
+*/
+
+/* RESET */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+button {
+  font: inherit;
+}
+
+/* ========================================
+   COMMON SCREEN STYLING
+   ======================================== */
+
+.screen {
+  width: 100%;
+
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ========================================
+   KEYBOARD ACCESSIBILITY
+   ======================================== */
+
+:focus-visible {
+  outline: 4px solid #f8d04a;
+  outline-offset: 2px;
+}

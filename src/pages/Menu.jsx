@@ -1,26 +1,48 @@
+
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+
+import WoodenButton from "../components/WoodenButton";
 import backgroundImage from "../assets/background2.png";
 
-function Menu() {
+import "../styles/menu.css";
+
+/*
+==========================================
+GAME SELECTION MENU
+
+Pictionary Game -> Game 1
+Goat Island Game -> Game 2
+Back -> Home
+
+==========================================
+*/
+
+export default function Menu() {
   const navigate = useNavigate();
 
   return (
-
-    <div
-      className="game-screen"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+    <main
+      className="screen menu-screen"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
     >
-    
-    
-    <div className="menu-screen">
-      <div className="menu-buttons">
-        <button onClick={() => navigate("/game1")}>Pictionary Game</button>
-        <button onClick={() => navigate("/game2")}>Goat Island Game</button>
-        <button onClick={() => navigate("/")}>Back</button>
-      </div>
-    </div></div>
+      <nav
+        className="menu-buttons"
+        aria-label="Game selection"
+      >
+        <WoodenButton onClick={() => navigate("/game1")}>
+          Pictionary Game
+        </WoodenButton>
+
+        <WoodenButton onClick={() => navigate("/game2")}>
+          Goat Island Game
+        </WoodenButton>
+
+        <WoodenButton onClick={() => navigate("/")}>
+          Back
+        </WoodenButton>
+      </nav>
+    </main>
   );
 }
-
-export default Menu;

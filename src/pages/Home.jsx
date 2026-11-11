@@ -1,23 +1,38 @@
+
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+
+import WoodenButton from "../components/WoodenButton";
 import backgroundImage from "../assets/background1.png";
 
-function Home() {
+import "../styles/home.css";
+
+/*
+==========================================
+HOME PAGE
+
+Background: background1.png
+
+PLAY button navigates to the game menu.
+
+==========================================
+*/
+
+export default function Home() {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="game-screen"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+    <main
+      className="screen home-screen"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+      }}
     >
-      <button
-        className="play-button"
+      <WoodenButton
+        className="home-play-button"
         onClick={() => navigate("/menu")}
       >
         PLAY
-      </button>
-    </div>
+      </WoodenButton>
+    </main>
   );
 }
-
-export default Home;

@@ -1,0 +1,56 @@
+
+/*
+==========================================
+HOME PAGE STYLES
+==========================================
+
+The PLAY button stays centered
+horizontally at 70% of screen height.
+
+Responsive sizing uses clamp().
+
+==========================================
+*/
+
+.home-screen {
+  position: relative;
+}
+
+/* PLAY BUTTON */
+
+.home-play-button {
+  position: absolute;
+
+  top: 70%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  padding:
+    clamp(12px, 2vw, 18px)
+    clamp(32px, 5vw, 70px);
+
+  border-width: 5px;
+  border-radius: 22px;
+
+  font-family: Arial, sans-serif;
+  font-size: clamp(26px, 3vw, 42px);
+
+  letter-spacing: 2px;
+
+  box-shadow:
+    inset 0 0 0 3px #b77a3d,
+    0 6px 0 #5b351b;
+}
+
+/* HOVER ANIMATION */
+
+.home-play-button:hover:not(:disabled) {
+  transform: translate(-50%, -50%) scale(1.05);
+}
+
+/* CLICK ANIMATION */
+
+.home-play-button:active:not(:disabled) {
+  transform: translate(-50%, -50%) scale(0.97);
+}

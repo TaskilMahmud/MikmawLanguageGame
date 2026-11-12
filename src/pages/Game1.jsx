@@ -16,25 +16,6 @@ import thumbnail from "../assets/thumbnail.png";
 
 import "../styles/game1.css";
 
-/*
-==========================================
-GAME 1 - PICTIONARY
-==========================================
-
-Game logic:
-1. Player selects an answer.
-2. Audio pronunciation plays.
-3. Player clicks Select Answer.
-4. Wrong answer -> Try Again.
-5. Correct answer -> Next Question.
-6. After question 21 -> Game Complete.
-
-Game data: data/game1Questions.js
-Styles: styles/game1.css
-
-==========================================
-*/
-
 export default function Game1() {
   const navigate = useNavigate();
 
@@ -42,6 +23,10 @@ export default function Game1() {
   // GAME STATE
   // ========================================
 
+  // Extract unique months dynamically from questions
+  const availableMonths = [...new Set(questions.map((q) => q.month || "September"))];
+
+  const [selectedMonth, setSelectedMonth] = useState(availableMonths[0]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -50,7 +35,12 @@ export default function Game1() {
 
   const audioRef = useRef(null);
 
-  const question = questions[currentQuestion];
+  // Filter questions for the selected month
+  const filteredQuestions = questions.filter(
+    (q) => (q.month || "September") === selectedMonth
+  );
+
+  const question = filteredQuestions[currentQuestion];
 
   // ========================================
   // STOP AUDIO
@@ -69,12 +59,9 @@ export default function Game1() {
   // ========================================
 
   function playAnswerAudio(answer) {
-    // Stop any previous recording.
     stopAudio();
 
-    // Ignore capitalization differences.
     const word = answer.trim().toLowerCase();
-
     const filename = audioFiles[word];
 
     if (!filename) {
@@ -82,21 +69,14 @@ export default function Game1() {
       return;
     }
 
-    // Compatible with localhost and GitHub Pages.
-    const audioPath =
-      `${import.meta.env.BASE_URL}audio/${filename}`;
-
+    const audioPath = `${import.meta.env.BASE_URL}audio/${filename}`;
     const audio = new Audio(audioPath);
 
     audioRef.current = audio;
 
     audio.play().catch((error) => {
       if (error.name !== "AbortError") {
-        console.warn(
-          "Unable to play audio:",
-          filename,
-          error
-        );
+        console.warn("Unable to play audio:", filename, error);
       }
     });
   }
@@ -115,20 +95,28 @@ export default function Game1() {
   }, []);
 
   // ========================================
+  // HANDLE MONTH CHANGE
+  // ========================================
+
+  function handleMonthChange(e) {
+    stopAudio();
+    setSelectedMonth(e.target.value);
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setFeedback(null);
+    setScore(0);
+    setIsComplete(false);
+  }
+
+  // ========================================
   // SELECT ANSWER
   // ========================================
 
   function handleAnswerClick(answer) {
-    // Once correct, answer choices are locked.
     if (feedback === "correct") return;
 
-    // Highlight the choice.
     setSelectedAnswer(answer);
-
-    // Clear old incorrect feedback.
     setFeedback(null);
-
-    // Play its pronunciation.
     playAnswerAudio(answer);
   }
 
@@ -137,25 +125,17 @@ export default function Game1() {
   // ========================================
 
   function handleSelectAnswer() {
-    if (
-      selectedAnswer === null ||
-      feedback === "correct"
-    ) {
+    if (selectedAnswer === null || feedback === "correct") {
       return;
     }
 
     stopAudio();
 
     if (selectedAnswer === question.correctAnswer) {
-      // Correct: increase score and allow Next.
       setFeedback("correct");
-
       setScore((previousScore) => previousScore + 1);
     } else {
-      // Wrong: keep the child on this question.
       setFeedback("incorrect");
-
-      // Clear the choice so they can try again.
       setSelectedAnswer(null);
     }
   }
@@ -169,9 +149,8 @@ export default function Game1() {
 
     stopAudio();
 
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < filteredQuestions.length - 1) {
       setCurrentQuestion((previous) => previous + 1);
-
       setSelectedAnswer(null);
       setFeedback(null);
     } else {
@@ -185,7 +164,6 @@ export default function Game1() {
 
   function restartGame() {
     stopAudio();
-
     setCurrentQuestion(0);
     setSelectedAnswer(null);
     setFeedback(null);
@@ -215,12 +193,31 @@ export default function Game1() {
     >
       <div className="game1-shell">
 
-        {/* BACK BUTTON */}
+        {/* HEADER & MONTH SELECTOR */}
 
-        <header className="game1-header">
+        <header className="game1-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <WoodenButton onClick={handleBack}>
             Back
           </WoodenButton>
+
+          {/* Month Dropdown Selector */}
+          <div className="month-selector" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <label htmlFor="month-select" style={{ fontWeight: "bold", color: "#fff" }}>
+              Month:
+            </label>
+            <select
+              id="month-select"
+              value={selectedMonth}
+              onChange={handleMonthChange}
+              style={{ padding: "6px 12px", borderRadius: "6px", fontWeight: "bold" }}
+            >
+              {availableMonths.map((month) => (
+                <option key={month} value={month}>
+                  {month}
+                </option>
+              ))}
+            </select>
+          </div>
         </header>
 
         {/* ==================================
@@ -240,7 +237,7 @@ export default function Game1() {
             <h1>Game Complete!</h1>
 
             <p>
-              Score: {score}/{questions.length}
+              Score: {score}/{filteredQuestions.length}
             </p>
 
             <WoodenButton onClick={restartGame}>
@@ -257,67 +254,76 @@ export default function Game1() {
             className="game1-layout"
             aria-label="Pictionary game"
           >
-            {/* QUESTION IMAGE */}
+            {/* SAFETY CHECK IF MONTH IS EMPTY */}
+            {filteredQuestions.length === 0 ? (
+              <p style={{ textAlign: "center", color: "#fff" }}>
+                No questions available for {selectedMonth}.
+              </p>
+            ) : (
+              <>
+                {/* QUESTION IMAGE */}
 
-            <img
-              className="game1-image"
-              src={question.image}
-              alt="Question illustration"
-            />
+                <img
+                  className="game1-image"
+                  src={question.image}
+                  alt="Question illustration"
+                />
 
-            {/* QUESTION AND FEEDBACK BOX */}
+                {/* QUESTION AND FEEDBACK BOX */}
 
-            <QuestionBox
-              thumbnail={thumbnail}
-              questionText={question.text}
-              feedback={feedback}
+                <QuestionBox
+                  thumbnail={thumbnail}
+                  questionText={question.text}
+                  feedback={feedback}
 
-              onAction={
-                feedback === "correct"
-                  ? handleNextQuestion
-                  : handleSelectAnswer
-              }
-
-              actionLabel={
-                feedback === "correct"
-                  ? (
-                    currentQuestion === questions.length - 1
-                      ? "Finish Game"
-                      : "Next Question"
-                  )
-                  : "Select Answer"
-              }
-
-              actionDisabled={
-                feedback !== "correct" &&
-                selectedAnswer === null
-              }
-            />
-
-            {/* ANSWER BUTTON BOX */}
-
-            <div
-              className="game1-answers"
-              role="group"
-              aria-label="Answer choices"
-            >
-              {question.answers.map((answer) => (
-                <AnswerButton
-                  key={answer}
-                  answer={answer}
-
-                  selected={
-                    selectedAnswer === answer
+                  onAction={
+                    feedback === "correct"
+                      ? handleNextQuestion
+                      : handleSelectAnswer
                   }
 
-                  disabled={feedback === "correct"}
+                  actionLabel={
+                    feedback === "correct"
+                      ? (
+                          currentQuestion === filteredQuestions.length - 1
+                            ? "Finish Game"
+                            : "Next Question"
+                        )
+                      : "Select Answer"
+                  }
 
-                  onClick={() =>
-                    handleAnswerClick(answer)
+                  actionDisabled={
+                    feedback !== "correct" &&
+                    selectedAnswer === null
                   }
                 />
-              ))}
-            </div>
+
+                {/* ANSWER BUTTON BOX */}
+
+                <div
+                  className="game1-answers"
+                  role="group"
+                  aria-label="Answer choices"
+                >
+                  {question.answers.map((answer) => (
+                    <AnswerButton
+                      key={answer}
+                      answer={answer}
+
+                      selected={
+                        selectedAnswer === answer
+                      }
+
+                      disabled={feedback === "correct"}
+
+                      onClick={() =>
+                        handleAnswerClick(answer)
+                      }
+                    />
+                  ))}
+                </div>
+              </>
+            )}
           </section>
         )}
       </div>

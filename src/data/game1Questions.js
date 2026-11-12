@@ -9,7 +9,7 @@ Contains:
 - Answer choices
 - Correct answers
 - Audio filenames
-- Assigned Months
+- Traditional Mi'kmaw Months
 
 Audio files are stored in public/audio/.
 
@@ -72,160 +72,168 @@ export const audioFiles = {
 };
 
 // ========================================
-// ALL 21 QUESTIONS (Distributed by Month)
+// ALL 21 QUESTIONS (Traditional Months)
 // ========================================
 
 export const questions = [
-  // --- SEPTEMBER ---
+  // --- WIKUMKEWIKU’S (SEPTEMBER) ---
   {
     text: "I ____ meat",
     image: questionImage1,
     answers: ["and", "eat", "you"],
     correctAnswer: "eat",
-    month: "September",
+    month: "Wikumkewiku’s (September)",
   },
   {
     text: "Mali ____",
     image: questionImage2,
     answers: ["is my name", "eat", "and"],
     correctAnswer: "is my name",
-    month: "September",
+    month: "Wikumkewiku’s (September)",
   },
   {
     text: "Pointing at _____",
     image: questionImage3,
     answers: ["and", "eat", "you"],
     correctAnswer: "you",
-    month: "September",
+    month: "Wikumkewiku’s (September)",
   },
+
+  // --- WIKEWIKU’S (OCTOBER) ---
   {
     text: "____ am a student .",
     image: questionImage4,
     answers: ["eat", "I", "you"],
     correctAnswer: "I",
-    month: "September",
+    month: "Wikewiku’s (October)",
   },
   {
     text: "____ Ice-cream .",
     image: questionImage5,
     answers: ["I like the taste of", "I", "and"],
     correctAnswer: "I like the taste of",
-    month: "September",
+    month: "Wikewiku’s (October)",
   },
   {
     text: "Ji'm ___ Sarah are friends.",
     image: questionImage6,
     answers: ["and", "I", "you"],
     correctAnswer: "and",
-    month: "September",
+    month: "Wikewiku’s (October)",
   },
+
+  // --- KEPTEKEWIKU’S (NOVEMBER) ---
   {
     text: "___ to School",
     image: questionImage7,
     answers: ["I am going", "I love", "and"],
     correctAnswer: "I am going",
-    month: "September",
+    month: "Keptekewiku’s (November)",
   },
-
-  // --- OCTOBER ---
   {
     text: " ___ pizza",
     image: questionImage8,
     answers: ["Make it", "I love", "and"],
     correctAnswer: "I love",
-    month: "October",
+    month: "Keptekewiku’s (November)",
   },
   {
     text: "I ____ paper airplane",
     image: questionImage9,
     answers: ["make it", "eat", "you"],
     correctAnswer: "make it",
-    month: "October",
+    month: "Keptekewiku’s (November)",
   },
+
+  // --- KESIKEWIKU’S (DECEMBER) ---
   {
     text: "__ home",
     image: questionImage10,
     answers: ["make it", "you", "I am coming from"],
     correctAnswer: "I am coming from",
-    month: "October",
+    month: "Kesikewiku’s (December)",
   },
   {
     text: "I __ moon",
     image: questionImage11,
     answers: ["make it", "I", "I see it"],
     correctAnswer: "I see it",
-    month: "October",
+    month: "Kesikewiku’s (December)",
   },
   {
     text: " __ music",
     image: questionImage12,
     answers: ["I like", "I see it", "I am coming from"],
     correctAnswer: "I like",
-    month: "October",
+    month: "Kesikewiku’s (December)",
   },
+
+  // --- PUNAMUJUIKU’S (JANUARY) ---
   {
     text: "Bye __",
     image: questionImage13,
     answers: ["Mother", "Dad", "him or her"],
     correctAnswer: "Dad",
-    month: "October",
+    month: "Punamujuiku’s (January)",
   },
   {
     text: " Me and __ eating together",
     image: questionImage14,
     answers: ["Mother", "Dad", "him or her"],
     correctAnswer: "Mother",
-    month: "October",
+    month: "Punamujuiku’s (January)",
   },
-
-  // --- NOVEMBER ---
   {
     text: "Give the book to ___",
     image: questionImage15,
     answers: ["Mother", "Dad", "him or her"],
     correctAnswer: "him or her",
-    month: "November",
+    month: "Punamujuiku’s (January)",
   },
+
+  // --- APUKNAJIT (FEBRUARY) ---
   {
     text: "___ Backpack",
     image: questionImage16,
     answers: ["Mother", "I Love you", "I have it"],
     correctAnswer: "I have it",
-    month: "November",
+    month: "Apuknajit (February)",
   },
   {
     text: "___ board",
     image: questionImage17,
     answers: ["Look at this", "I Love you", "I am coming from"],
     correctAnswer: "Look at this",
-    month: "November",
+    month: "Apuknajit (February)",
   },
   {
     text: "___ daughter",
     image: questionImage18,
     answers: ["Look at this", "I love you", "I am coming from"],
     correctAnswer: "I love you",
-    month: "November",
+    month: "Apuknajit (February)",
   },
+
+  // --- SI’KO”KU’S (MARCH) ---
   {
     text: "I won! ___",
     image: questionImage19,
     answers: ["I am happy", "who", "I am coming from"],
     correctAnswer: "I am happy",
-    month: "November",
+    month: "Si’ko”ku’s (March)",
   },
   {
     text: "___ are you?",
     image: questionImage20,
     answers: ["who", "I am happy", "Look at this"],
     correctAnswer: "who",
-    month: "November",
+    month: "Si’ko”ku’s (March)",
   },
   {
     text: "___ in Canada",
     image: questionImage21,
     answers: ["who", "I live", "I am happy"],
     correctAnswer: "I live",
-    month: "November",
+    month: "Si’ko”ku’s (March)",
   },
 ];

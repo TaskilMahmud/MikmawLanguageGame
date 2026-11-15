@@ -1,30 +1,22 @@
-
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import WoodenButton from "../components/WoodenButton";
-import AnswerButton from "../components/AnswerButton";
-import QuestionBox from "../components/QuestionBox";
+import WoodenButton from "../../components/WoodenButton";
+import AnswerButton from "../../components/AnswerButton";
+import QuestionBox from "../../components/QuestionBox";
+import { questions, audioFiles } from "../../data/game1Questions";
 
-import {
-  questions,
-  audioFiles,
-} from "../data/game1Questions";
+import backgroundImage from "../../assets/background3.png";
+import thumbnail from "../../assets/thumbnail.png";
 
-import backgroundImage from "../assets/background3.png";
-import thumbnail from "../assets/thumbnail.png";
-
-import "../styles/game1.css";
+import "../../styles/game1.css";
 
 export default function Game1() {
   const navigate = useNavigate();
 
-  // ========================================
-  // GAME STATE
-  // ========================================
-
-  // Extract unique months dynamically from questions
-  const availableMonths = [...new Set(questions.map((q) => q.month || "September"))];
+  const availableMonths = [
+    ...new Set(questions.map((q) => q.month || "September")),
+  ];
 
   const [selectedMonth, setSelectedMonth] = useState(availableMonths[0]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -35,16 +27,10 @@ export default function Game1() {
 
   const audioRef = useRef(null);
 
-  // Filter questions for the selected month
   const filteredQuestions = questions.filter(
     (q) => (q.month || "September") === selectedMonth
   );
-
   const question = filteredQuestions[currentQuestion];
-
-  // ========================================
-  // STOP AUDIO
-  // ========================================
 
   function stopAudio() {
     if (audioRef.current) {
@@ -53,10 +39,6 @@ export default function Game1() {
       audioRef.current = null;
     }
   }
-
-  // ========================================
-  // PLAY AUDIO PRONUNCIATION
-  // ========================================
 
   function playAnswerAudio(answer) {
     stopAudio();
@@ -71,7 +53,6 @@ export default function Game1() {
 
     const audioPath = `${import.meta.env.BASE_URL}audio/${filename}`;
     const audio = new Audio(audioPath);
-
     audioRef.current = audio;
 
     audio.play().catch((error) => {
@@ -81,10 +62,6 @@ export default function Game1() {
     });
   }
 
-  // ========================================
-  // AUDIO CLEANUP
-  // ========================================
-
   useEffect(() => {
     return () => {
       if (audioRef.current) {
@@ -93,10 +70,6 @@ export default function Game1() {
       }
     };
   }, []);
-
-  // ========================================
-  // HANDLE MONTH CHANGE
-  // ========================================
 
   function handleMonthChange(e) {
     stopAudio();
@@ -108,10 +81,6 @@ export default function Game1() {
     setIsComplete(false);
   }
 
-  // ========================================
-  // SELECT ANSWER
-  // ========================================
-
   function handleAnswerClick(answer) {
     if (feedback === "correct") return;
 
@@ -120,14 +89,8 @@ export default function Game1() {
     playAnswerAudio(answer);
   }
 
-  // ========================================
-  // CHECK ANSWER
-  // ========================================
-
   function handleSelectAnswer() {
-    if (selectedAnswer === null || feedback === "correct") {
-      return;
-    }
+    if (selectedAnswer === null || feedback === "correct") return;
 
     stopAudio();
 
@@ -139,10 +102,6 @@ export default function Game1() {
       setSelectedAnswer(null);
     }
   }
-
-  // ========================================
-  // NEXT QUESTION
-  // ========================================
 
   function handleNextQuestion() {
     if (feedback !== "correct") return;
@@ -158,10 +117,6 @@ export default function Game1() {
     }
   }
 
-  // ========================================
-  // RESTART GAME
-  // ========================================
-
   function restartGame() {
     stopAudio();
     setCurrentQuestion(0);
@@ -171,45 +126,46 @@ export default function Game1() {
     setIsComplete(false);
   }
 
-  // ========================================
-  // BACK TO MENU
-  // ========================================
-
   function handleBack() {
     stopAudio();
     navigate("/menu");
   }
 
-  // ========================================
-  // GAME DISPLAY
-  // ========================================
-
   return (
     <main
       className="screen game1-screen"
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-      }}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       <div className="game1-shell">
+        <header
+          className="game1-header"
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <WoodenButton onClick={handleBack}>Back</WoodenButton>
 
-        {/* HEADER & MONTH SELECTOR */}
-
-        <header className="game1-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <WoodenButton onClick={handleBack}>
-            Back
-          </WoodenButton>
-
-          {/* Month Dropdown Selector */}
-          <div className="month-selector" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            <label htmlFor="month-select" style={{ fontWeight: "bold", color: "#fff" }}>
+          <div
+            className="month-selector"
+            style={{ display: "flex", alignItems: "center", gap: "8px" }}
+          >
+            <label
+              htmlFor="month-select"
+              style={{ fontWeight: "bold", color: "#fff" }}
+            >
               Month:
             </label>
             <select
               id="month-select"
               value={selectedMonth}
               onChange={handleMonthChange}
-              style={{ padding: "6px 12px", borderRadius: "6px", fontWeight: "bold" }}
+              style={{
+                padding: "6px 12px",
+                borderRadius: "6px",
+                fontWeight: "bold",
+              }}
             >
               {availableMonths.map((month) => (
                 <option key={month} value={month}>
@@ -220,86 +176,48 @@ export default function Game1() {
           </div>
         </header>
 
-        {/* ==================================
-            GAME COMPLETE
-            ================================== */}
-
         {isComplete ? (
-          <section
-            className="game1-complete"
-            aria-label="Game complete"
-          >
-            <img
-              src={thumbnail}
-              alt="Game character"
-            />
-
+          <section className="game1-complete" aria-label="Game complete">
+            <img src={thumbnail} alt="Game character" />
             <h1>Game Complete!</h1>
-
-            <p>
-              Score: {score}/{filteredQuestions.length}
-            </p>
-
-            <WoodenButton onClick={restartGame}>
-              Play Again
-            </WoodenButton>
+            <p>Score: {score}/{filteredQuestions.length}</p>
+            <WoodenButton onClick={restartGame}>Play Again</WoodenButton>
           </section>
         ) : (
-
-          /* ==================================
-             MAIN GAME LAYOUT
-             ================================== */
-
-          <section
-            className="game1-layout"
-            aria-label="Pictionary game"
-          >
-            {/* SAFETY CHECK IF MONTH IS EMPTY */}
+          <section className="game1-layout" aria-label="Pictionary game">
             {filteredQuestions.length === 0 ? (
               <p style={{ textAlign: "center", color: "#fff" }}>
                 No questions available for {selectedMonth}.
               </p>
             ) : (
               <>
-                {/* QUESTION IMAGE */}
-
                 <img
                   className="game1-image"
                   src={question.image}
                   alt="Question illustration"
                 />
 
-                {/* QUESTION AND FEEDBACK BOX */}
-
                 <QuestionBox
                   thumbnail={thumbnail}
                   questionText={question.text}
                   feedback={feedback}
-
                   onAction={
                     feedback === "correct"
                       ? handleNextQuestion
                       : handleSelectAnswer
                   }
-
                   actionLabel={
                     feedback === "correct"
-                      ? (
-                          currentQuestion === filteredQuestions.length - 1
-                            ? "Finish Game"
-                            : "Next Question"
-                        )
+                      ? currentQuestion === filteredQuestions.length - 1
+                        ? "Finish Game"
+                        : "Next Question"
                       : "Select Answer"
                   }
-
                   actionDisabled={
-                    feedback !== "correct" &&
-                    selectedAnswer === null
+                    feedback !== "correct" && selectedAnswer === null
                   }
                   dictionaryQuestions={filteredQuestions}
                 />
-
-                {/* ANSWER BUTTON BOX */}
 
                 <div
                   className="game1-answers"
@@ -310,16 +228,9 @@ export default function Game1() {
                     <AnswerButton
                       key={answer}
                       answer={answer}
-
-                      selected={
-                        selectedAnswer === answer
-                      }
-
+                      selected={selectedAnswer === answer}
                       disabled={feedback === "correct"}
-
-                      onClick={() =>
-                        handleAnswerClick(answer)
-                      }
+                      onClick={() => handleAnswerClick(answer)}
                     />
                   ))}
                 </div>

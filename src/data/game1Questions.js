@@ -4,12 +4,13 @@ GAME 1 QUESTION DATA
 ==========================================
 
 Contains:
-- All 21 questions
+- All 21 questions (Ordered by Traditional Month & Curriculum Sequence)
 - Question images
 - Answer choices
 - Correct answers
 - Audio filenames
 - Traditional Mi'kmaw Months
+- Mi'kmaw Spelling Dictionary
 
 Audio files are stored in public/audio/.
 
@@ -237,7 +238,11 @@ export const questions = [
     month: "Si’ko”ku’s (March)",
   },
 ];
-// MI'KMAW SPELLINGS//
+
+// ========================================
+// MI'KMAW SPELLINGS DICTIONARY
+// ========================================
+
 export const mikmawWords = {
   "i": "ni'n",
   "and": "aqq",
@@ -259,5 +264,5 @@ export const mikmawWords = {
   "look at this": "ula",
   "i am happy": "welta'si",
   "who": "wen",
- 
+  "i live": "e'wist",
 };

@@ -131,9 +131,10 @@
 .goat2-scroll {
   position: absolute;
   z-index: 2;
-  top: 27%;
+  top: 24%;
   left: 50%;
-  width: 73%;
+  width: 86%;
+  max-height: 72%;
   transform: translateX(-50%);
   aspect-ratio: 336 / 255;
 }
@@ -150,12 +151,12 @@
 .goat2-scroll-writing {
   position: absolute;
   top: 50%;
-  left: 11%;
+  left: 17%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 78%;
+  width: 66%;
   height: 62%;
   transform: translateY(-50%);
   color: #24170c;

@@ -1,40 +1,84 @@
-/*
- * Goat Island animal data. Add new animals here as you create them.
- * Keep animal IDs / URLs stable after programming physical NFC tags.
- * Audio files belong in public/audio/ (or leave audioFile: null).
- */
 import rabbitImage from "../assets/goat-island/rabbit.png";
 import deerImage from "../assets/goat-island/deer.png";
+import raccoonImage from "../assets/goat-island/raccoon.png";
+import bearImage from "../assets/goat-island/bear.png";
+import beaverImage from "../assets/goat-island/beaver.png";
+import foxImage from "../assets/goat-island/fox.png";
+import mooseImage from "../assets/goat-island/moose.png";
+import porcupineImage from "../assets/goat-island/porcupine.png";
+import eagleImage from "../assets/goat-island/eagle.png";
 
-export const GOAT_ISLAND_TOTAL_ANIMALS = 10;
-
-export const goatIslandAnimals = [
+// This order controls the counter and the Previous and Next buttons.
+// Replace the sample clues with your actual NFC tag locations.
+const animals = [
   {
     id: "rabbit",
-    number: 1,
     name: "Rabbit",
-    questTitle: "Find a Rabbit!",
-    foundTitle: "You found the Rabbit!",
-    clue: "the rabbit is\nunder the tree",
     image: rabbitImage,
-    audioFile: null, // e.g. "rabbit.mp3"
-    questPath: "/game2/rabbit",
-    foundPath: "/game2/rabbit-found",
+    clue: "The rabbit is\nunder the tree.",
   },
   {
     id: "deer",
-    number: 2,
     name: "Deer",
-    questTitle: "Find a Deer!",
-    foundTitle: "You found the Deer!",
-    // Placeholder clue: change to the actual location of your deer NFC tag.
-    clue: "the deer is\nnear the trees",
     image: deerImage,
-    audioFile: null, // e.g. "deer.mp3"
-    questPath: "/game2/deer",
-    foundPath: "/game2/deer-found",
+    clue: "The deer is\nnear the trees.",
+  },
+  {
+    id: "raccoon",
+    name: "Raccoon",
+    image: raccoonImage,
+    clue: "Look near a hollow log.",
+  },
+  {
+    id: "bear",
+    name: "Bear",
+    image: bearImage,
+    clue: "Look near the berry bushes.",
+  },
+  {
+    id: "beaver",
+    name: "Beaver",
+    image: beaverImage,
+    clue: "Look near the water.",
+  },
+  {
+    id: "fox",
+    name: "Fox",
+    image: foxImage,
+    clue: "Look near the bend in the trail.",
+  },
+  {
+    id: "moose",
+    name: "Moose",
+    image: mooseImage,
+    clue: "Look near the tall trees.",
+  },
+  {
+    id: "porcupine",
+    name: "Porcupine",
+    image: porcupineImage,
+    clue: "Look near the fallen branches.",
+  },
+  {
+    id: "eagle",
+    name: "Eagle",
+    article: "an",
+    image: eagleImage,
+    clue: "Look near the spot where you can see the sky.",
   },
 ];
+
+export const goatIslandAnimals = animals.map((animal, index) => ({
+  ...animal,
+  number: index + 1,
+  questTitle: `Find ${animal.article ?? "a"} ${animal.name}!`,
+  foundTitle: `You found the ${animal.name}!`,
+  audioFile: animal.audioFile ?? null,
+  questPath: `/game2/${animal.id}`,
+  foundPath: `/game2/${animal.id}-found`,
+}));
+
+export const GOAT_ISLAND_TOTAL_ANIMALS = goatIslandAnimals.length;
 
 export function getGoatIslandAnimal(id) {
   return goatIslandAnimals.find((animal) => animal.id === id);

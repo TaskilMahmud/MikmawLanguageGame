@@ -78,17 +78,10 @@ export const audioFiles = {
 export const questions = [
   // --- WIKUMKEWIKU’S (SEPTEMBER) ---
   {
-    text: "I ____ meat",
-    image: questionImage1,
-    answers: ["and", "eat", "you"],
-    correctAnswer: "eat",
-    month: "Wikumkewiku’s (September)",
-  },
-  {
-    text: "Mali ____",
-    image: questionImage2,
-    answers: ["is my name", "eat", "and"],
-    correctAnswer: "is my name",
+    text: "____ am a student .",
+    image: questionImage4,
+    answers: ["eat", "I", "you"],
+    correctAnswer: "I",
     month: "Wikumkewiku’s (September)",
   },
   {
@@ -98,13 +91,20 @@ export const questions = [
     correctAnswer: "you",
     month: "Wikumkewiku’s (September)",
   },
-
+  {
+    text: "Mali ____",
+    image: questionImage2,
+    answers: ["is my name", "eat", "and"],
+    correctAnswer: "is my name",
+    month: "Wikumkewiku’s (September)",
+  },
+  
   // --- WIKEWIKU’S (OCTOBER) ---
   {
-    text: "____ am a student .",
-    image: questionImage4,
-    answers: ["eat", "I", "you"],
-    correctAnswer: "I",
+    text: "I ____ meat",
+    image: questionImage1,
+    answers: ["and", "eat", "you"],
+    correctAnswer: "eat",
     month: "Wikewiku’s (October)",
   },
   {

@@ -28,3 +28,7 @@ export function saveFoundAnimal(id) {
 
   return updated;
 }
+
+export function resetFoundAnimals() {
+  localStorage.removeItem(STORAGE_KEY);
+}

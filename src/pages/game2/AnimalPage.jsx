@@ -91,8 +91,8 @@ export default function AnimalPage({ animalId, found = false }) {
 
     stopAudio();
 
-    // Previous and Next always open the animal's hint.
-    navigate(destination.questPath);
+    const alreadyFound = getFoundAnimalIds().includes(destination.id);
+    navigate(alreadyFound ? destination.foundPath : destination.questPath);
   }
 
   function backToMenu() {

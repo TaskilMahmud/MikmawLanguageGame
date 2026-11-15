@@ -1,219 +1,434 @@
-
 /*
-==========================================
-GAME 2 - GOAT ISLAND STYLES
-==========================================
-
-The prototype uses two existing
-portrait mockup images.
-
-Transparent buttons sit over the
-interactive parts of each screenshot.
-
-Percentage positioning allows the
-clickable areas to scale with the image.
-
-==========================================
+=============================================================
+GOAT ISLAND — PHONE-FIRST GAME 2 (PLAIN CSS)
+=============================================================
+These styles are shared by Rabbit, Rabbit Found, Deer, Deer Found.
+Desktop: a centered phone-sized panel. Mobile: fills screen.
+Header 12% | Forest 56% | Buttons 32%.
+All names start with goat2- so they won't affect Game 1.
+=============================================================
 */
 
-/* ========================================
-   MAIN SCREEN
-   ======================================== */
+/* Reset only within this game. */
+.goat2-page,
+.goat2-page * { box-sizing: border-box; }
 
-.game2-screen {
+/* Dark page background frames the phone UI on desktop. */
+.goat2-page {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 16px;
+  background: #173c39;
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* Three-row, phone-sized game screen. */
+.goat2-phone {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-rows: 12% 56% 32%;
+  width: min(430px, 100%);
+  height: min(790px, calc(100dvh - 32px));
+  min-height: 570px;
+  overflow: hidden;
+  border: 5px solid #0c2a28;
+  border-radius: 22px;
+  background: #a0eeb2;
+  box-shadow: 0 14px 38px rgba(0,0,0,.38);
+}
+
+/* ------------------- HEADER ------------------- */
+.goat2-header {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  min-height: 0;
+  padding: 6px 11px;
+  border-bottom: 4px solid #0b4137;
+  background: linear-gradient(180deg,#96e5aa,#8be2aa 80%,#72cb89);
+}
 
-  flex-direction: column;
-
+.goat2-logo-button {
+  display: flex;
   align-items: center;
   justify-content: flex-start;
-
-  gap: 16px;
-
-  padding: clamp(8px, 1.5vw, 20px);
+  width: 51%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
-
-/* ========================================
-   RESPONSIVE GAME FRAME
-   ======================================== */
-
-.game2-frame {
-  position: relative;
-
-  width: min(94vw, 52dvh, 560px);
-
-  aspect-ratio: 941 / 1672;
-
-  flex: 0 0 auto;
-
-  overflow: hidden;
-
-  border: 4px solid #31384b;
-  border-radius: 12px;
-
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-/* ========================================
-   GAME ARTWORK
-   ======================================== */
-
-.game2-artwork {
+.goat2-logo-button img {
   display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 
+.goat2-counter {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 32%;
+  min-height: 57%;
+  border: 4px solid #15181a;
+  border-radius: 10px;
+  background: linear-gradient(180deg,#fffef1,#fff2d4);
+  box-shadow: inset 0 4px #fff,0 5px 0 #657a54;
+  color: #111315;
+  font-size: clamp(20px, 6vw, 32px);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ------------------- FOREST ------------------- */
+.goat2-scene {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-bottom: 4px solid #0e3b34;
+  background: #79ccff;
+}
+.goat2-forest {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
-
   object-fit: fill;
-
+  image-rendering: pixelated;
+  pointer-events: none;
   user-select: none;
 }
 
-/* ========================================
-   CLICKABLE AREAS
-   ========================================
-
-   These transparent buttons are placed
-   on top of the mockup artwork.
-
-   We use percentage values so they
-   resize with the frame.
-
-   ======================================== */
-
-.game2-hotspot {
+/* Cream, outlined caption shared by both stages. */
+.goat2-title {
   position: absolute;
-  z-index: 1;
-
-  padding: 0;
-
-  border: 0;
-  border-radius: 8px;
-
-  background: transparent;
-
-  cursor: pointer;
-}
-
-.game2-hotspot:hover {
-  background: rgba(255, 239, 170, 0.18);
-}
-
-/* ========================================
-   FIND RABBIT SCREEN HOTSPOTS
-   ======================================== */
-
-/* Back button */
-.game2-hotspot--quest-back {
-  left: 2.5%;
-  top: 1.5%;
-
-  width: 14%;
-  height: 4.5%;
-}
-
-/* Pronunciation button */
-.game2-hotspot--quest-audio {
-  left: 42%;
-  top: 39%;
-
-  width: 15%;
-  height: 7%;
-}
-
-/* Rabbit discovery area */
-.game2-hotspot--rabbit {
-  left: 1%;
-  top: 58%;
-
-  width: 19%;
-  height: 12%;
-}
-
-/* ========================================
-   RABBIT FOUND SCREEN HOTSPOTS
-   ======================================== */
-
-/* Back button */
-.game2-hotspot--found-back {
-  left: 3%;
-  top: 4%;
-
-  width: 18%;
-  height: 5%;
-}
-
-/* Play Rabbit pronunciation */
-.game2-hotspot--found-audio {
+  z-index: 2;
+  top: 7%;
   left: 5%;
-  top: 84%;
-
-  width: 47%;
-  height: 7%;
-}
-
-/* Next word button */
-.game2-hotspot--next {
-  left: 53%;
-  top: 84%;
-
-  width: 42%;
-  height: 7%;
-}
-
-/* ========================================
-   FEEDBACK MESSAGE
-   ======================================== */
-
-.game2-message {
-  max-width: min(100%, 450px);
-
+  display: grid;
+  place-items: center;
+  width: 90%;
+  min-height: 13%;
   margin: 0;
-
-  padding: 12px 16px;
-
-  border: 4px solid #7a4a24;
-  border-radius: 12px;
-
-  background: #e7c48d;
-
-  color: #2f6b3a;
-
-  font-family: monospace;
-  font-size: clamp(14px, 1.5vw, 18px);
-  font-weight: 700;
-  line-height: 1.35;
-
+  padding: 7px 6px;
+  border: 4px solid #191919;
+  border-radius: 11px;
+  background: linear-gradient(180deg,#fffdf3,#fff4dd);
+  box-shadow: inset 0 4px #fff,0 4px 0 rgba(0,0,0,.18);
+  color: #191919;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(16px, 4.5vw, 24px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.1;
   text-align: center;
 }
 
-/* ========================================
-   GAME 2 ACTION BUTTONS
-   ======================================== */
-
-.game2-actions {
+/* Quest scroll, positioned over the forest. */
+.goat2-scroll {
+  position: absolute;
+  z-index: 2;
+  top: 27%;
+  left: 50%;
+  width: 73%;
+  transform: translateX(-50%);
+  aspect-ratio: 336 / 255;
+}
+.goat2-scroll > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+.goat2-scroll-writing {
+  position: absolute;
+  top: 50%;
+  left: 11%;
   display: flex;
-  flex-wrap: wrap;
-
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  gap: 12px;
+  width: 78%;
+  height: 62%;
+  transform: translateY(-50%);
+  color: #24170c;
+  text-align: center;
+  pointer-events: none;
+}
+.goat2-scroll-writing p {
+  margin: 3px 0;
+  font-size: clamp(15px, 4.3vw, 21px);
+  font-weight: 900;
+  line-height: 1.21;
+  letter-spacing: -.9px;
+  white-space: pre-line;
+}
+.goat2-paw {
+  color: #db5144;
+  font-size: clamp(15px,5vw,23px);
+  line-height: 1;
 }
 
-/* ========================================
-   RESPONSIVE - MOBILE
-   ======================================== */
+/* Test/demo-only: tapping tree opens found URL even without an NFC tag.
+   Remove its React button when you want NFC-only progression. */
+.goat2-tree-hotspot {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  top: 30%;
+  width: 16%;
+  height: 56%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.goat2-tree-hotspot:hover { background: rgba(255,237,97,.15); }
 
-@media (max-width: 480px) {
+/* ------------------- FOUND ANIMAL -------------------
+   Constraining both axes prevents clipping (the previous rabbit issue).
+   You may change the 60% value to resize animals, without moving panels. */
+.goat2-found-picture {
+  position: absolute;
+  z-index: 2;
+  top: 24%;
+  right: 4%;
+  bottom: 6%;
+  left: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.goat2-found-picture > img {
+  display: block;
+  width: min(60%, 220px);
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 1px rgba(19,77,50,.25));
+}
+/* Deer has a wider shape than the rabbit, so it can use more width. */
+.goat2-found-picture--deer > img { width: min(78%, 280px); }
+.goat2-sparkles {
+  position: absolute;
+  top: 5%;
+  right: 14%;
+  color: #ffdf28;
+  font-size: clamp(22px,6vw,32px);
+  text-shadow: 2px 2px #2a2310;
+}
 
-  .game2-frame {
-    width: min(94vw, 53dvh);
+/* ------------------- BOTTOM CONTROLS -------------------
+   Two equal-height rows: red audio button, then 3 navigation buttons.
+   This keeps the enlarged layout from your current game2.css. */
+.goat2-controls {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0,1fr);
+  grid-template-rows: minmax(0,1fr) minmax(0,1fr);
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  padding: 12px 10px 16px;
+  background: linear-gradient(to bottom,#92e3ab 0%,#aaedb2 18%,#ceffd0 57%,#b4f4b9 87%,#69ca8d 100%);
+}
+.goat2-game-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  padding: 6px;
+  border: 4px solid #141414;
+  border-radius: 9px;
+  box-shadow: inset 0 5px rgba(255,255,255,.78),inset 0 -9px rgba(0,0,0,.16),0 5px 0 rgba(15,51,39,.34);
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 900;
+  line-height: 1.12;
+  text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: filter .12s ease,transform .12s ease;
+}
+.goat2-game-button:hover { filter: brightness(1.07); }
+.goat2-game-button:active { transform: translateY(3px); }
+.goat2-button-red {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,#b83e40 0%,#fa373b 12%,#ed3337 88%,#b73d40 100%);
+  font-size: clamp(23px,7vw,35px);
+  letter-spacing: -.5px;
+  text-shadow: 2px 0 #4f2119,-2px 0 #4f2119,0 2px #4f2119,0 -2px #4f2119;
+}
+.goat2-sound-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(35px,11vw,55px);
+  max-height: 75%;
+  object-fit: contain;
+}
+.goat2-nav-buttons {
+  display: grid;
+  grid-template-columns: repeat(3,minmax(0,1fr));
+  gap: 7px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+.goat2-nav-buttons .goat2-game-button {
+  width: 100%;
+  height: 100%;
+  padding: 5px 3px;
+  font-family: Arial,sans-serif;
+  font-size: clamp(12px,3.5vw,18px);
+  font-weight: 900;
+  letter-spacing: -.4px;
+  overflow-wrap: anywhere;
+  text-shadow: 1px 1px 0 rgba(0,0,0,.7);
+}
+.goat2-button-yellow { background: linear-gradient(180deg,#ffc735,#f4a80f); }
+.goat2-button-blue { background: linear-gradient(180deg,#28baff,#0288d7); }
+.goat2-button-green { background: linear-gradient(180deg,#64ec34,#28ae21); }
+
+/* Notices float above controls without shrinking the buttons. */
+.goat2-notice {
+  position: absolute;
+  z-index: 5;
+  bottom: 100%;
+  left: 3%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 94%;
+  padding: 8px 10px;
+  border: 3px solid #262324;
+  border-radius: 8px;
+  background: #fff7dd;
+  color: #29221d;
+  font-family: Arial,sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+}
+.goat2-notice button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+/* ------------------- DICTIONARY MODAL ------------------- */
+.goat2-modal-backdrop {
+  position: absolute;
+  z-index: 12;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(11,32,33,.72);
+}
+.goat2-dictionary {
+  width: 100%;
+  max-height: 90%;
+  overflow-y: auto;
+  padding: 20px 16px;
+  border: 5px solid #16191c;
+  border-radius: 12px;
+  background: #fff7df;
+  color: #2a201a;
+  box-shadow: inset 0 5px #fff,0 8px 0 rgba(0,0,0,.4);
+  text-align: center;
+}
+.goat2-dictionary h2 { margin: 0 0 10px; font-size: 22px; }
+.goat2-dictionary > p { margin: 0 0 14px; font-size: 14px; font-weight: 700; }
+.goat2-dictionary-list { display: grid; gap: 9px; margin-bottom: 16px; }
+.goat2-dictionary-entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 3px solid #403024;
+  border-radius: 8px;
+  background: #e0f5c8;
+  text-align: left;
+}
+.goat2-dictionary-entry img,
+.goat2-dictionary-locked {
+  width: 60px;
+  height: 66px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+.goat2-dictionary-locked {
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #a8c4a0;
+  color: #355b33;
+  font-size: 36px;
+  font-weight: 900;
+}
+.goat2-dictionary-entry strong { font-size: 19px; }
+.goat2-dictionary-entry p { margin: 6px 0 0; font-size: 13px; }
+.goat2-modal-close { width: 100%; min-height: 48px; font-size: 19px; }
+
+/* Clear focus indication for keyboard users. */
+.goat2-tree-hotspot:focus-visible,
+.goat2-logo-button:focus-visible,
+.goat2-game-button:focus-visible {
+  outline: 4px solid #ffe46b;
+  outline-offset: -5px;
+}
+
+/* ------------------- MOBILE ------------------- */
+@media (max-width: 500px) {
+  .goat2-page { padding: 0; }
+  .goat2-phone {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
-
-  .game2-actions .wooden-button {
-    font-size: 15px;
-    padding: 9px 12px;
-  }
+  .goat2-found-picture > img { width: min(60%, 210px); }
+  .goat2-found-picture--deer > img { width: min(74%, 265px); }
+}
+@media (max-width: 360px) {
+  .goat2-header { padding-inline: 7px; }
+  .goat2-title { font-size: 15px; }
+  .goat2-scroll-writing p { font-size: 15px; }
+  .goat2-controls { gap: 8px; padding: 8px 6px 12px; }
+  .goat2-nav-buttons { gap: 4px; }
+  .goat2-nav-buttons .goat2-game-button { font-size: 11px; padding: 3px; }
+  .goat2-game-button { border-width: 3px; }
+  .goat2-found-picture > img { width: min(55%, 190px); }
+  .goat2-found-picture--deer > img { width: min(70%, 235px); }
+}
+@media (max-height: 560px) {
+  .goat2-page { overflow-y: auto; }
+  .goat2-phone { min-height: 560px; }
 }

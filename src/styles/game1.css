@@ -542,3 +542,146 @@ Responsive design uses:
   }
 
 }
+/* ========================================
+   QUESTION BOX BUTTON ROW
+   ======================================== */
+
+.question-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ========================================
+   DICTIONARY POPUP
+   ======================================== */
+
+.dict-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 26, 40, 0.65);
+}
+
+.dict-panel {
+  position: relative;
+  width: min(560px, 94vw);
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 22px;
+  border: 8px solid #31384b;
+  border-radius: 8px;
+  background: #f4f0df;
+  box-shadow:
+    inset 0 0 0 5px #df3f32,
+    0 6px 0 #1e2634;
+  font-family: monospace;
+}
+
+.dict-title {
+  margin: 0;
+  text-align: center;
+  color: #31384b;
+  font-size: clamp(22px, 3vw, 32px);
+  text-shadow: 2px 2px 0 #d9cfa8;
+}
+
+.dict-hint {
+  margin: 4px 0 16px;
+  text-align: center;
+  color: #5b6272;
+  font-size: 14px;
+}
+
+.dict-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: none;
+  background: none;
+  color: #df3f32;
+  font-size: 26px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+/* ---------- flip card with hover ---------- */
+
+.dict-card {
+  aspect-ratio: 1;
+  perspective: 800px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.dict-card:hover {
+  transform: translateY(-4px) scale(1.03);
+}
+
+.dict-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.dict-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.dict-card.is-flipped .dict-inner {
+  transform: rotateY(180deg);
+}
+
+.dict-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 5px solid #31384b;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  box-shadow: 0 4px 0 #1e2634;
+}
+
+.dict-front {
+  background: white;
+}
+
+.dict-front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dict-back {
+  transform: rotateY(180deg);
+  gap: 6px;
+  padding: 8px;
+  background: #a85a22;
+  color: white;
+  text-align: center;
+  text-shadow: 2px 2px 0 #5b3012;
+}
+
+.dict-back strong {
+  font-size: clamp(20px, 3vw, 30px);
+}
+
+.dict-back span {
+  font-size: 15px;
+  opacity: 0.9;
+}

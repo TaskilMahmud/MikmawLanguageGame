@@ -296,6 +296,7 @@ export default function Game1() {
                     feedback !== "correct" &&
                     selectedAnswer === null
                   }
+                  dictionaryQuestions={filteredQuestions}
                 />
 
                 {/* ANSWER BUTTON BOX */}

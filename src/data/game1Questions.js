@@ -237,3 +237,27 @@ export const questions = [
     month: "Si’ko”ku’s (March)",
   },
 ];
+// MI'KMAW SPELLINGS//
+export const mikmawWords = {
+  "i": "ni'n",
+  "and": "aqq",
+  "eat": "mijisi",
+  "you": "ki'l",
+  "is my name": "teluisi",
+  "i like the taste of": "wiktm",
+  "i am going": "eliey",
+  "i love": "kesalk",
+  "make it": "l'tu",
+  "i am coming from": "wejiey",
+  "i see it": "nemitu",
+  "i like": "kesam",
+  "mother": "kiju'",
+  "dad": "ta'ta",
+  "him or her": "nekm",
+  "i love you": "kesalul",
+  "i have it": "ala'tu",
+  "look at this": "ula",
+  "i am happy": "welta'si",
+  "who": "wen",
+ 
+};

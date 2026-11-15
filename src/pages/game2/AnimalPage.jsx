@@ -11,29 +11,30 @@ import {
   goatIslandAnimals,
   GOAT_ISLAND_TOTAL_ANIMALS,
 } from "../../data/goatIslandAnimals";
-import { getFoundAnimalIds, saveFoundAnimal } from "../../data/goatIslandProgress";
+import {
+  getFoundAnimalIds,
+  saveFoundAnimal,
+} from "../../data/goatIslandProgress";
 import "../../styles/game2.css";
 
-/*
- * Shared page for the rabbit and deer clue and found screens.
- * Each NFC tag can open its animal's found route directly.
- */
 export default function AnimalPage({ animalId, found = false }) {
   const navigate = useNavigate();
   const animal = getGoatIslandAnimal(animalId);
+
   const [notice, setNotice] = useState("");
   const [dictionaryOpen, setDictionaryOpen] = useState(false);
   const [foundIds, setFoundIds] = useState(getFoundAnimalIds);
   const audioRef = useRef(null);
 
-  // Record a discovery when its found page opens.
-  useEffect(() => {
-    if (found && animal) {
-      setFoundIds(saveFoundAnimal(animal.id));
-    }
-  }, [animal?.id, found]);
+  // Visiting a Found URL records the discovery in this browser.
+  const discoveredAnimalId = found ? animal?.id : undefined;
 
-  // Stop audio when leaving this page.
+  useEffect(() => {
+    if (discoveredAnimalId) {
+      setFoundIds(saveFoundAnimal(discoveredAnimalId));
+    }
+  }, [discoveredAnimalId]);
+
   useEffect(() => {
     return () => {
       audioRef.current?.pause();
@@ -46,7 +47,7 @@ export default function AnimalPage({ animalId, found = false }) {
   }
 
   const currentIndex = goatIslandAnimals.findIndex(
-    (item) => item.id === animal.id
+    (entry) => entry.id === animal.id
   );
 
   function stopAudio() {
@@ -66,7 +67,6 @@ export default function AnimalPage({ animalId, found = false }) {
       return;
     }
 
-    // BASE_URL keeps the correct audio path on GitHub Pages.
     const audio = new Audio(
       `${import.meta.env.BASE_URL}audio/${animal.audioFile}`
     );
@@ -90,6 +90,8 @@ export default function AnimalPage({ animalId, found = false }) {
     }
 
     stopAudio();
+
+    // Previous and Next always open the animal's hint.
     navigate(destination.questPath);
   }
 
@@ -146,32 +148,23 @@ export default function AnimalPage({ animalId, found = false }) {
           </h1>
 
           {found ? (
-            <div className={`goat2-found-picture goat2-found-picture--${animal.id}`}>
+            <div
+              className={`goat2-found-picture goat2-found-picture--${animal.id}`}
+            >
               <img src={animal.image} alt={animal.name} />
               <span className="goat2-sparkles" aria-hidden="true">
                 ✦ ✦
               </span>
             </div>
           ) : (
-            <>
-              <div className="goat2-scroll">
-                <img src={scrollBlank} alt="" aria-hidden="true" />
-                <div className="goat2-scroll-writing">
-                  <span className="goat2-paw" aria-hidden="true">✿</span>
-                  <p>{animal.clue}</p>
-                  <span className="goat2-paw" aria-hidden="true">✿</span>
-                </div>
+            <div className="goat2-scroll">
+              <img src={scrollBlank} alt="" aria-hidden="true" />
+              <div className="goat2-scroll-writing">
+                <span className="goat2-paw" aria-hidden="true">✿</span>
+                <p>{animal.clue}</p>
+                <span className="goat2-paw" aria-hidden="true">✿</span>
               </div>
-
-              {/* Tap the tree to simulate finding the animal during a demo. */}
-              <button
-                type="button"
-                className="goat2-tree-hotspot"
-                onClick={() => navigate(animal.foundPath)}
-                aria-label={`Demo: discover the ${animal.name} by touching the tree`}
-                title="Demo: tap to discover"
-              />
-            </>
+            </div>
           )}
         </section>
 
@@ -249,7 +242,10 @@ export default function AnimalPage({ animalId, found = false }) {
                       {unlocked ? (
                         <img src={entry.image} alt="" />
                       ) : (
-                        <div className="goat2-dictionary-locked" aria-hidden="true">
+                        <div
+                          className="goat2-dictionary-locked"
+                          aria-hidden="true"
+                        >
                           ?
                         </div>
                       )}

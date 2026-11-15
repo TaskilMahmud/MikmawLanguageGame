@@ -15,12 +15,8 @@ import { getFoundAnimalIds, saveFoundAnimal } from "../../data/goatIslandProgres
 import "../../styles/game2.css";
 
 /*
- * Shared page for both quest and found screens.
- * Rabbit.jsx, RabbitFound.jsx, Deer.jsx and DeerFound.jsx
- * only choose which animal and which screen this component shows.
- *
- * The NFC sticker stores a URL pointing DIRECTLY to the found route.
- * No in-browser NFC API or server is required.
+ * Shared page for the rabbit and deer clue and found screens.
+ * Each NFC tag can open its animal's found route directly.
  */
 export default function AnimalPage({ animalId, found = false }) {
   const navigate = useNavigate();
@@ -30,14 +26,14 @@ export default function AnimalPage({ animalId, found = false }) {
   const [foundIds, setFoundIds] = useState(getFoundAnimalIds);
   const audioRef = useRef(null);
 
-  // Record a discovery when its NFC website URL opens.
+  // Record a discovery when its found page opens.
   useEffect(() => {
     if (found && animal) {
       setFoundIds(saveFoundAnimal(animal.id));
     }
   }, [animal?.id, found]);
 
-  // Stop audio when navigating away from this page.
+  // Stop audio when leaving this page.
   useEffect(() => {
     return () => {
       audioRef.current?.pause();
@@ -70,7 +66,7 @@ export default function AnimalPage({ animalId, found = false }) {
       return;
     }
 
-    // BASE_URL preserves the GitHub Pages /MikmawLanguageGame/ prefix.
+    // BASE_URL keeps the correct audio path on GitHub Pages.
     const audio = new Audio(
       `${import.meta.env.BASE_URL}audio/${animal.audioFile}`
     );
@@ -85,14 +81,15 @@ export default function AnimalPage({ animalId, found = false }) {
 
   function moveAnimal(change) {
     const destination = goatIslandAnimals[currentIndex + change];
+
     if (!destination) {
-      setNotice(change < 0 ? "This is the first animal!" : "More animals coming soon!");
+      setNotice(
+        change < 0 ? "This is the first animal!" : "More animals coming soon!"
+      );
       return;
     }
 
     stopAudio();
-    // Navigation buttons open the next/previous CLUE page.
-    // Its NFC tag opens the corresponding FOUND page.
     navigate(destination.questPath);
   }
 
@@ -104,8 +101,16 @@ export default function AnimalPage({ animalId, found = false }) {
   return (
     <main className="goat2-page">
       <section className="goat2-phone" aria-label={`${animal.name} game`}>
-        {/* HEADER */}
         <header className="goat2-header">
+          <button
+            type="button"
+            className="goat2-game-button goat2-back-button"
+            onClick={backToMenu}
+            aria-label="Back to game menu"
+          >
+            <span aria-hidden="true">←</span> Back
+          </button>
+
           <button
             type="button"
             className="goat2-logo-button"
@@ -116,20 +121,36 @@ export default function AnimalPage({ animalId, found = false }) {
             <img src={goatLogo} alt="Goat Island" />
           </button>
 
-          <div className="goat2-counter" aria-label={`Animal ${animal.number} of ${GOAT_ISLAND_TOTAL_ANIMALS}`}>
+          <div
+            className="goat2-counter"
+            aria-label={`Animal ${animal.number} of ${GOAT_ISLAND_TOTAL_ANIMALS}`}
+          >
             {animal.number}/{GOAT_ISLAND_TOTAL_ANIMALS}
           </div>
         </header>
 
-        {/* FOREST + SCROLL OR FOUND ANIMAL */}
-        <section className="goat2-scene" aria-label={found ? animal.foundTitle : animal.questTitle}>
-          <img className="goat2-forest" src={forestScene} alt="" aria-hidden="true" draggable={false} />
-          <h1 className="goat2-title">{found ? animal.foundTitle : animal.questTitle}</h1>
+        <section
+          className="goat2-scene"
+          aria-label={found ? animal.foundTitle : animal.questTitle}
+        >
+          <img
+            className="goat2-forest"
+            src={forestScene}
+            alt=""
+            aria-hidden="true"
+            draggable={false}
+          />
+
+          <h1 className="goat2-title">
+            {found ? animal.foundTitle : animal.questTitle}
+          </h1>
 
           {found ? (
             <div className={`goat2-found-picture goat2-found-picture--${animal.id}`}>
               <img src={animal.image} alt={animal.name} />
-              <span className="goat2-sparkles" aria-hidden="true">✦ ✦</span>
+              <span className="goat2-sparkles" aria-hidden="true">
+                ✦ ✦
+              </span>
             </div>
           ) : (
             <>
@@ -142,10 +163,7 @@ export default function AnimalPage({ animalId, found = false }) {
                 </div>
               </div>
 
-              {/*
-                Optional prototype shortcut: tap the tree to simulate an NFC find.
-                For strictly NFC-only gameplay, DELETE this button.
-              */}
+              {/* Tap the tree to simulate finding the animal during a demo. */}
               <button
                 type="button"
                 className="goat2-tree-hotspot"
@@ -157,12 +175,17 @@ export default function AnimalPage({ animalId, found = false }) {
           )}
         </section>
 
-        {/* AUDIO + THREE BUTTONS (SAME LAYOUT AS BEFORE) */}
         <section className="goat2-controls" aria-label="Animal controls">
           {notice && (
             <div className="goat2-notice" role="status">
               <span>{notice}</span>
-              <button type="button" onClick={() => setNotice("")} aria-label="Close message">×</button>
+              <button
+                type="button"
+                onClick={() => setNotice("")}
+                aria-label="Close message"
+              >
+                ×
+              </button>
             </div>
           )}
 
@@ -177,34 +200,60 @@ export default function AnimalPage({ animalId, found = false }) {
           </button>
 
           <div className="goat2-nav-buttons">
-            <button type="button" className="goat2-game-button goat2-button-yellow" onClick={() => moveAnimal(-1)}>
+            <button
+              type="button"
+              className="goat2-game-button goat2-button-yellow"
+              onClick={() => moveAnimal(-1)}
+            >
               <span>Previous<br />Animal</span>
             </button>
+
             <button
               type="button"
               className="goat2-game-button goat2-button-blue"
-              onClick={() => { setNotice(""); setDictionaryOpen(true); }}
+              onClick={() => {
+                setNotice("");
+                setDictionaryOpen(true);
+              }}
             >
               Dictionary
             </button>
-            <button type="button" className="goat2-game-button goat2-button-green" onClick={() => moveAnimal(1)}>
+
+            <button
+              type="button"
+              className="goat2-game-button goat2-button-green"
+              onClick={() => moveAnimal(1)}
+            >
               <span>Next<br />Animal</span>
             </button>
           </div>
         </section>
 
-        {/* DICTIONARY: unlocked animals persist in this browser */}
         {dictionaryOpen && (
           <div className="goat2-modal-backdrop">
-            <section className="goat2-dictionary" role="dialog" aria-modal="true" aria-labelledby="goat-dictionary-heading">
+            <section
+              className="goat2-dictionary"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="goat-dictionary-heading"
+            >
               <h2 id="goat-dictionary-heading">Animal Dictionary</h2>
               <p>Discovered: {foundIds.length}/{GOAT_ISLAND_TOTAL_ANIMALS}</p>
+
               <div className="goat2-dictionary-list">
                 {goatIslandAnimals.map((entry) => {
                   const unlocked = foundIds.includes(entry.id);
+
                   return (
                     <div className="goat2-dictionary-entry" key={entry.id}>
-                      {unlocked ? <img src={entry.image} alt="" /> : <div className="goat2-dictionary-locked" aria-hidden="true">?</div>}
+                      {unlocked ? (
+                        <img src={entry.image} alt="" />
+                      ) : (
+                        <div className="goat2-dictionary-locked" aria-hidden="true">
+                          ?
+                        </div>
+                      )}
+
                       <div>
                         <strong>{unlocked ? entry.name : "Unknown animal"}</strong>
                         <p>{unlocked ? "Discovered!" : "Not discovered yet"}</p>
@@ -213,7 +262,12 @@ export default function AnimalPage({ animalId, found = false }) {
                   );
                 })}
               </div>
-              <button type="button" className="goat2-game-button goat2-button-blue goat2-modal-close" onClick={() => setDictionaryOpen(false)}>
+
+              <button
+                type="button"
+                className="goat2-game-button goat2-button-blue goat2-modal-close"
+                onClick={() => setDictionaryOpen(false)}
+              >
                 Close
               </button>
             </section>

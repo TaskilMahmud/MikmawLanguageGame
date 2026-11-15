@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
-import Game1 from "./pages/Game1";
+import Game1 from "./pages/game1/Game1";
 import Rabbit from "./pages/game2/Rabbit";
 import RabbitFound from "./pages/game2/RabbitFound";
 import Deer from "./pages/game2/Deer";
@@ -21,7 +21,10 @@ export default function App() {
       <Route path="/game2/deer" element={<Deer />} />
       <Route path="/game2/deer-found" element={<DeerFound />} />
 
-      <Route path="/rabbit-found" element={<Navigate to="/game2/rabbit-found" replace />} />
+      <Route
+        path="/rabbit-found"
+        element={<Navigate to="/game2/rabbit-found" replace />}
+      />
     </Routes>
   );
 }

@@ -4,13 +4,11 @@ GAME 1 QUESTION DATA
 ==========================================
 
 Contains:
-- All 21 questions (Ordered by Traditional Month & Curriculum Sequence)
+- All 21 questions (Ordered by Curriculum Month & Word Sequence)
 - Question images
 - Answer choices
 - Correct answers
 - Audio filenames
-- Traditional Mi'kmaw Months
-- Mi'kmaw Spelling Dictionary
 
 Audio files are stored in public/audio/.
 
@@ -73,11 +71,11 @@ export const audioFiles = {
 };
 
 // ========================================
-// ALL 21 QUESTIONS (Traditional Months)
+// ALL 21 QUESTIONS (Exact Curriculum Order)
 // ========================================
 
 export const questions = [
-  // --- WIKUMKEWIKU’S (SEPTEMBER) ---
+  // --- WIKUMKEWIKU’S (SEPTEMBER): nin (I), ki’l (you), teluisi (My name is...) ---
   {
     text: "____ am a student .",
     image: questionImage4,
@@ -99,8 +97,15 @@ export const questions = [
     correctAnswer: "is my name",
     month: "Wikumkewiku’s (September)",
   },
-  
-  // --- WIKEWIKU’S (OCTOBER) ---
+
+  // --- WIKEWIKU’S (OCTOBER): aq (and), mijisi (eat), wiktm (I like the taste of it) ---
+  {
+    text: "Ji'm ___ Sarah are friends.",
+    image: questionImage6,
+    answers: ["and", "I", "you"],
+    correctAnswer: "and",
+    month: "Wikewiku’s (October)",
+  },
   {
     text: "I ____ meat",
     image: questionImage1,
@@ -115,22 +120,8 @@ export const questions = [
     correctAnswer: "I like the taste of",
     month: "Wikewiku’s (October)",
   },
-  {
-    text: "Ji'm ___ Sarah are friends.",
-    image: questionImage6,
-    answers: ["and", "I", "you"],
-    correctAnswer: "and",
-    month: "Wikewiku’s (October)",
-  },
 
-  // --- KEPTEKEWIKU’S (NOVEMBER) ---
-  {
-    text: "___ to School",
-    image: questionImage7,
-    answers: ["I am going", "I love", "and"],
-    correctAnswer: "I am going",
-    month: "Keptekewiku’s (November)",
-  },
+  // --- KEPTEKEWIKU’S (NOVEMBER): kesalk (I love...), l'tu (Make it.), eliey (I am going.) ---
   {
     text: " ___ pizza",
     image: questionImage8,
@@ -145,15 +136,15 @@ export const questions = [
     correctAnswer: "make it",
     month: "Keptekewiku’s (November)",
   },
-
-  // --- KESIKEWIKU’S (DECEMBER) ---
   {
-    text: "__ home",
-    image: questionImage10,
-    answers: ["make it", "you", "I am coming from"],
-    correctAnswer: "I am coming from",
-    month: "Kesikewiku’s (December)",
+    text: "___ to School",
+    image: questionImage7,
+    answers: ["I am going", "I love", "and"],
+    correctAnswer: "I am going",
+    month: "Keptekewiku’s (November)",
   },
+
+  // --- KESIKEWIKU’S (DECEMBER): nemitu (I see it.), kesatm (I like...), wejiey (I am coming from...) ---
   {
     text: "I __ moon",
     image: questionImage11,
@@ -168,8 +159,15 @@ export const questions = [
     correctAnswer: "I like",
     month: "Kesikewiku’s (December)",
   },
+  {
+    text: "__ home",
+    image: questionImage10,
+    answers: ["make it", "you", "I am coming from"],
+    correctAnswer: "I am coming from",
+    month: "Kesikewiku’s (December)",
+  },
 
-  // --- PUNAMUJUIKU’S (JANUARY) ---
+  // --- PUNAMUJUIKU’S (JANUARY): ta’ta (Dad), kiju (Mother), nekm (him or her) ---
   {
     text: "Bye __",
     image: questionImage13,
@@ -192,7 +190,7 @@ export const questions = [
     month: "Punamujuiku’s (January)",
   },
 
-  // --- APUKNAJIT (FEBRUARY) ---
+  // --- APUKNAJIT (FEBRUARY): ala’tu (I have it.), ula (Look at this.), kesalul (I love you.) ---
   {
     text: "___ Backpack",
     image: questionImage16,
@@ -215,7 +213,7 @@ export const questions = [
     month: "Apuknajit (February)",
   },
 
-  // --- SI’KO”KU’S (MARCH) ---
+  // --- SI’KO”KU’S (MARCH): welta’si (I am happy.), wen (who), + I live ---
   {
     text: "I won! ___",
     image: questionImage19,

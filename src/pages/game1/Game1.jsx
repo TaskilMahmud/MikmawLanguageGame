@@ -128,44 +128,26 @@ export default function Game1() {
 
   function handleBack() {
     stopAudio();
-    navigate("/menu");
+    navigate("/game1");
   }
 
   return (
     <main
       className="screen game1-screen"
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      style={{ "--game1-background": `url(${backgroundImage})` }}
     >
       <div className="game1-shell">
-        <header
-          className="game1-header"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
+        <header className="game1-header">
           <WoodenButton onClick={handleBack}>Back</WoodenButton>
 
-          <div
-            className="month-selector"
-            style={{ display: "flex", alignItems: "center", gap: "8px" }}
-          >
-            <label
-              htmlFor="month-select"
-              style={{ fontWeight: "bold", color: "#fff" }}
-            >
-              Month:
-            </label>
+          <p className="game1-title">Pictionary</p>
+
+          <div className="game1-month">
+            <label htmlFor="month-select">Month</label>
             <select
               id="month-select"
               value={selectedMonth}
               onChange={handleMonthChange}
-              style={{
-                padding: "6px 12px",
-                borderRadius: "6px",
-                fontWeight: "bold",
-              }}
             >
               {availableMonths.map((month) => (
                 <option key={month} value={month}>
@@ -185,8 +167,8 @@ export default function Game1() {
           </section>
         ) : (
           <section className="game1-layout" aria-label="Pictionary game">
-            {filteredQuestions.length === 0 ? (
-              <p style={{ textAlign: "center", color: "#fff" }}>
+            {!question ? (
+              <p className="game1-empty">
                 No questions available for {selectedMonth}.
               </p>
             ) : (
@@ -217,23 +199,24 @@ export default function Game1() {
                     feedback !== "correct" && selectedAnswer === null
                   }
                   dictionaryQuestions={filteredQuestions}
-                />
-
-                <div
-                  className="game1-answers"
-                  role="group"
-                  aria-label="Answer choices"
+                  progress={`Question ${currentQuestion + 1} of ${filteredQuestions.length}`}
                 >
-                  {question.answers.map((answer) => (
-                    <AnswerButton
-                      key={answer}
-                      answer={answer}
-                      selected={selectedAnswer === answer}
-                      disabled={feedback === "correct"}
-                      onClick={() => handleAnswerClick(answer)}
-                    />
-                  ))}
-                </div>
+                  <div
+                    className="game1-answers"
+                    role="group"
+                    aria-label="Answer choices"
+                  >
+                    {question.answers.map((answer) => (
+                      <AnswerButton
+                        key={answer}
+                        answer={answer}
+                        selected={selectedAnswer === answer}
+                        disabled={feedback === "correct"}
+                        onClick={() => handleAnswerClick(answer)}
+                      />
+                    ))}
+                  </div>
+                </QuestionBox>
               </>
             )}
           </section>

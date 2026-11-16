@@ -95,9 +95,9 @@ export default function AnimalPage({ animalId, found = false }) {
     navigate(alreadyFound ? destination.foundPath : destination.questPath);
   }
 
-  function backToMenu() {
+  function leaveAnimalPage(path) {
     stopAudio();
-    navigate("/menu");
+    navigate(path);
   }
 
   return (
@@ -107,8 +107,8 @@ export default function AnimalPage({ animalId, found = false }) {
           <button
             type="button"
             className="goat2-game-button goat2-back-button"
-            onClick={backToMenu}
-            aria-label="Back to game menu"
+            onClick={() => leaveAnimalPage("/game2")}
+            aria-label="Back to Goat Island landing page"
           >
             <span aria-hidden="true">←</span> Back
           </button>
@@ -116,7 +116,7 @@ export default function AnimalPage({ animalId, found = false }) {
           <button
             type="button"
             className="goat2-logo-button"
-            onClick={backToMenu}
+            onClick={() => leaveAnimalPage("/menu")}
             aria-label="Back to game menu"
             title="Back to menu"
           >

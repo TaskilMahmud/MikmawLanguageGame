@@ -25,7 +25,9 @@ export default function QuestionBox({
   onAction,
   actionLabel,
   actionDisabled = false,
-  dictionaryQuestions =[],
+  dictionaryQuestions = [],
+  progress,
+  children,
 }) {
   const [showDictionary, setShowDictionary] = useState(false);
 
@@ -39,48 +41,36 @@ export default function QuestionBox({
 
   return (
     <>
-    <section
-      className="question-box"
-      aria-label="Current question"
-    >
-      {/* CHARACTER THUMBNAIL */}
+      <section className="question-box" aria-label="Current question">
+        <p className="question-progress">{progress}</p>
 
-      <div className="question-picture">
-        <img
-          src={thumbnail}
-          alt="Question character"
-        />
-      </div>
+        <div className="question-prompt">
+          <div className="question-picture">
+            <img src={thumbnail} alt="" />
+          </div>
+          <h2 className="question-text">{questionText}</h2>
+        </div>
 
-      {/* QUESTION AND FEEDBACK */}
-      <div className="question-actions">
-        <h2 className="question-text">
-          {questionText}
-        </h2>
+        <div className="question-choices">
+          <p className="question-instruction">Choose an answer to hear it.</p>
+          {children}
+        </div>
 
         <FeedbackMessage feedback={feedback} />
 
         <div className="question-actions">
-        <WoodenButton
-          disabled={actionDisabled}
-          onClick={onAction}
-        >
-          {actionLabel}
-        </WoodenButton>
-
-        <WoodenButton onClick ={() => setShowDictionary(true)}>
-          Dictionary
-        </WoodenButton>
+          <WoodenButton disabled={actionDisabled} onClick={onAction}>
+            {actionLabel}
+          </WoodenButton>
+          <WoodenButton onClick={() => setShowDictionary(true)}>
+            Dictionary
+          </WoodenButton>
         </div>
-      </div>
-    </section>
+      </section>
 
-    {showDictionary && (
-      <Dictionary
-       entries={entries}
-       onClose={() => setShowDictionary(false)}
-       />
-    )}
+      {showDictionary && (
+        <Dictionary entries={entries} onClose={() => setShowDictionary(false)} />
+      )}
     </>
   );
 }

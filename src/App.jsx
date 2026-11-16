@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Game1 from "./pages/game1/Game1";
+import Game1Landing from "./pages/game1/Game1Landing";
 import GoatIslandLanding from "./pages/game2/GoatIslandLanding";
 import AnimalPage from "./pages/game2/AnimalPage";
 import { goatIslandAnimals } from "./data/goatIslandAnimals";
@@ -13,7 +14,8 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/menu" element={<Menu />} />
-      <Route path="/game1" element={<Game1 />} />
+      <Route path="/game1" element={<Game1Landing />} />
+      <Route path="/game1/play" element={<Game1 />} />
 
       <Route path="/game2" element={<GoatIslandLanding />} />
 

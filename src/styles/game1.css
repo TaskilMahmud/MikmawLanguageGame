@@ -1,555 +1,307 @@
-
-/*
-==========================================
-GAME 1 - PICTIONARY STYLES
-==========================================
-
-DESKTOP LAYOUT:
-
-[ Back ]       [ Question Image ]
-[      ]       [                ]
-[Question Box] [ Answer Buttons ]
-
-TABLET / MOBILE LAYOUT:
-
-[ Back ]
-[ Question Image ]
-[ Question Box ]
-[ Answer Buttons ]
-
-Responsive design uses:
-- CSS Grid
-- Flexbox
-- clamp()
-- Media queries
-
-==========================================
-*/
-
-/* ========================================
-   MAIN GAME CONTAINER
-   ======================================== */
+.game1-screen {
+  background-color: #08251f;
+  background-image:
+    linear-gradient(180deg, rgba(4, 19, 38, 0.19), rgba(5, 41, 27, 0.07)),
+    var(--game1-background);
+  color: #173125;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+}
 
 .game1-shell {
-  --game-padding: clamp(12px, 1.5vw, 24px);
-
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-
-  gap: 16px;
-
-  width: min(100%, 1700px);
-
-  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: clamp(16px, 2.4vw, 30px);
+  width: min(100%, 1336px);
   min-height: 100dvh;
-
   margin-inline: auto;
-
-  padding: var(--game-padding);
+  padding: clamp(16px, 3.2vw, 48px);
 }
-
-/* ========================================
-   BACK BUTTON
-   ========================================
-
-   The button is absolutely positioned
-   on desktop so it does not push the
-   question image box downward.
-
-   ======================================== */
 
 .game1-header {
-  position: absolute;
-  z-index: 5;
-
-  top: var(--game-padding);
-  left: var(--game-padding);
-
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 3px solid #142e23;
+  border-radius: 16px;
+  background: #133d30;
+  box-shadow: inset 0 1px #48705a, 0 5px 0 #0a261d;
 }
 
-/* ========================================
-   MAIN RESPONSIVE GAME GRID
-   ======================================== */
+.game1-header > button {
+  justify-self: start;
+  padding: 9px 18px;
+  font-size: 16px;
+}
+
+.game1-title {
+  margin: 0;
+  color: #fff2ce;
+  font-family: Georgia, serif;
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.game1-month {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 10px;
+  min-width: 0;
+}
+
+.game1-month label {
+  color: #fff2ce;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.game1-month select {
+  width: clamp(310px, 27vw, 390px);
+  min-width: 0;
+  max-width: 100%;
+  min-height: 54px;
+  padding: 8px 14px;
+  border: 2px solid #d7b37b;
+  border-radius: 8px;
+  background: #fff2d5;
+  color: #183428;
+  font: inherit;
+  font-size: clamp(16px, 1.35vw, 20px);
+  font-weight: 700;
+}
 
 .game1-layout {
   display: grid;
-
-  flex: 1;
-
-  grid-template-columns:
-    minmax(0, 1fr)
-    minmax(0, 1.15fr);
-
-  grid-template-rows:
-    minmax(0, 1fr)
-    minmax(220px, auto);
-
-  gap: clamp(12px, 1.5vw, 20px);
-
-  width: 100%;
-
-  height: calc(
-    100dvh - var(--game-padding) - var(--game-padding)
-  );
-
-  min-height: 570px;
-  max-height: 1100px;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  align-items: stretch;
+  align-self: center;
+  gap: clamp(16px, 2.4vw, 30px);
 }
-
-/* ========================================
-   QUESTION IMAGE BOX
-   ========================================
-
-   Positioned at the top-right.
-
-   To make the image box wider:
-   Increase the second grid column above.
-
-   To make the box taller:
-   Reduce the height of the answer row.
-
-   object-position aligns artwork toward
-   the top of its frame.
-
-   ======================================== */
 
 .game1-image {
-  grid-column: 2;
-  grid-row: 1;
-
   display: block;
-
+  align-self: center;
   width: 100%;
-  height: 100%;
-
+  height: auto;
+  aspect-ratio: 1;
+  max-height: max(440px, calc(100dvh - 152px));
   min-height: 0;
-
-  padding: clamp(8px, 1vw, 14px);
-
+  padding: clamp(10px, 1.5vw, 18px);
+  border: 3px solid #704827;
+  border-radius: 16px;
+  background: #ffedc5;
+  box-shadow: inset 0 0 0 5px #d1a578, 0 6px 0 #182f22;
   object-fit: contain;
-  object-position: center top;
-
-  border: 8px solid #31384b;
-  border-radius: 12px;
-
-  background: rgba(244, 240, 223, 0.9);
-
-  box-shadow:
-    inset 0 0 0 5px #a8adb5,
-    0 6px 0 #1e2634;
 }
 
-/* ========================================
-   QUESTION BOX
-   ========================================
-
-   Turquoise question and feedback box
-   located at the bottom-left.
-
-   ======================================== */
+.question-box,
+.game1-complete,
+.game1-empty {
+  border: 3px solid #6d4f32;
+  border-radius: 16px;
+  background: #fff3d9;
+  box-shadow: inset 0 0 0 4px #fff9ea, 0 6px 0 #182f22;
+}
 
 .question-box {
-  grid-column: 1;
-  grid-row: 2;
-
   display: flex;
-  align-items: center;
-
-  gap: clamp(10px, 1.5vw, 22px);
-
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(14px, 1.6vw, 23px);
   min-width: 0;
-  min-height: 220px;
-
-  padding: clamp(12px, 1.4vw, 22px);
-
-  border: 8px solid #30394c;
-  border-radius: 8px;
-
-  background: #55b4b8;
-
-  box-shadow:
-    inset 0 0 0 5px #df3f32,
-    0 5px 0 #1e2634;
+  padding: clamp(18px, 2.4vw, 32px);
 }
 
-/* ========================================
-   CHARACTER THUMBNAIL
-   ======================================== */
+.question-progress {
+  margin: 0;
+  color: #46614d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.question-prompt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
 
 .question-picture {
-  display: flex;
   flex: 0 0 auto;
-
-  align-items: center;
-  justify-content: center;
-
-  width: clamp(90px, 11vw, 150px);
-
-  aspect-ratio: 1 / 1;
-
+  width: clamp(52px, 5.2vw, 78px);
+  aspect-ratio: 1;
   overflow: hidden;
-
-  border: 6px solid #e8eeee;
-
-  background: #bfe9e5;
+  border: 2px solid #547e62;
+  border-radius: 10px;
+  background: #b7d8ae;
 }
 
 .question-picture img {
   display: block;
-
   width: 100%;
   height: 100%;
-
   object-fit: contain;
-
-  image-rendering: pixelated;
 }
-
-/* ========================================
-   QUESTION CONTENT
-   ========================================
-
-   Holds:
-   - Question text
-   - Feedback message
-   - Action button
-
-   ======================================== */
-
-.question-content {
-  position: relative;
-  z-index: 1;
-
-  display: flex;
-  flex: 1;
-
-  flex-direction: column;
-
-  align-items: flex-start;
-  justify-content: center;
-
-  gap: 12px;
-
-  min-width: 0;
-}
-
-/* ========================================
-   QUESTION TEXT
-   ======================================== */
 
 .question-text {
-  max-width: 100%;
-
+  min-width: 0;
   margin: 0;
-
-  color: white;
-
-  font-family: monospace;
-  font-size: clamp(20px, 2.2vw, 35px);
-  font-weight: 700;
-  line-height: 1.25;
-
+  font-family: Georgia, serif;
+  font-size: clamp(24px, 2.65vw, 39px);
+  line-height: 1.15;
   overflow-wrap: anywhere;
-
-  text-shadow: 3px 3px 0 #424b79;
 }
 
-/* ========================================
-   ANSWER BUTTON BOX
-   ========================================
-
-   Cream box located at bottom-right.
-
-   Three choices are displayed in a
-   two-column grid.
-
-   AnswerButton styles are defined
-   in components.css.
-
-   ======================================== */
+.question-instruction {
+  margin: 0 0 10px;
+  color: #385342;
+  font-size: 15px;
+  font-weight: 700;
+}
 
 .game1-answers {
-  grid-column: 2;
-  grid-row: 2;
-
   display: grid;
-
-  grid-template-columns:
-    repeat(2, minmax(0, 1fr));
-
-  grid-auto-rows: minmax(0, 1fr);
-
-  gap: clamp(8px, 1vw, 14px);
-
-  min-width: 0;
-  min-height: 220px;
-
-  padding: clamp(10px, 1.3vw, 20px);
-
-  border: 8px solid #31384b;
-  border-radius: 8px;
-
-  background: #f4f0df;
-
-  box-shadow:
-    inset 0 0 0 5px #a8adb5,
-    0 5px 0 #1e2634;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.2vw, 17px);
+  padding-bottom: 6px;
 }
 
-/* ========================================
-   GAME COMPLETE SCREEN
-   ======================================== */
-
-.game1-complete {
+.game1-answers .answer-button {
+  grid-column: span 2;
   display: flex;
-  flex: 1;
-
-  flex-direction: column;
-
   align-items: center;
   justify-content: center;
-
-  gap: 20px;
-
-  align-self: center;
-
-  width: min(100%, 650px);
-
-  margin: 75px 0 24px;
-
-  padding: clamp(18px, 3vw, 32px);
-
-  border: 8px solid #30394c;
+  min-height: clamp(60px, 9dvh, 88px);
+  padding: 10px 14px;
+  border: 3px solid #a7703d;
   border-radius: 12px;
-
-  background: #55b4b8;
-  color: white;
-
+  background: linear-gradient(180deg, #fff3d3, #f6ddb1);
+  box-shadow: inset 0 3px #fff9ea, inset 0 -3px #e4bd86, 0 6px 0 #855029;
+  color: #233c2c;
+  font-family: inherit;
+  font-size: clamp(22px, 2.4vw, 34px);
   text-align: center;
+}
 
-  box-shadow:
-    inset 0 0 0 5px #df3f32,
-    0 5px 0 #1e2634;
+.game1-answers .answer-button:last-child:nth-child(odd) {
+  grid-column: 2 / span 2;
+}
+
+.game1-answers .answer-button:hover:not(:disabled) {
+  border-color: #80552e;
+  background: linear-gradient(180deg, #fff9e4, #fbe5bc);
+}
+
+.game1-answers .answer-button.is-selected,
+.game1-answers .answer-button.is-selected:hover:not(:disabled) {
+  border-color: #3d6b4d;
+  background: linear-gradient(180deg, #e6f2d7, #c5dfad);
+  box-shadow: inset 0 3px #f4fae9, inset 0 -3px #abc995, 0 6px 0 #315c40;
+}
+
+.game1-answers .answer-button:active:not(:disabled) {
+  transform: translateY(3px);
+}
+
+.question-box .feedback-message {
+  margin: 0;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.question-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 10px;
+}
+
+.question-actions .wooden-button {
+  min-height: 46px;
+  padding: 8px;
+  font-family: inherit;
+  font-size: clamp(15px, 1.35vw, 19px);
+}
+
+.question-actions .wooden-button:first-child {
+  border-color: #244b38;
+  background: #346549;
+  color: #fff9e6;
+  box-shadow: 0 4px 0 #193d2b;
+}
+
+.question-actions .wooden-button:first-child:hover:not(:disabled) {
+  background: #427657;
+}
+
+.game1-complete,
+.game1-empty {
+  align-self: center;
+  justify-self: center;
+  grid-column: 1 / -1;
+  width: min(100%, 530px);
+  padding: clamp(24px, 4vw, 48px);
+  text-align: center;
+}
+
+.game1-complete {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
 }
 
 .game1-complete img {
-  width: clamp(96px, 12vw, 145px);
+  width: 115px;
   aspect-ratio: 1;
-
   object-fit: contain;
 }
 
 .game1-complete h1,
 .game1-complete p {
   margin: 0;
-  font-family: monospace;
 }
 
 .game1-complete h1 {
-  font-size: clamp(24px, 3vw, 42px);
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 3.4vw, 46px);
 }
 
 .game1-complete p {
-  font-size: clamp(20px, 2vw, 26px);
+  font-size: 22px;
   font-weight: 700;
 }
 
-/* ========================================
-   RESPONSIVE - TABLET / SMALL LAPTOP
-   ========================================
-
-   At widths below 1024px:
-   - Back button joins normal page flow
-   - Game changes to vertical layout
-   - Everything remains visible
-   - Scrolling is allowed
-
-   ======================================== */
-
-@media (max-width: 1023px) {
-
-  .game1-header {
-    position: static;
-  }
-
+@media (max-width: 900px) {
   .game1-layout {
-    display: flex;
-    flex: 1;
-
-    flex-direction: column;
-
-    height: auto;
-    min-height: 0;
-    max-height: none;
+    grid-template-columns: minmax(0, 1fr);
+    width: min(100%, 640px);
+    margin-inline: auto;
   }
 
   .game1-image {
-    flex: 0 0 auto;
-
-    width: 100%;
-
-    height: clamp(260px, 42dvh, 520px);
+    height: clamp(240px, 48dvh, 510px);
   }
-
-  .question-box {
-    width: 100%;
-    min-height: 160px;
-  }
-
-  .game1-answers {
-    width: 100%;
-    min-height: 180px;
-  }
-
-  .game1-complete {
-    margin-top: 20px;
-  }
-}
-
-/* ========================================
-   RESPONSIVE - MOBILE
-   ========================================
-
-   Smaller font sizes and thumbnail
-   help everything fit narrow screens.
-
-   ======================================== */
-
-@media (max-width: 560px) {
-
-  .question-box {
-    gap: 10px;
+  .game1-header {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 12px;
     padding: 12px;
   }
 
-  .question-picture {
-    width: 76px;
-    border-width: 4px;
+  .game1-month {
+    grid-column: 1 / -1;
+    justify-content: start;
   }
 
-  .question-content {
-    gap: 10px;
+  .game1-month select {
+    flex: 1;
+    width: auto;
   }
 
-  .question-text {
-    font-size: 20px;
+  .game1-title {
+    justify-self: end;
   }
-
-  .question-box .wooden-button {
-    padding: 9px 12px;
-    font-size: 16px;
-  }
-
-  .game1-answers .answer-button {
-    font-size: 18px;
-    padding: 8px 4px;
-  }
-}
-
-/* ========================================
-   SHORT DESKTOP SCREENS
-   ========================================
-
-   Allow scrolling rather than clipping
-   the question and answer boxes.
-
-   ======================================== */
-
-@media (min-width: 1024px) and (max-height: 650px) {
-
-  .game1-layout {
-    min-height: 540px;
-  }
-}
-
-
-
-/* ==========================================
-   GAME 1 - FIT EVERYTHING ON ONE SCREEN
-   ==========================================
-
-   Applies to desktop and laptop screens.
-
-   The question image uses the available
-   space above the question/answer boxes.
-
-   No image resizing is necessary.
-
-   ========================================== */
-
-@media (min-width: 1024px) {
-
-  /* MAIN GAME LAYOUT */
-
-  .game1-layout {
-    display: grid;
-
-    /* Keep everything within the viewport */
-    height: calc(100dvh - 48px);
-
-    min-height: 0;
-    max-height: none;
-
-    flex: 0 0 auto;
-
-    grid-template-columns:
-      minmax(0, 1fr)
-      minmax(0, 1.15fr);
-
-    /* Top image grows; bottom boxes stay visible */
-    grid-template-rows:
-      minmax(0, 1fr)
-      clamp(190px, 25dvh, 240px);
-
-    gap: 16px;
-  }
-
-  /* QUESTION IMAGE */
-
-  .game1-image {
-    width: 100%;
-    height: 100%;
-
-    min-width: 0;
-    min-height: 0;
-
-    max-width: 100%;
-    max-height: 100%;
-
-    /* Preserve image proportions */
-    object-fit: contain;
-    object-position: center;
-
-    padding: 8px;
-  }
-
-  /* QUESTION BOX */
-
-  .question-box {
-    min-height: 0;
-    height: 100%;
-  }
-
-  /* ANSWER BOX */
-
-  .game1-answers {
-    min-height: 0;
-    height: 100%;
-  }
-
-}
-/* ========================================
-   QUESTION BOX BUTTON ROW
-   ======================================== */
-
-.question-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
 }
 
 /* ========================================

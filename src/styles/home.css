@@ -1,12 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@1000&display=swap");
+
 .home-screen {
   position: relative;
+  display: grid;
+  grid-template-rows:
+    minmax(0, 0.24fr)
+    auto
+    minmax(2rem, 0.56fr)
+    auto
+    minmax(2rem, 0.6fr);
+  justify-items: center;
+  padding: clamp(1rem, 2vw, 2rem) clamp(1rem, 4vw, 4rem);
+  padding-bottom: calc(3rem + env(safe-area-inset-bottom, 0px));
+  background-color: #4d8f9f;
+}
+
+.home-title {
+  grid-row: 2;
+  margin: 0;
+  color: #fff1cd;
+  font-family: "Nunito", "Arial Rounded MT Bold", system-ui, sans-serif;
+  font-size: clamp(1.8rem, min(12.7vw, 17svh), 11rem);
+  font-weight: 1000;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-align: center;
+  -webkit-text-stroke: 0.13em #073619;
+  paint-order: stroke fill;
+  text-shadow: none;
+}
+
+.home-title span {
+  display: block;
+  margin-top: 0.03em;
+  font-size: 0.8em;
+  line-height: 1.05;
+}
+
+.home-credit {
+  position: absolute;
+  right: max(1rem, env(safe-area-inset-right, 0px));
+  bottom: max(0.875rem, env(safe-area-inset-bottom, 0px));
+  margin: 0;
+  color: #fff0c5;
+  font-size: clamp(0.875rem, 1.55vw, 1.5rem);
+  font-weight: 700;
+  text-align: right;
+  -webkit-text-stroke: 0.18em #244317;
+  paint-order: stroke fill;
 }
 
 .wooden-button.home-play-button {
-  position: absolute;
-  top: 62%;
-  left: 50%;
-  translate: -50% -50%;
+  grid-row: 4;
 
   padding: clamp(14px, 2.2vw, 21px) clamp(38px, 5.5vw, 78px);
   border-width: 5px;

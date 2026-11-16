@@ -1,444 +1,561 @@
-.game1-screen {
-  background-color: #08251f;
-  background-image:
-    linear-gradient(180deg, rgba(4, 19, 38, 0.19), rgba(5, 41, 27, 0.07)),
-    var(--game1-background);
-  color: #173125;
-  font-family: "Trebuchet MS", Arial, sans-serif;
+/* Goat Island layout shared by the rabbit and deer screens. */
+
+.goat2-page,
+.goat2-page * {
+  box-sizing: border-box;
 }
 
-.game1-shell {
+.goat2-page {
   display: grid;
-  grid-template-rows: auto 1fr;
-  gap: clamp(16px, 2.4vw, 30px);
-  width: min(100%, 1336px);
+  place-items: center;
+  min-height: 100vh;
   min-height: 100dvh;
-  margin-inline: auto;
-  padding: clamp(16px, 3.2vw, 48px);
+  padding: 16px;
+  background: #173c39;
+  font-family: "Courier New", Courier, monospace;
 }
 
-.game1-header {
+.goat2-phone {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-rows: 12% 56% 32%;
+  width: min(430px, 100%);
+  height: min(790px, calc(100dvh - 32px));
+  min-height: 570px;
+  overflow: hidden;
+  border: 5px solid #0c2a28;
+  border-radius: 22px;
+  background: #a0eeb2;
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.38);
+}
+
+/* Equal side columns keep the logo centered in the header. */
+
+.goat2-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr) minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
-  border: 3px solid #142e23;
-  border-radius: 16px;
-  background: #133d30;
-  box-shadow: inset 0 1px #48705a, 0 5px 0 #0a261d;
+  gap: 5px;
+  min-height: 0;
+  padding: 6px 11px;
+  border-bottom: 4px solid #0b4137;
+  background: linear-gradient(180deg, #96e5aa, #8be2aa 80%, #72cb89);
 }
 
-.game1-header > button {
-  justify-self: start;
-  padding: 9px 18px;
-  font-size: 16px;
+.goat2-logo-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
-.game1-title {
+.goat2-logo-button img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.goat2-counter {
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  padding: 5px 9px;
+  border: 3px solid #15181a;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fffef1, #fff2d4);
+  box-shadow: inset 0 2px #fff, 0 3px 0 #657a54;
+  color: #111315;
+  font-size: clamp(14px, 4vw, 18px);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Forest scene */
+
+.goat2-scene {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  overflow: hidden;
+  border-bottom: 4px solid #0e3b34;
+  background: #79ccff;
+}
+
+.goat2-forest {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  image-rendering: pixelated;
+  pointer-events: none;
+  user-select: none;
+}
+
+.goat2-title {
+  position: absolute;
+  z-index: 2;
+  top: 7%;
+  left: 5%;
+  display: grid;
+  place-items: center;
+  width: 90%;
+  min-height: 13%;
   margin: 0;
-  color: #fff2ce;
-  font-family: Georgia, serif;
-  font-size: clamp(26px, 3vw, 42px);
-  font-weight: 700;
+  padding: 7px 6px;
+  border: 4px solid #191919;
+  border-radius: 11px;
+  background: linear-gradient(180deg, #fffdf3, #fff4dd);
+  box-shadow: inset 0 4px #fff, 0 4px 0 rgba(0, 0, 0, 0.18);
+  color: #191919;
+  font-family: "Courier New", Courier, monospace;
+  font-size: clamp(16px, 4.5vw, 24px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.goat2-scroll {
+  position: absolute;
+  z-index: 2;
+  top: 24%;
+  left: 50%;
+  width: 86%;
+  max-height: 72%;
+  transform: translateX(-50%);
+  aspect-ratio: 336 / 255;
+}
+
+.goat2-scroll > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.goat2-scroll-writing {
+  position: absolute;
+  top: 50%;
+  left: 17%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 66%;
+  height: 62%;
+  transform: translateY(-50%);
+  color: #24170c;
+  text-align: center;
+  pointer-events: none;
+}
+
+.goat2-scroll-writing p {
+  margin: 3px 0;
+  font-size: clamp(15px, 4.3vw, 21px);
+  font-weight: 900;
+  line-height: 1.21;
+  letter-spacing: -0.9px;
+  white-space: pre-line;
+}
+
+.goat2-paw {
+  color: #db5144;
+  font-size: clamp(15px, 5vw, 23px);
   line-height: 1;
 }
 
-.game1-month {
+/* Tap the tree to open the found screen during a demo. */
+
+.goat2-tree-hotspot {
+  position: absolute;
+  z-index: 3;
+  right: 0;
+  top: 30%;
+  width: 16%;
+  height: 56%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.goat2-tree-hotspot:hover {
+  background: rgba(255, 237, 97, 0.15);
+}
+
+/* Found animal */
+
+.goat2-found-picture {
+  position: absolute;
+  z-index: 2;
+  top: 24%;
+  right: 4%;
+  bottom: 6%;
+  left: 4%;
   display: flex;
   align-items: center;
-  justify-content: end;
-  gap: 10px;
+  justify-content: center;
   min-width: 0;
-}
-
-.game1-month label {
-  color: #fff2ce;
-  font-size: 16px;
-  font-weight: 700;
-}
-
-.game1-month select {
-  width: clamp(310px, 27vw, 390px);
-  min-width: 0;
-  max-width: 100%;
-  min-height: 54px;
-  padding: 8px 14px;
-  border: 2px solid #d7b37b;
-  border-radius: 8px;
-  background: #fff2d5;
-  color: #183428;
-  font: inherit;
-  font-size: clamp(16px, 1.35vw, 20px);
-  font-weight: 700;
-}
-
-.game1-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  align-items: stretch;
-  align-self: center;
-  gap: clamp(16px, 2.4vw, 30px);
-}
-
-.game1-image {
-  display: block;
-  align-self: center;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 1;
-  max-height: max(440px, calc(100dvh - 152px));
   min-height: 0;
-  padding: clamp(10px, 1.5vw, 18px);
-  border: 3px solid #704827;
-  border-radius: 16px;
-  background: #ffedc5;
-  box-shadow: inset 0 0 0 5px #d1a578, 0 6px 0 #182f22;
-  object-fit: contain;
-}
-
-.question-box,
-.game1-complete,
-.game1-empty {
-  border: 3px solid #6d4f32;
-  border-radius: 16px;
-  background: #fff3d9;
-  box-shadow: inset 0 0 0 4px #fff9ea, 0 6px 0 #182f22;
-}
-
-.question-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(14px, 1.6vw, 23px);
-  min-width: 0;
-  padding: clamp(18px, 2.4vw, 32px);
-}
-
-.question-progress {
-  margin: 0;
-  color: #46614d;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.question-prompt {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
-}
-
-.question-picture {
-  flex: 0 0 auto;
-  width: clamp(52px, 5.2vw, 78px);
-  aspect-ratio: 1;
   overflow: hidden;
-  border: 2px solid #547e62;
-  border-radius: 10px;
-  background: #b7d8ae;
+  pointer-events: none;
 }
 
-.question-picture img {
+.goat2-found-picture > img {
   display: block;
-  width: 100%;
-  height: 100%;
+  width: min(60%, 220px);
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   object-fit: contain;
+  filter: drop-shadow(0 5px 1px rgba(19, 77, 50, 0.25));
 }
 
-.question-text {
-  min-width: 0;
-  margin: 0;
-  font-family: Georgia, serif;
-  font-size: clamp(24px, 2.65vw, 39px);
-  line-height: 1.15;
-  overflow-wrap: anywhere;
+.goat2-found-picture--deer > img {
+  width: min(78%, 280px);
 }
 
-.question-instruction {
-  margin: 0 0 10px;
-  color: #385342;
-  font-size: 15px;
-  font-weight: 700;
+.goat2-sparkles {
+  position: absolute;
+  top: 5%;
+  right: 14%;
+  color: #ffdf28;
+  font-size: clamp(22px, 6vw, 32px);
+  text-shadow: 2px 2px #2a2310;
 }
 
-.game1-answers {
+/* Buttons and bottom controls */
+
+.goat2-controls {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 1.2vw, 17px);
-  padding-bottom: 6px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  width: 100%;
+  min-height: 0;
+  padding: 12px 10px 16px;
+  background: linear-gradient(
+    to bottom,
+    #92e3ab 0%,
+    #aaedb2 18%,
+    #ceffd0 57%,
+    #b4f4b9 87%,
+    #69ca8d 100%
+  );
 }
 
-.game1-answers .answer-button {
-  grid-column: span 2;
+.goat2-game-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: clamp(60px, 9dvh, 88px);
-  padding: 10px 14px;
-  border: 3px solid;
-  border-radius: 12px;
-  box-shadow: inset 0 3px #fff9ea, inset 0 -3px #e4bd86, 0 6px 0 #855029;
-  font-family: inherit;
-  font-size: clamp(22px, 2.4vw, 34px);
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  padding: 6px;
+  border: 4px solid #141414;
+  border-radius: 9px;
+  box-shadow:
+    inset 0 5px rgba(255, 255, 255, 0.78),
+    inset 0 -9px rgba(0, 0, 0, 0.16),
+    0 5px 0 rgba(15, 51, 39, 0.34);
+  color: #fff;
+  font-family: "Courier New", Courier, monospace;
+  font-weight: 900;
+  line-height: 1.12;
   text-align: center;
+  text-transform: uppercase;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: filter 0.12s ease, transform 0.12s ease;
 }
 
-.game1-answers .answer-button,
-.question-box .feedback-message--incorrect {
-  border-color: #a7703d;
-  background: linear-gradient(180deg, #fff3d3, #f6ddb1);
-  color: #233c2c;
+.goat2-game-button:hover {
+  filter: brightness(1.07);
 }
 
-.game1-answers .answer-button:last-child:nth-child(odd) {
-  grid-column: 2 / span 2;
-}
-
-.game1-answers .answer-button:hover:not(:disabled) {
-  border-color: #80552e;
-  background: linear-gradient(180deg, #fff9e4, #fbe5bc);
-}
-
-.game1-answers .answer-button.is-selected,
-.game1-answers .answer-button.is-selected:hover:not(:disabled) {
-  border-color: #3d6b4d;
-  background: linear-gradient(180deg, #e6f2d7, #c5dfad);
-  box-shadow: inset 0 3px #f4fae9, inset 0 -3px #abc995, 0 6px 0 #315c40;
-}
-
-.game1-answers .answer-button:active:not(:disabled) {
+.goat2-game-button:active {
   transform: translateY(3px);
 }
 
-.question-box .feedback-message {
-  margin: 0;
-  font-family: inherit;
-  font-size: 16px;
-}
-
-.question-actions {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: 10px;
-}
-
-.question-actions .wooden-button {
-  min-height: 46px;
-  padding: 8px;
-  font-family: inherit;
-  font-size: clamp(15px, 1.35vw, 19px);
-}
-
-.question-actions .wooden-button:first-child {
-  border-color: #244b38;
-  background: #346549;
-  color: #fff9e6;
-  box-shadow: 0 4px 0 #193d2b;
-}
-
-.question-actions .wooden-button:first-child:hover:not(:disabled) {
-  background: #427657;
-}
-
-.game1-complete,
-.game1-empty {
-  align-self: center;
-  justify-self: center;
-  grid-column: 1 / -1;
-  width: min(100%, 530px);
-  padding: clamp(24px, 4vw, 48px);
-  text-align: center;
-}
-
-.game1-complete {
-  display: grid;
-  justify-items: center;
-  gap: 18px;
-}
-
-.game1-complete img {
-  width: 115px;
-  aspect-ratio: 1;
-  object-fit: contain;
-}
-
-.game1-complete h1,
-.game1-complete p {
-  margin: 0;
-}
-
-.game1-complete h1 {
-  font-family: Georgia, serif;
-  font-size: clamp(28px, 3.4vw, 46px);
-}
-
-.game1-complete p {
-  font-size: 22px;
-  font-weight: 700;
-}
-
-@media (max-width: 900px) {
-  .game1-layout {
-    grid-template-columns: minmax(0, 1fr);
-    width: min(100%, 640px);
-    margin-inline: auto;
-  }
-
-  .game1-image {
-    height: clamp(240px, 48dvh, 510px);
-  }
-  .game1-header {
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 12px;
-    padding: 12px;
-  }
-
-  .game1-month {
-    grid-column: 1 / -1;
-    justify-content: start;
-  }
-
-  .game1-month select {
-    flex: 1;
-    width: auto;
-  }
-
-  .game1-title {
-    justify-self: end;
-  }
-}
-
-/* ========================================
-   DICTIONARY POPUP
-   ======================================== */
-
-.dict-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(20, 26, 40, 0.65);
-}
-
-.dict-panel {
-  position: relative;
-  width: min(560px, 94vw);
-  max-height: 86vh;
-  overflow-y: auto;
-  padding: 22px;
-  border: 8px solid #31384b;
-  border-radius: 8px;
-  background: #f4f0df;
-  box-shadow:
-    inset 0 0 0 5px #df3f32,
-    0 6px 0 #1e2634;
-  font-family: monospace;
-}
-
-.dict-title {
-  margin: 0;
-  text-align: center;
-  color: #31384b;
-  font-size: clamp(22px, 3vw, 32px);
-  text-shadow: 2px 2px 0 #d9cfa8;
-}
-
-.dict-hint {
-  margin: 4px 0 16px;
-  text-align: center;
-  color: #5b6272;
+.goat2-back-button {
+  justify-self: start;
+  min-height: 44px;
+  padding: 4px 8px;
+  background: #fff2d4;
+  color: #191919;
   font-size: 14px;
 }
 
-.dict-close {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  border: none;
-  background: none;
-  color: #df3f32;
-  font-size: 26px;
-  font-weight: 700;
-  cursor: pointer;
+.goat2-button-red {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    #b83e40 0%,
+    #fa373b 12%,
+    #ed3337 88%,
+    #b73d40 100%
+  );
+  font-size: clamp(23px, 7vw, 35px);
+  letter-spacing: -0.5px;
+  text-shadow:
+    2px 0 #4f2119,
+    -2px 0 #4f2119,
+    0 2px #4f2119,
+    0 -2px #4f2119;
 }
 
-.dict-grid {
+.goat2-sound-icon {
+  display: block;
+  flex: 0 0 auto;
+  width: clamp(35px, 11vw, 55px);
+  max-height: 75%;
+  object-fit: contain;
+}
+
+.goat2-nav-buttons {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-/* ---------- flip card with hover ---------- */
-
-.dict-card {
-  aspect-ratio: 1;
-  perspective: 800px;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
-
-.dict-card:hover {
-  transform: translateY(-4px) scale(1.03);
-}
-
-.dict-card:active {
-  transform: translateY(0) scale(0.98);
-}
-
-.dict-inner {
-  position: relative;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
   width: 100%;
   height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.5s ease;
+  min-height: 0;
 }
 
-.dict-card.is-flipped .dict-inner {
-  transform: rotateY(180deg);
+.goat2-nav-buttons .goat2-game-button {
+  width: 100%;
+  height: 100%;
+  padding: 5px 3px;
+  font-family: Arial, sans-serif;
+  font-size: clamp(12px, 3.5vw, 18px);
+  font-weight: 900;
+  letter-spacing: -0.4px;
+  overflow-wrap: anywhere;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.7);
 }
 
-.dict-face {
+.goat2-button-yellow {
+  background: linear-gradient(180deg, #ffc735, #f4a80f);
+}
+
+.goat2-button-blue {
+  background: linear-gradient(180deg, #28baff, #0288d7);
+}
+
+.goat2-button-green {
+  background: linear-gradient(180deg, #64ec34, #28ae21);
+}
+
+/* Notices float above the controls. */
+
+.goat2-notice {
   position: absolute;
-  inset: 0;
+  z-index: 5;
+  bottom: 100%;
+  left: 3%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  border: 5px solid #31384b;
+  justify-content: space-between;
+  gap: 8px;
+  width: 94%;
+  padding: 8px 10px;
+  border: 3px solid #262324;
   border-radius: 8px;
-  backface-visibility: hidden;
-  box-shadow: 0 4px 0 #1e2634;
+  background: #fff7dd;
+  color: #29221d;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
 }
 
-.dict-front {
-  background: white;
+.goat2-notice button {
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
 }
 
-.dict-front img {
+/* Dictionary */
+
+.goat2-modal-backdrop {
+  position: absolute;
+  z-index: 12;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(11, 32, 33, 0.72);
+}
+
+.goat2-dictionary {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.dict-back {
-  transform: rotateY(180deg);
-  gap: 6px;
-  padding: 8px;
-  background: #a85a22;
-  color: white;
+  max-height: 90%;
+  overflow-y: auto;
+  padding: 20px 16px;
+  border: 5px solid #16191c;
+  border-radius: 12px;
+  background: #fff7df;
+  color: #2a201a;
+  box-shadow: inset 0 5px #fff, 0 8px 0 rgba(0, 0, 0, 0.4);
   text-align: center;
-  text-shadow: 2px 2px 0 #5b3012;
 }
 
-.dict-back strong {
-  font-size: clamp(20px, 3vw, 30px);
+.goat2-dictionary h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
 }
 
-.dict-back span {
-  font-size: 15px;
-  opacity: 0.9;
+.goat2-dictionary > p {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.goat2-dictionary-list {
+  display: grid;
+  gap: 9px;
+  margin-bottom: 16px;
+}
+
+.goat2-dictionary-entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 3px solid #403024;
+  border-radius: 8px;
+  background: #e0f5c8;
+  text-align: left;
+}
+
+.goat2-dictionary-entry img,
+.goat2-dictionary-locked {
+  width: 60px;
+  height: 66px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.goat2-dictionary-locked {
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: #a8c4a0;
+  color: #355b33;
+  font-size: 36px;
+  font-weight: 900;
+}
+
+.goat2-dictionary-entry strong {
+  font-size: 19px;
+}
+
+.goat2-dictionary-entry p {
+  margin: 6px 0 0;
+  font-size: 13px;
+}
+
+.goat2-modal-close {
+  width: 100%;
+  min-height: 48px;
+  font-size: 19px;
+}
+
+.goat2-tree-hotspot:focus-visible,
+.goat2-logo-button:focus-visible,
+.goat2-game-button:focus-visible {
+  outline: 4px solid #ffe46b;
+  outline-offset: -5px;
+}
+
+/* Mobile and short screens */
+
+@media (max-width: 500px) {
+  .goat2-page {
+    padding: 0;
+  }
+
+  .goat2-phone {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    max-height: none;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .goat2-found-picture > img {
+    width: min(60%, 210px);
+  }
+
+  .goat2-found-picture--deer > img {
+    width: min(74%, 265px);
+  }
+}
+
+@media (max-width: 360px) {
+  .goat2-header {
+    padding-inline: 7px;
+  }
+
+  .goat2-title,
+  .goat2-scroll-writing p {
+    font-size: 15px;
+  }
+
+  .goat2-controls {
+    gap: 8px;
+    padding: 8px 6px 12px;
+  }
+
+  .goat2-nav-buttons {
+    gap: 4px;
+  }
+
+  .goat2-nav-buttons .goat2-game-button {
+    font-size: 11px;
+    padding: 3px;
+  }
+
+  .goat2-game-button {
+    border-width: 3px;
+  }
+
+  .goat2-found-picture > img {
+    width: min(55%, 190px);
+  }
+
+  .goat2-found-picture--deer > img {
+    width: min(70%, 235px);
+  }
+}
+
+@media (max-height: 560px) {
+  .goat2-page {
+    overflow-y: auto;
+  }
+
+  .goat2-phone {
+    min-height: 560px;
+  }
 }

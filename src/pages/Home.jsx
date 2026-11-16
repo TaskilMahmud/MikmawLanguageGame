@@ -1,21 +1,9 @@
-
 import { useNavigate } from "react-router-dom";
 
 import WoodenButton from "../components/WoodenButton";
 import backgroundImage from "../assets/background1.png";
 
 import "../styles/home.css";
-
-/*
-==========================================
-HOME PAGE
-
-Background: background1.png
-
-PLAY button navigates to the game menu.
-
-==========================================
-*/
 
 export default function Home() {
   const navigate = useNavigate();
@@ -27,12 +15,17 @@ export default function Home() {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
+      <h1 className="home-title">
+        Mi’kmaw
+        <span>Language Games</span>
+      </h1>
       <WoodenButton
         className="home-play-button"
         onClick={() => navigate("/menu")}
       >
         PLAY
       </WoodenButton>
+      <p className="home-credit">made by Agile AANTS</p>
     </main>
   );
 }

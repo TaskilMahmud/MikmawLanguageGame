@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Game1 from "./pages/game1/Game1";
+import GoatIslandLanding from "./pages/game2/GoatIslandLanding";
 import AnimalPage from "./pages/game2/AnimalPage";
 import { goatIslandAnimals } from "./data/goatIslandAnimals";
 
@@ -14,7 +15,7 @@ export default function App() {
       <Route path="/menu" element={<Menu />} />
       <Route path="/game1" element={<Game1 />} />
 
-      <Route path="/game2" element={<Navigate to="/game2/rabbit" replace />} />
+      <Route path="/game2" element={<GoatIslandLanding />} />
 
       {goatIslandAnimals.map((animal) => (
         <Fragment key={animal.id}>

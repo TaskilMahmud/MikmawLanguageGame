@@ -176,14 +176,19 @@
   justify-content: center;
   min-height: clamp(60px, 9dvh, 88px);
   padding: 10px 14px;
-  border: 3px solid #a7703d;
+  border: 3px solid;
   border-radius: 12px;
-  background: linear-gradient(180deg, #fff3d3, #f6ddb1);
   box-shadow: inset 0 3px #fff9ea, inset 0 -3px #e4bd86, 0 6px 0 #855029;
-  color: #233c2c;
   font-family: inherit;
   font-size: clamp(22px, 2.4vw, 34px);
   text-align: center;
+}
+
+.game1-answers .answer-button,
+.question-box .feedback-message--incorrect {
+  border-color: #a7703d;
+  background: linear-gradient(180deg, #fff3d3, #f6ddb1);
+  color: #233c2c;
 }
 
 .game1-answers .answer-button:last-child:nth-child(odd) {

@@ -11,7 +11,10 @@ import "../../styles/goatIslandLanding.css";
 export default function GoatIslandLanding() {
   const navigate = useNavigate();
   const [notice, setNotice] = useState("");
-  const firstCluePath = goatIslandAnimals[0].questPath;
+  const firstAnimal = goatIslandAnimals[0];
+  const playPath = getFoundAnimalIds().includes(firstAnimal.id)
+    ? firstAnimal.foundPath
+    : firstAnimal.questPath;
 
   function restartGame() {
     if (
@@ -28,7 +31,7 @@ export default function GoatIslandLanding() {
       return;
     }
 
-    navigate(firstCluePath);
+    navigate(firstAnimal.questPath);
   }
 
   return (
@@ -55,7 +58,7 @@ export default function GoatIslandLanding() {
               {notice && <p className="goat-landing__notice" role="status">{notice}</p>}
             </div>
             <div className="goat-landing__actions">
-              <Link className="goat2-game-button goat2-button-green" to={firstCluePath}>
+              <Link className="goat2-game-button goat2-button-green" to={playPath}>
                 Play
               </Link>
               <button className="goat2-game-button goat2-button-yellow" type="button" onClick={restartGame}>

@@ -359,6 +359,49 @@
   padding-inline: 10px;
 }
 
+/* Gentle entrances only when a new question is mounted.
+   The React question keys ensure these never retrigger while answering. */
+@media (prefers-reduced-motion: no-preference) {
+  .game1-image {
+    animation: game1-picture-arrive 420ms cubic-bezier(.2, .75, .25, 1) both;
+  }
+
+  .question-box {
+    animation: game1-question-arrive 420ms cubic-bezier(.2, .75, .25, 1) 45ms both;
+  }
+
+  .game1-answer-row {
+    animation: game1-choice-arrive 300ms ease-out both;
+  }
+
+  .game1-answer-row:nth-child(1) { animation-delay: 120ms; }
+  .game1-answer-row:nth-child(2) { animation-delay: 165ms; }
+  .game1-answer-row:nth-child(3) { animation-delay: 210ms; }
+
+  .game1-answer-audio {
+    transition: background 180ms ease, transform 180ms ease;
+  }
+
+  .game1-answer-audio:hover:not(:active) {
+    transform: translateY(-1px);
+  }
+
+  @keyframes game1-picture-arrive {
+    from { opacity: .65; transform: translateY(7px) scale(.988); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes game1-question-arrive {
+    from { opacity: .72; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes game1-choice-arrive {
+    from { opacity: .65; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
 @media (width > 900px) {
   .game1-shell {
     gap: clamp(12px, 2.3dvh, 24px);

@@ -63,6 +63,9 @@ export default function Game1() {
   );
   const question = filteredQuestions[currentQuestion];
   const nextMonth = availableMonths[availableMonths.indexOf(selectedMonth) + 1];
+  // A new key remounts only the question visuals when the question changes.
+  // Clicking an answer or opening the dictionary won't replay the entrance animations.
+  const questionAnimationKey = `${selectedMonth}-${currentQuestion}`;
 
   function stopAudio() {
     if (audioRef.current) {
@@ -224,12 +227,14 @@ export default function Game1() {
             ) : (
               <>
                 <img
+                  key={`image-${questionAnimationKey}`}
                   className="game1-image"
                   src={question.image}
                   alt="Question illustration"
                 />
 
                 <QuestionBox
+                  key={`question-${questionAnimationKey}`}
                   thumbnail={thumbnail}
                   questionText={question.text}
                   feedback={feedback}

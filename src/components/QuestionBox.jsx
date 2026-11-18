@@ -100,7 +100,7 @@ function Dictionary({ entries, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <button className="dict-close" onClick={onClose}>
-          ✕
+          Close
         </button>
         <h2 className="dict-title">Dictionary</h2>
         <p className="dict-hint">Tap a picture to see the word</p>

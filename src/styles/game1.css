@@ -509,7 +509,7 @@
   border-radius: 8px;
   background: #f4f0df;
   box-shadow:
-    inset 0 0 0 5px #df3f32,
+    inset 0 0 0 5px #8a5a2b,
     0 6px 0 #1e2634;
   font-family: monospace;
 }
@@ -531,14 +531,29 @@
 
 .dict-close {
   position: absolute;
-  top: 10px;
+  top: 12px;
   right: 14px;
-  border: none;
-  background: none;
-  color: #df3f32;
-  font-size: 26px;
+  padding: 6px 14px;
+  border: 3px solid #2f6b32;
+  border-radius: 8px;
+  background: #4f9d4f;
+  color: white;
+  font-family: monospace;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 3px 0 #2f6b32;
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.dict-close:hover {
+  background: #5fb05f;
+  transform: translateY(-2px);
+}
+
+.dict-close:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 #2f6b32;
 }
 
 .dict-grid {

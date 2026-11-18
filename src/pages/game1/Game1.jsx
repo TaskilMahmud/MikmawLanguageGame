@@ -61,6 +61,14 @@ export default function Game1() {
   const filteredQuestions = questions.filter(
     (q) => (q.month || "September") === selectedMonth
   );
+
+    // Questions from the selected month and all earlier months (for the dictionary)
+  const selectedMonthIndex = availableMonths.indexOf(selectedMonth);
+
+  const unlockedQuestions = questions.filter((q) => {
+    const monthIndex = availableMonths.indexOf(q.month || "September");
+    return monthIndex <= selectedMonthIndex;
+  });
   const question = filteredQuestions[currentQuestion];
   const nextMonth = availableMonths[availableMonths.indexOf(selectedMonth) + 1];
   // A new key remounts only the question visuals when the question changes.
@@ -245,7 +253,7 @@ export default function Game1() {
                       ? "Finish Game"
                       : "Next Question"
                   }
-                  dictionaryQuestions={filteredQuestions}
+                  dictionaryQuestions={unlockedQuestions}
                   progress={`Question ${currentQuestion + 1} of ${filteredQuestions.length}`}
                 >
                   <div

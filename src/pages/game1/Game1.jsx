@@ -7,12 +7,39 @@ import QuestionBox from "../../components/QuestionBox";
 import { questions, audioFiles } from "../../data/game1Questions";
 
 import backgroundImage from "../../assets/background3.png";
-import character from "../../assets/game1-girl-pointing.png";
+import happyGirl from "../../assets/game1-happy-girl.png";
 import speakerIcon from "../../assets/goat-island/speaker-icon.png";
 import thumbnail from "../../assets/thumbnail.png";
 
 import "../../styles/game1.css";
 import "../../styles/game1Landing.css";
+
+// Fixed positions keep the celebration consistent and avoid a new animation on re-render.
+const confetti = Array.from({ length: 22 }, (_, index) => ({
+  left: `${4 + ((index * 43) % 92)}%`,
+  delay: `${(index % 7) * 0.11}s`,
+  duration: `${3.2 + (index % 4) * 0.25}s`,
+  color: ["#e7b339", "#d86d52", "#4c966d", "#7c9ec7", "#cc87a3"][index % 5],
+}));
+
+function Confetti() {
+  return (
+    <div className="game1-complete-confetti" aria-hidden="true">
+      {confetti.map((piece, index) => (
+        <span
+          key={index}
+          className="game1-complete-confetti-piece"
+          style={{
+            "--piece-left": piece.left,
+            "--piece-delay": piece.delay,
+            "--piece-duration": piece.duration,
+            "--piece-color": piece.color,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 export default function Game1() {
   const navigate = useNavigate();
@@ -158,8 +185,13 @@ export default function Game1() {
         </header>
 
         {isComplete ? (
-          <div className="game1-landing__welcome">
-            <img className="game1-landing__character" src={character} alt="" />
+          <div className="game1-landing__welcome game1-complete-screen">
+            <Confetti />
+            <img
+              className="game1-landing__character game1-complete-character"
+              src={happyGirl}
+              alt="Happy girl jumping with joy"
+            />
 
             <section
               className="game1-landing__instructions game1-complete"
@@ -167,7 +199,7 @@ export default function Game1() {
             >
               <div>
                 <h1 id="game1-complete-title">Game Complete!</h1>
-                <p className="game1-complete__praise">🎉🎉 Great Job 🎉🎉</p>
+                <p className="game1-complete__praise">Grreat Job!</p>
               </div>
               <p>Score: {score}/{filteredQuestions.length}</p>
               <div className="game1-complete__actions">

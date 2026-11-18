@@ -575,3 +575,115 @@
   font-size: 15px;
   opacity: 0.9;
 }
+
+/* ========================================
+   SUBTLE GAME COMPLETE CELEBRATION
+   ======================================== */
+
+.game1-complete-screen {
+  position: relative;
+  isolation: isolate;
+}
+
+.game1-complete-screen > .game1-complete-character,
+.game1-complete-screen > .game1-complete {
+  position: relative;
+  z-index: 1;
+}
+
+.game1-complete-screen > .game1-complete-character {
+  width: min(100%, 390px);
+  max-height: 52dvh;
+  object-fit: contain;
+}
+
+.game1-complete-screen .game1-complete__praise {
+  color: #23613d;
+  font-family: Georgia, serif;
+  font-weight: 800;
+}
+
+/* Brown replay button and green next-month button, like the How to Play UI. */
+.game1-complete-screen .game1-complete__actions .wooden-button:first-child {
+  color: #fff9e6;
+  background: #915531;
+  border-color: #603719;
+  box-shadow: 0 4px 0 #49280f;
+}
+
+.game1-complete-screen .game1-complete__actions .wooden-button:first-child:hover {
+  background: #a86840;
+}
+
+.game1-complete-screen .game1-complete__actions .wooden-button.game1-landing__play {
+  width: auto;
+  min-width: 0;
+  justify-self: stretch;
+  color: #fff9e6;
+  background: #346549;
+  border-color: #244b38;
+  box-shadow: 0 4px 0 #193d2b;
+}
+
+.game1-complete-screen .game1-complete__actions .wooden-button.game1-landing__play:hover {
+  background: #427657;
+}
+
+.game1-complete-confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.game1-complete-confetti-piece {
+  position: absolute;
+  top: -20px;
+  left: var(--piece-left);
+  width: 7px;
+  height: 11px;
+  border-radius: 2px;
+  background-color: var(--piece-color);
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .game1-complete-confetti-piece {
+    animation: game1-confetti-drop var(--piece-duration) ease-in var(--piece-delay) 1 both;
+  }
+
+  .game1-complete-character {
+    animation: game1-celebration-pop 850ms cubic-bezier(.2, .75, .25, 1) both;
+  }
+
+  @keyframes game1-confetti-drop {
+    0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+    12% { opacity: .68; }
+    72% { opacity: .58; }
+    100% { transform: translate3d(14px, 104dvh, 0) rotate(390deg); opacity: 0; }
+  }
+
+  @keyframes game1-celebration-pop {
+    0% { transform: translateY(14px) scale(.97); opacity: 0; }
+    60% { transform: translateY(-5px) scale(1.015); opacity: 1; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+}
+
+@media (max-width: 740px) {
+  .game1-complete-screen > .game1-complete-character {
+    width: min(60%, 210px);
+    max-height: 24dvh;
+  }
+
+  .game1-complete__actions {
+    width: 100%;
+    gap: 9px;
+  }
+  .game1-complete__actions .wooden-button {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    font-size: clamp(14px, 3.5vw, 20px);
+  }
+}

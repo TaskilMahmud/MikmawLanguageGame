@@ -11,7 +11,7 @@ Displays:
 - Character thumbnail
 - Current question
 - Correct/incorrect feedback
-- Select Answer / Next Question button
+- Dictionary and next-question controls
 
 The game logic stays in Game1.jsx.
 
@@ -22,9 +22,9 @@ export default function QuestionBox({
   thumbnail,
   questionText,
   feedback,
-  onAction,
-  actionLabel,
-  actionDisabled = false,
+  incorrectAttempts,
+  onNext,
+  nextLabel,
   dictionaryQuestions = [],
   progress,
   children,
@@ -42,7 +42,15 @@ export default function QuestionBox({
   return (
     <>
       <section className="question-box" aria-label="Current question">
-        <p className="question-progress">{progress}</p>
+        <div className="question-toolbar">
+          <p className="question-progress">{progress}</p>
+          <WoodenButton
+            className="question-dictionary"
+            onClick={() => setShowDictionary(true)}
+          >
+            Dictionary
+          </WoodenButton>
+        </div>
 
         <div className="question-prompt">
           <div className="question-picture">
@@ -52,19 +60,27 @@ export default function QuestionBox({
         </div>
 
         <div className="question-choices">
-          <p className="question-instruction">Choose an answer to hear it.</p>
+          <p className="question-instruction">
+            Tap a word to answer. Tap its speaker to listen.
+          </p>
           {children}
         </div>
 
-        <FeedbackMessage feedback={feedback} />
+        <div className="question-result">
+          <div className="question-feedback">
+            <FeedbackMessage
+              key={feedback === "incorrect" ? incorrectAttempts : feedback}
+              feedback={feedback}
+            />
+          </div>
 
-        <div className="question-actions">
-          <WoodenButton disabled={actionDisabled} onClick={onAction}>
-            {actionLabel}
-          </WoodenButton>
-          <WoodenButton onClick={() => setShowDictionary(true)}>
-            Dictionary
-          </WoodenButton>
+          <div className="question-next-slot">
+            {feedback === "correct" && (
+              <WoodenButton className="question-next" onClick={onNext}>
+                {nextLabel}
+              </WoodenButton>
+            )}
+          </div>
         </div>
       </section>
 

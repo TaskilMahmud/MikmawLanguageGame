@@ -98,7 +98,6 @@
 }
 
 .question-box,
-.game1-complete,
 .game1-empty {
   border: 3px solid #6d4f32;
   border-radius: 16px;
@@ -115,11 +114,35 @@
   padding: clamp(18px, 2.4vw, 32px);
 }
 
+.question-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 12px;
+}
+
 .question-progress {
   margin: 0;
   color: #46614d;
   font-size: 15px;
   font-weight: 700;
+}
+
+.question-box .question-dictionary {
+  min-height: 44px;
+  padding: 7px 13px;
+  border: 2px solid #97aa90;
+  border-radius: 10px;
+  background: #eef0dc;
+  color: #234d36;
+  box-shadow: none;
+  font-family: inherit;
+  font-size: 15px;
+}
+
+.question-box .question-dictionary:hover {
+  background: #dfe9cf;
 }
 
 .question-prompt {
@@ -164,24 +187,25 @@
 
 .game1-answers {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(12px, 1.2vw, 17px);
+  gap: 12px;
   padding-bottom: 6px;
 }
 
+.game1-answer-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(76px, 10vw, 128px);
+  gap: clamp(8px, 1vw, 14px);
+}
+
 .game1-answers .answer-button {
-  grid-column: span 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: clamp(60px, 9dvh, 88px);
-  padding: 10px 14px;
+  min-height: clamp(62px, 8dvh, 80px);
+  padding: 10px clamp(14px, 2.1vw, 26px);
   border: 3px solid;
   border-radius: 12px;
   box-shadow: inset 0 3px #fff9ea, inset 0 -3px #e4bd86, 0 6px 0 #855029;
   font-family: inherit;
-  font-size: clamp(22px, 2.4vw, 34px);
-  text-align: center;
+  font-size: clamp(24px, 3vw, 35px);
+  text-align: left;
 }
 
 .game1-answers .answer-button,
@@ -189,10 +213,6 @@
   border-color: #a7703d;
   background: linear-gradient(180deg, #fff3d3, #f6ddb1);
   color: #233c2c;
-}
-
-.game1-answers .answer-button:last-child:nth-child(odd) {
-  grid-column: 2 / span 2;
 }
 
 .game1-answers .answer-button:hover:not(:disabled) {
@@ -207,8 +227,45 @@
   box-shadow: inset 0 3px #f4fae9, inset 0 -3px #abc995, 0 6px 0 #315c40;
 }
 
-.game1-answers .answer-button:active:not(:disabled) {
+.game1-answer-audio {
+  display: grid;
+  place-items: center;
+  padding: 3px 4px;
+  border: 3px solid #527858;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #eff6e1, #ccdfb8);
+  box-shadow: inset 0 3px #f7fbed, inset 0 -3px #b5cca4, 0 6px 0 #416448;
+  cursor: pointer;
+}
+
+.game1-answer-audio:hover {
+  background: linear-gradient(180deg, #f6faee, #dfebcf);
+}
+
+.game1-answer-audio img {
+  display: block;
+  width: clamp(42px, 4vw, 52px);
+  max-width: 100%;
+  height: auto;
+}
+
+.game1-answers .answer-button:active:not(:disabled),
+.game1-answer-audio:active {
   transform: translateY(3px);
+}
+
+.question-box button:focus-visible {
+  outline: 3px solid #234d36;
+  outline-offset: 2px;
+}
+
+.question-result {
+  display: grid;
+  gap: 10px;
+}
+
+.question-feedback {
+  min-height: 42px;
 }
 
 .question-box .feedback-message {
@@ -217,31 +274,49 @@
   font-size: 16px;
 }
 
-.question-actions {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: 10px;
+.question-next-slot {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  min-height: 46px;
 }
 
-.question-actions .wooden-button {
+.question-box .question-next {
   min-height: 46px;
-  padding: 8px;
+  padding: 8px 20px;
   font-family: inherit;
   font-size: clamp(15px, 1.35vw, 19px);
-}
-
-.question-actions .wooden-button:first-child {
   border-color: #244b38;
   background: #346549;
   color: #fff9e6;
   box-shadow: 0 4px 0 #193d2b;
 }
 
-.question-actions .wooden-button:first-child:hover:not(:disabled) {
+.question-box .question-next:hover {
   background: #427657;
 }
 
-.game1-complete,
+@media (prefers-reduced-motion: no-preference) {
+  .question-feedback .feedback-message {
+    animation: question-result-enter 200ms ease-out;
+  }
+
+  .question-next-slot .question-next {
+    animation: question-result-enter 220ms ease-out 60ms backwards;
+  }
+
+  @keyframes question-result-enter {
+    from {
+      opacity: 0;
+      transform: translateY(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
 .game1-empty {
   align-self: center;
   justify-self: center;
@@ -252,30 +327,88 @@
 }
 
 .game1-complete {
-  display: grid;
-  justify-items: center;
-  gap: 18px;
-}
-
-.game1-complete img {
-  width: 115px;
-  aspect-ratio: 1;
-  object-fit: contain;
-}
-
-.game1-complete h1,
-.game1-complete p {
-  margin: 0;
+  min-height: clamp(320px, 52dvh, 440px);
+  align-content: center;
 }
 
 .game1-complete h1 {
+  margin: 0;
   font-family: Georgia, serif;
-  font-size: clamp(28px, 3.4vw, 46px);
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1.1;
 }
 
 .game1-complete p {
-  font-size: 22px;
   font-weight: 700;
+}
+
+.game1-complete .game1-complete__praise {
+  margin-top: 8px;
+  font-size: clamp(20px, 2.4vw, 30px);
+}
+
+.game1-complete__actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  width: min(100%, 432px);
+}
+
+.game1-complete__actions .wooden-button {
+  min-height: 52px;
+  padding-inline: 10px;
+}
+
+@media (width > 900px) {
+  .game1-shell {
+    gap: clamp(12px, 2.3dvh, 24px);
+    padding-block: clamp(12px, 2.5dvh, 28px);
+  }
+
+  .game1-header {
+    padding-block: 9px;
+  }
+
+  .game1-month select {
+    min-height: 48px;
+  }
+
+  .game1-image {
+    justify-self: center;
+    width: min(100%, 75dvh);
+  }
+
+  .question-box {
+    gap: clamp(10px, 1.8dvh, 16px);
+    padding-block: clamp(14px, 2.3dvh, 24px);
+  }
+
+  .question-picture {
+    width: clamp(48px, 9dvh, 72px);
+  }
+
+  .question-instruction {
+    margin-bottom: 8px;
+  }
+
+  .game1-answers {
+    gap: 10px;
+  }
+
+  .game1-answers .answer-button {
+    min-height: clamp(54px, 8dvh, 68px);
+    padding-block: 6px;
+  }
+
+  .question-result {
+    grid-template-columns: minmax(0, 1fr) 168px;
+    align-items: center;
+    min-height: 46px;
+  }
+
+  .question-box .question-next {
+    padding-inline: 14px;
+  }
 }
 
 @media (max-width: 900px) {

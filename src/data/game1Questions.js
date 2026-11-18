@@ -77,21 +77,21 @@ export const audioFiles = {
 export const questions = [
   // --- WIKUMKEWIKU’S (SEPTEMBER): nin (I), ki’l (you), teluisi (My name is...) ---
   {
-    text: "____ am a student .",
+    text: "____ am a Indian .",
     image: questionImage4,
     answers: ["eat", "I", "you"],
     correctAnswer: "I",
     month: "Wikumkewiku’s (September)",
   },
   {
-    text: "Pointing at _____",
+    text: "____ and me",
     image: questionImage3,
     answers: ["and", "eat", "you"],
     correctAnswer: "you",
     month: "Wikumkewiku’s (September)",
   },
   {
-    text: "Mali ____",
+    text: "____ Mali",
     image: questionImage2,
     answers: ["is my name", "eat", "and"],
     correctAnswer: "is my name",
@@ -100,21 +100,21 @@ export const questions = [
 
   // --- WIKEWIKU’S (OCTOBER): aq (and), mijisi (eat), wiktm (I like the taste of it) ---
   {
-    text: "Ji'm ___ Sarah are friends.",
+    text: "You ___ my friend.",
     image: questionImage6,
     answers: ["and", "I", "you"],
     correctAnswer: "and",
     month: "Wikewiku’s (October)",
   },
   {
-    text: "I ____ meat",
+    text: "I ____ at Mcdonalds",
     image: questionImage1,
     answers: ["and", "eat", "you"],
     correctAnswer: "eat",
     month: "Wikewiku’s (October)",
   },
   {
-    text: "____ Ice-cream .",
+    text: "____ Pizza.",
     image: questionImage5,
     answers: ["I like the taste of", "I", "and"],
     correctAnswer: "I like the taste of",
@@ -123,21 +123,21 @@ export const questions = [
 
   // --- KEPTEKEWIKU’S (NOVEMBER): kesalk (I love...), l'tu (Make it.), eliey (I am going.) ---
   {
-    text: " ___ pizza",
+    text: " ___ my Granddad",
     image: questionImage8,
     answers: ["Make it", "I love", "and"],
     correctAnswer: "I love",
     month: "Keptekewiku’s (November)",
   },
   {
-    text: "I ____ paper airplane",
+    text: "I am ____ a house",
     image: questionImage9,
     answers: ["make it", "eat", "you"],
     correctAnswer: "make it",
     month: "Keptekewiku’s (November)",
   },
   {
-    text: "___ to School",
+    text: "___ to town",
     image: questionImage7,
     answers: ["I am going", "I love", "and"],
     correctAnswer: "I am going",
@@ -146,21 +146,21 @@ export const questions = [
 
   // --- KESIKEWIKU’S (DECEMBER): nemitu (I see it.), kesatm (I like...), wejiey (I am coming from...) ---
   {
-    text: "I __ moon",
+    text: "I __ fire",
     image: questionImage11,
     answers: ["make it", "I", "I see it"],
     correctAnswer: "I see it",
     month: "Kesikewiku’s (December)",
   },
   {
-    text: " __ music",
+    text: " __ to play",
     image: questionImage12,
     answers: ["I like", "I see it", "I am coming from"],
     correctAnswer: "I like",
     month: "Kesikewiku’s (December)",
   },
   {
-    text: "__ home",
+    text: "__ town",
     image: questionImage10,
     answers: ["make it", "you", "I am coming from"],
     correctAnswer: "I am coming from",
@@ -169,21 +169,21 @@ export const questions = [
 
   // --- PUNAMUJUIKU’S (JANUARY): ta’ta (Dad), kiju (Mother), nekm (him or her) ---
   {
-    text: "Bye __",
+    text: " __ is dancing",
     image: questionImage13,
     answers: ["Mother", "Dad", "him or her"],
     correctAnswer: "Dad",
     month: "Punamujuiku’s (January)",
   },
   {
-    text: " Me and __ eating together",
+    text: " I love ___",
     image: questionImage14,
-    answers: ["Mother", "Dad", "him or her"],
-    correctAnswer: "Mother",
+    answers: ["Grandma", "Dad", "him or her"],
+    correctAnswer: "Grandma",
     month: "Punamujuiku’s (January)",
   },
   {
-    text: "Give the book to ___",
+    text: "___ is my friend",
     image: questionImage15,
     answers: ["Mother", "Dad", "him or her"],
     correctAnswer: "him or her",
@@ -192,21 +192,21 @@ export const questions = [
 
   // --- APUKNAJIT (FEBRUARY): ala’tu (I have it.), ula (Look at this.), kesalul (I love you.) ---
   {
-    text: "___ Backpack",
+    text: "___ Money",
     image: questionImage16,
     answers: ["Mother", "I Love you", "I have it"],
     correctAnswer: "I have it",
     month: "Apuknajit (February)",
   },
   {
-    text: "___ board",
+    text: "___ dog",
     image: questionImage17,
     answers: ["Look at this", "I Love you", "I am coming from"],
     correctAnswer: "Look at this",
     month: "Apuknajit (February)",
   },
   {
-    text: "___ daughter",
+    text: "___ grandma",
     image: questionImage18,
     answers: ["Look at this", "I love you", "I am coming from"],
     correctAnswer: "I love you",
@@ -215,7 +215,7 @@ export const questions = [
 
   // --- SI’KO”KU’S (MARCH): welta’si (I am happy.), wen (who), + I live ---
   {
-    text: "I won! ___",
+    text: "I'm glad that u came ___",
     image: questionImage19,
     answers: ["I am happy", "who", "I am coming from"],
     correctAnswer: "I am happy",
@@ -229,7 +229,7 @@ export const questions = [
     month: "Si’ko”ku’s (March)",
   },
   {
-    text: "___ in Canada",
+    text: "___ in Eskasoni",
     image: questionImage21,
     answers: ["who", "I live", "I am happy"],
     correctAnswer: "I live",

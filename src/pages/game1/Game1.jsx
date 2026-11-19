@@ -22,6 +22,8 @@ const confetti = Array.from({ length: 22 }, (_, index) => ({
   color: ["#e7b339", "#d86d52", "#4c966d", "#7c9ec7", "#cc87a3"][index % 5],
 }));
 
+const STAR_COLORS = ["#e7b339", "#d86d52", "#4c966d"];
+
 function Confetti() {
   return (
     <div className="game1-complete-confetti" aria-hidden="true">
@@ -35,6 +37,54 @@ function Confetti() {
             "--piece-duration": piece.duration,
             "--piece-color": piece.color,
           }}
+        />
+      ))}
+    </div>
+  );
+}
+
+function MikmawStar({ filled, color, index }) {
+  return (
+    <svg
+      className={`game1-star ${filled ? "game1-star--filled" : "game1-star--empty"}`}
+      viewBox="0 0 100 100"
+      width="34"
+      height="34"
+      aria-hidden="true"
+    >
+      <polygon
+        points="50,4 62,34 94,24 72,50 94,76 62,66 50,96 38,66 6,76 28,50 6,24 38,34"
+        fill={filled ? color : "#9e9e9e"}
+        stroke="#3b1e06"
+        strokeWidth="4"
+        strokeLinejoin="round"
+      />
+      <circle
+        cx="50"
+        cy="50"
+        r="11"
+        fill={filled ? "#fff8e7" : "#bdbdbd"}
+        stroke="#3b1e06"
+        strokeWidth="3"
+      />
+      <title>{`Star ${index + 1}`}</title>
+    </svg>
+  );
+}
+
+function MikmawStarsTracker({ score, total = 3 }) {
+  return (
+    <div
+      className="game1-stars"
+      role="img"
+      aria-label={`${Math.min(score, total)} of ${total} stars earned`}
+    >
+      {Array.from({ length: total }, (_, index) => (
+        <MikmawStar
+          key={index}
+          index={index}
+          filled={index < score}
+          color={STAR_COLORS[index % STAR_COLORS.length]}
         />
       ))}
     </div>
@@ -62,15 +112,17 @@ export default function Game1() {
     (q) => (q.month || "September") === selectedMonth
   );
 
-    // Questions from the selected month and all earlier months (for the dictionary)
+  // Questions from the selected month and all earlier months (for the dictionary)
   const selectedMonthIndex = availableMonths.indexOf(selectedMonth);
 
   const unlockedQuestions = questions.filter((q) => {
     const monthIndex = availableMonths.indexOf(q.month || "September");
     return monthIndex <= selectedMonthIndex;
   });
+
   const question = filteredQuestions[currentQuestion];
   const nextMonth = availableMonths[availableMonths.indexOf(selectedMonth) + 1];
+
   // A new key remounts only the question visuals when the question changes.
   // Clicking an answer or opening the dictionary won't replay the entrance animations.
   const questionAnimationKey = `${selectedMonth}-${currentQuestion}`;
@@ -159,6 +211,7 @@ export default function Game1() {
     setCurrentQuestion(0);
     setSelectedAnswer(null);
     setFeedback(null);
+    setIncorrectAttempts(0);
     setScore(0);
     setIsComplete(false);
   }
@@ -175,7 +228,10 @@ export default function Game1() {
     >
       <div className="game1-shell">
         <header className="game1-header">
-          <WoodenButton onClick={handleBack}>Back</WoodenButton>
+          <div className="game1-header-left">
+            <WoodenButton onClick={handleBack}>Back</WoodenButton>
+            <MikmawStarsTracker score={score} total={3} />
+          </div>
 
           <p className="game1-title">Pictionary</p>
 

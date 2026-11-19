@@ -29,10 +29,46 @@
   box-shadow: inset 0 1px #48705a, 0 5px 0 #0a261d;
 }
 
-.game1-header > button {
+.game1-header-left {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-self: start;
+  min-width: 0;
+}
+
+.game1-header > button,
+.game1-header-left > button {
   justify-self: start;
   padding: 9px 18px;
   font-size: 16px;
+}
+
+.game1-stars {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(10, 38, 29, 0.65);
+  border: 2px solid #d7b37b;
+  border-radius: 12px;
+  box-shadow: inset 0 1px rgba(255, 242, 206, 0.25);
+}
+
+.game1-star {
+  display: block;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+
+.game1-star--empty {
+  opacity: 0.85;
+}
+
+.game1-star--filled {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 6px rgba(255, 224, 130, 0.75)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
 }
 
 .game1-title {

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import WoodenButton from "../components/WoodenButton";
 import backgroundImage from "../assets/background2.png";
+import girl from "../assets/girl.png";
+import boy from "../assets/boy.png";
 
 import "../styles/menu.css";
 
@@ -27,6 +29,9 @@ export default function Menu() {
         backgroundImage: `url(${backgroundImage})`,
       }}
     >
+      <img className="menu-character menu-character--girl" src={girl} alt="" draggable={false} />
+      <img className="menu-character menu-character--boy" src={boy} alt="" draggable={false} />
+
       <nav
         className="menu-buttons"
         aria-label="Game selection"

@@ -414,6 +414,22 @@
   .game1-answer-row:nth-child(2) { animation-delay: 165ms; }
   .game1-answer-row:nth-child(3) { animation-delay: 210ms; }
 
+  .game1-layout--opening :is(.game1-image, .question-box) {
+    animation-name: game1-opening-arrive;
+    animation-duration: 580ms;
+  }
+
+  .game1-layout--opening .question-box {
+    animation-delay: 75ms;
+  }
+
+  .game1-layout--opening .game1-answer-row {
+    --game1-opening-offset: 9px;
+    --game1-opening-scale: 1;
+    animation-name: game1-opening-arrive;
+    animation-duration: 420ms;
+  }
+
   .game1-answer-audio {
     transition: background 180ms ease, transform 180ms ease;
   }
@@ -435,6 +451,19 @@
   @keyframes game1-choice-arrive {
     from { opacity: .65; transform: translateY(4px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes game1-opening-arrive {
+    from {
+      opacity: .3;
+      transform: translateY(var(--game1-opening-offset, 16px))
+        scale(var(--game1-opening-scale, .96));
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 }
 
@@ -748,7 +777,9 @@
   }
 
   .game1-complete-character {
-    animation: game1-celebration-pop 850ms cubic-bezier(.2, .75, .25, 1) both;
+    animation:
+      game1-celebration-pop 850ms cubic-bezier(.2, .75, .25, 1) both,
+      game1-celebration-bounce 525ms ease-in-out 850ms infinite alternate;
   }
 
   @keyframes game1-confetti-drop {
@@ -756,6 +787,16 @@
     12% { opacity: .68; }
     72% { opacity: .58; }
     100% { transform: translate3d(14px, 104dvh, 0) rotate(390deg); opacity: 0; }
+  }
+
+  @keyframes game1-celebration-bounce {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(-14px);
+    }
   }
 
   @keyframes game1-celebration-pop {

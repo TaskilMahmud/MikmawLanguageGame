@@ -14,15 +14,20 @@ import thumbnail from "../../assets/thumbnail.png";
 import "../../styles/game1.css";
 import "../../styles/game1Landing.css";
 
+const regularConfettiCount = 22;
+const confettiDurations = [
+  ...Array.from({ length: regularConfettiCount }, (_, index) => 3.2 + (index % 4) * 0.25),
+  2.65, 2.8, 2.7, 2.9, 2.75,
+  1.85, 2.1, 1.95, 2.15, 1.9,
+];
+
 // Fixed positions keep the celebration consistent and avoid a new animation on re-render.
-const confetti = Array.from({ length: 22 }, (_, index) => ({
+const confetti = confettiDurations.map((duration, index) => ({
   left: `${4 + ((index * 43) % 92)}%`,
-  delay: `${(index % 7) * 0.11}s`,
-  duration: `${3.2 + (index % 4) * 0.25}s`,
+  delay: `${(index % 7) * (index < regularConfettiCount ? 0.11 : 0.04)}s`,
+  duration: `${duration}s`,
   color: ["#e7b339", "#d86d52", "#4c966d", "#7c9ec7", "#cc87a3"][index % 5],
 }));
-
-const STAR_COLORS = ["#e7b339", "#d86d52", "#4c966d"];
 
 function Confetti() {
   return (
@@ -43,7 +48,7 @@ function Confetti() {
   );
 }
 
-function MikmawStar({ filled, color, index }) {
+function MikmawStar({ filled, index }) {
   return (
     <svg
       className={`game1-star ${filled ? "game1-star--filled" : "game1-star--empty"}`}
@@ -52,20 +57,32 @@ function MikmawStar({ filled, color, index }) {
       height="34"
       aria-hidden="true"
     >
+      {filled && (
+        <g>
+          <polygon
+            points="50,50 17.5,17.5 41.2,28.75 50,4 58.8,28.75 82.5,17.5"
+            fill="#fefefe"
+          />
+          <polygon
+            points="50,50 82.5,17.5 71.25,41.2 96,50 71.25,58.8 82.5,82.5"
+            fill="#fec701"
+          />
+          <polygon
+            points="50,50 82.5,82.5 58.8,71.25 50,96 41.2,71.25 17.5,82.5"
+            fill="#df0113"
+          />
+          <polygon
+            points="50,50 17.5,82.5 28.75,58.8 4,50 28.75,41.2 17.5,17.5"
+            fill="#161615"
+          />
+        </g>
+      )}
       <polygon
-        points="50,4 62,34 94,24 72,50 94,76 62,66 50,96 38,66 6,76 28,50 6,24 38,34"
-        fill={filled ? color : "#9e9e9e"}
-        stroke="#3b1e06"
-        strokeWidth="4"
-        strokeLinejoin="round"
-      />
-      <circle
-        cx="50"
-        cy="50"
-        r="11"
-        fill={filled ? "#fff8e7" : "#bdbdbd"}
-        stroke="#3b1e06"
+        points="50,4 58.8,28.75 82.5,17.5 71.25,41.2 96,50 71.25,58.8 82.5,82.5 58.8,71.25 50,96 41.2,71.25 17.5,82.5 28.75,58.8 4,50 28.75,41.2 17.5,17.5 41.2,28.75"
+        fill={filled ? "none" : "#9e9e9e"}
+        stroke="#0b0b0b"
         strokeWidth="3"
+        strokeLinejoin="round"
       />
       <title>{`Star ${index + 1}`}</title>
     </svg>
@@ -84,7 +101,6 @@ function MikmawStarsTracker({ score, total = 3 }) {
           key={index}
           index={index}
           filled={index < score}
-          color={STAR_COLORS[index % STAR_COLORS.length]}
         />
       ))}
     </div>
@@ -266,7 +282,7 @@ export default function Game1() {
             >
               <div>
                 <h1 id="game1-complete-title">Game Complete!</h1>
-                <p className="game1-complete__praise">Grreat Job!</p>
+                <p className="game1-complete__praise">Great Job!</p>
               </div>
               <p>Score: {score}/{filteredQuestions.length}</p>
               <div className="game1-complete__actions">
@@ -283,7 +299,10 @@ export default function Game1() {
             </section>
           </div>
         ) : (
-          <section className="game1-layout" aria-label="Pictionary game">
+          <section
+            className={`game1-layout${currentQuestion === 0 ? " game1-layout--opening" : ""}`}
+            aria-label="Pictionary game"
+          >
             {!question ? (
               <p className="game1-empty">
                 No questions available for {selectedMonth}.

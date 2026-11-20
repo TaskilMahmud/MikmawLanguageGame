@@ -1,10 +1,21 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import backgroundImage from "../../assets/background3.png";
-import character from "../../assets/game1-girl-pointing.png";
+import backgroundImage from "../../assets/background3.webp";
+import character from "../../assets/game1-girl-pointing.webp";
+import { questions } from "../../data/game1Questions";
 import "../../styles/game1Landing.css";
 
 export default function Game1Landing() {
+  useEffect(() => {
+    const firstQuestionImage = questions[0]?.image;
+    if (!firstQuestionImage) return;
+
+    const firstImage = new Image();
+    firstImage.fetchPriority = "low";
+    firstImage.src = firstQuestionImage;
+  }, []);
+
   return (
     <main
       className="screen game1-landing"

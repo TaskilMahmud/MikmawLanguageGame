@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-import goatLogo from "../../assets/goat-island/goat-logo.png";
-import landingScene from "../../assets/goat-island/landing-scene-red.png";
+import goatLogo from "../../assets/goat-island/goat-logo.webp";
+import landingScene from "../../assets/goat-island/landing-scene-red.webp";
 import { goatIslandAnimals } from "../../data/goatIslandAnimals";
 import { getFoundAnimalIds, resetFoundAnimals } from "../../data/goatIslandProgress";
 import "../../styles/game2.css";

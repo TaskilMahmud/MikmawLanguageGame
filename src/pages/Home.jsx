@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import WoodenButton from "../components/WoodenButton";
-import backgroundImage from "../assets/background1.png";
+import backgroundImage from "../assets/background1.webp";
 
 import "../styles/home.css";
 

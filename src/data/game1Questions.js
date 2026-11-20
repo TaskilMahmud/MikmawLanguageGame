@@ -18,27 +18,27 @@ Do not put game logic or CSS here.
 ==========================================
 */
 
-import questionImage1 from "../assets/questionImage1.png";
-import questionImage2 from "../assets/questionImage2.png";
-import questionImage3 from "../assets/questionImage3.png";
-import questionImage4 from "../assets/questionImage4.png";
-import questionImage5 from "../assets/questionImage5.png";
-import questionImage6 from "../assets/questionImage6.png";
-import questionImage7 from "../assets/questionImage7.png";
-import questionImage8 from "../assets/questionImage8.png";
-import questionImage9 from "../assets/questionImage9.png";
-import questionImage10 from "../assets/questionImage10.png";
-import questionImage11 from "../assets/questionImage11.png";
-import questionImage12 from "../assets/questionImage12.png";
-import questionImage13 from "../assets/questionImage13.png";
-import questionImage14 from "../assets/questionImage14.png";
-import questionImage15 from "../assets/questionImage15.png";
-import questionImage16 from "../assets/questionImage16.png";
-import questionImage17 from "../assets/questionImage17.png";
-import questionImage18 from "../assets/questionImage18.png";
-import questionImage19 from "../assets/questionImage19.png";
-import questionImage20 from "../assets/questionImage20.png";
-import questionImage21 from "../assets/questionImage21.png";
+import questionImage1 from "../assets/questionImage1.webp";
+import questionImage2 from "../assets/questionImage2.webp";
+import questionImage3 from "../assets/questionImage3.webp";
+import questionImage4 from "../assets/questionImage4.webp";
+import questionImage5 from "../assets/questionImage5.webp";
+import questionImage6 from "../assets/questionImage6.webp";
+import questionImage7 from "../assets/questionImage7.webp";
+import questionImage8 from "../assets/questionImage8.webp";
+import questionImage9 from "../assets/questionImage9.webp";
+import questionImage10 from "../assets/questionImage10.webp";
+import questionImage11 from "../assets/questionImage11.webp";
+import questionImage12 from "../assets/questionImage12.webp";
+import questionImage13 from "../assets/questionImage13.webp";
+import questionImage14 from "../assets/questionImage14.webp";
+import questionImage15 from "../assets/questionImage15.webp";
+import questionImage16 from "../assets/questionImage16.webp";
+import questionImage17 from "../assets/questionImage17.webp";
+import questionImage18 from "../assets/questionImage18.webp";
+import questionImage19 from "../assets/questionImage19.webp";
+import questionImage20 from "../assets/questionImage20.webp";
+import questionImage21 from "../assets/questionImage21.webp";
 
 // ========================================
 // AUDIO FILE MAPPING

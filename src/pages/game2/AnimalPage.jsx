@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import goatLogo from "../../assets/goat-island/goat-logo.png";
-import forestScene from "../../assets/goat-island/forest-scene.png";
-import scrollBlank from "../../assets/goat-island/scroll-blank.png";
-import speakerIcon from "../../assets/goat-island/speaker-icon.png";
+import goatLogo from "../../assets/goat-island/goat-logo.webp";
+import forestScene from "../../assets/goat-island/forest-scene.webp";
+import scrollBlank from "../../assets/goat-island/scroll-blank.webp";
+import speakerIcon from "../../assets/goat-island/speaker-icon.webp";
 
 import {
   getGoatIslandAnimal,

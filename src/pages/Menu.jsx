@@ -2,9 +2,9 @@
 import { useNavigate } from "react-router-dom";
 
 import WoodenButton from "../components/WoodenButton";
-import backgroundImage from "../assets/background2.png";
-import girl from "../assets/girl.png";
-import boy from "../assets/boy.png";
+import backgroundImage from "../assets/background2.webp";
+import girl from "../assets/girl.webp";
+import boy from "../assets/boy.webp";
 
 import "../styles/menu.css";
 

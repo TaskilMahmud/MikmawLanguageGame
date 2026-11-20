@@ -1,12 +1,12 @@
-import rabbitImage from "../assets/goat-island/rabbit.png";
-import deerImage from "../assets/goat-island/deer.png";
-import raccoonImage from "../assets/goat-island/raccoon.png";
-import bearImage from "../assets/goat-island/bear.png";
-import beaverImage from "../assets/goat-island/beaver.png";
-import foxImage from "../assets/goat-island/fox.png";
-import mooseImage from "../assets/goat-island/moose.png";
-import porcupineImage from "../assets/goat-island/porcupine.png";
-import eagleImage from "../assets/goat-island/eagle.png";
+import rabbitImage from "../assets/goat-island/rabbit.webp";
+import deerImage from "../assets/goat-island/deer.webp";
+import raccoonImage from "../assets/goat-island/raccoon.webp";
+import bearImage from "../assets/goat-island/bear.webp";
+import beaverImage from "../assets/goat-island/beaver.webp";
+import foxImage from "../assets/goat-island/fox.webp";
+import mooseImage from "../assets/goat-island/moose.webp";
+import porcupineImage from "../assets/goat-island/porcupine.webp";
+import eagleImage from "../assets/goat-island/eagle.webp";
 
 // This order controls the counter and the Previous and Next buttons.
 // Replace the sample clues with your actual NFC tag locations.

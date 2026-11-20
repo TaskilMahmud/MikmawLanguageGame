@@ -6,10 +6,10 @@ import AnswerButton from "../../components/AnswerButton";
 import QuestionBox from "../../components/QuestionBox";
 import { questions, audioFiles } from "../../data/game1Questions";
 
-import backgroundImage from "../../assets/background3.png";
-import happyGirl from "../../assets/game1-happy-girl.png";
-import speakerIcon from "../../assets/goat-island/speaker-icon.png";
-import thumbnail from "../../assets/thumbnail.png";
+import backgroundImage from "../../assets/background3.webp";
+import happyGirl from "../../assets/game1-happy-girl.webp";
+import speakerIcon from "../../assets/goat-island/speaker-icon.webp";
+import thumbnail from "../../assets/thumbnail.webp";
 
 import "../../styles/game1.css";
 import "../../styles/game1Landing.css";
@@ -137,6 +137,7 @@ export default function Game1() {
   });
 
   const question = filteredQuestions[currentQuestion];
+  const nextQuestionImage = filteredQuestions[currentQuestion + 1]?.image;
   const nextMonth = availableMonths[availableMonths.indexOf(selectedMonth) + 1];
 
   // A new key remounts only the question visuals when the question changes.
@@ -186,6 +187,14 @@ export default function Game1() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (!nextQuestionImage) return;
+
+    const nextImage = new Image();
+    nextImage.fetchPriority = "low";
+    nextImage.src = nextQuestionImage;
+  }, [nextQuestionImage]);
 
   function startMonth(month) {
     setSelectedMonth(month);
@@ -313,6 +322,7 @@ export default function Game1() {
                   key={`image-${questionAnimationKey}`}
                   className="game1-image"
                   src={question.image}
+                  fetchPriority="high"
                   alt="Question illustration"
                 />
 

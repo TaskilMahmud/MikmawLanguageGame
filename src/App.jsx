@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -6,8 +5,7 @@ import Menu from "./pages/Menu";
 import Game1 from "./pages/game1/Game1";
 import Game1Landing from "./pages/game1/Game1Landing";
 import GoatIslandLanding from "./pages/game2/GoatIslandLanding";
-import AnimalPage from "./pages/game2/AnimalPage";
-import { goatIslandAnimals } from "./data/goatIslandAnimals";
+import Game2, { ANIMALS } from "./pages/game2/Game2";
 
 export default function App() {
   return (
@@ -18,26 +16,16 @@ export default function App() {
       <Route path="/game1/play" element={<Game1 />} />
 
       <Route path="/game2" element={<GoatIslandLanding />} />
+      <Route path="/game2/:animalId" element={<Game2 />} />
 
-      {goatIslandAnimals.map((animal) => (
-        <Fragment key={animal.id}>
-          <Route
-            path={animal.questPath}
-            element={<AnimalPage key={animal.questPath} animalId={animal.id} />}
-          />
-          <Route
-            path={animal.foundPath}
-            element={
-              <AnimalPage key={animal.foundPath} animalId={animal.id} found />
-            }
-          />
-        </Fragment>
+      {/* Keep older NFC tags such as /#/rabbit-found working. */}
+      {ANIMALS.map((animal) => (
+        <Route
+          key={animal.id}
+          path={`/${animal.id}-found`}
+          element={<Navigate to={`/game2/${animal.id}-found`} replace />}
+        />
       ))}
-
-      <Route
-        path="/rabbit-found"
-        element={<Navigate to="/game2/rabbit-found" replace />}
-      />
     </Routes>
   );
 }

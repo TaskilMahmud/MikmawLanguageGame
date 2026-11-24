@@ -1,65 +1,394 @@
-/* Additional animal visuals: keep the existing forest, title, and controls. */
-.goat2-sad-picture {
+/* Goat Island - Feed the Animal gameplay UI.
+   All current Game 2 selection-screen CSS lives here.
+   The original scroll/dictionary styles are not needed here.
+   This stylesheet is imported only by Game2.jsx. */
+
+.feed2-page,
+.feed2-page * { box-sizing: border-box; }
+
+.feed2-page {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12px;
+  background: #173c33;
+  font-family: Arial, "Trebuchet MS", sans-serif;
+}
+
+.feed2-phone {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  flex: 0 0 auto;
+  width: min(100%, 432px);
+  aspect-ratio: 432 / 757;
+  overflow: hidden;
+  background: #f9dfb0;
+  color: #003c21;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feed2-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+.feed2-header {
+  position: absolute;
+  z-index: 6;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5.35%;
+  display: grid;
+  grid-template-columns: 24% minmax(0, 1fr) 21%;
+  align-items: center;
+  padding: 0 3%;
+  background: #ffe9ba;
+  color: #063b22;
+}
+
+.feed2-header h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: clamp(13px, 4.7cqw, 23px);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.feed2-back {
+  font-size: clamp(11px, 3.5cqw, 18px);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.feed2-progress {
+  justify-self: end;
+  display: grid;
+  place-items: center;
+  width: 84%;
+  height: 76%;
+  border-radius: 999px;
+  background: #003b21;
+  color: #fff4d4;
+  box-shadow: 0 1px 2px #8c7e59;
+  font-size: clamp(11px, 3.7cqw, 18px);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.feed2-pronunciation {
+  position: absolute;
+  z-index: 3;
+  top: 6.55%;
+  left: 26.4%;
+  width: 47.2%;
+  height: 6.12%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  border: min(0.65cqw, 3px) solid #e69c21;
+  border-radius: 999px;
+  background: #fff0c5;
+  box-shadow: 0 2px 0 #fffaf1, 0 4px 3px rgba(80, 50, 15, 0.32);
+  color: #043e22;
+  font-size: clamp(16px, 7.2cqw, 34px);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.feed2-sound-icon {
+  flex: 0 0 17%;
+  width: 17%;
+  height: 76%;
+}
+
+/* Large central animal; applies to ALL nine animals. */
+.feed2-hero {
   position: absolute;
   z-index: 2;
-  top: 22%;
-  left: 6%;
-  width: 88%;
-  height: 54%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.goat2-sad-picture img {
+  top: 13.4%;
+  left: 5%;
+  width: 90%;
+  height: 34%;
   display: block;
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 4px 2px rgba(19, 77, 50, 0.22));
+  transform: scale(1.08);
+  transform-origin: center center;
+  pointer-events: none;
+  user-select: none;
 }
 
-/* Keep the location clue readable below the sad animal. */
-.goat2-scroll--with-animal {
-  top: auto;
-  bottom: 2%;
-  width: 71%;
-  max-height: 31%;
-  height: 31%;
-  aspect-ratio: auto;
+.feed2-arrow {
+  position: absolute;
+  z-index: 3;
+  top: 25.5%;
+  width: 7%;
+  height: 4.5%;
+  display: grid;
+  place-items: center;
+  border: 2px solid #fff0c8;
+  border-radius: 22%;
+  background: #00402a;
+  box-shadow: 0 2px 0 rgba(56, 37, 14, 0.3);
+  color: #fff4d5;
 }
-
-.goat2-scroll--with-animal .goat2-scroll-writing {
+.feed2-arrow--left { left: 2%; }
+.feed2-arrow--right { right: 2%; }
+.feed2-arrow svg {
+  width: 55%;
   height: 70%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
 
-.goat2-scroll--with-animal .goat2-scroll-writing p {
-  font-size: clamp(11px, 3vw, 15px);
-  line-height: 1.1;
-  letter-spacing: -0.4px;
+.feed2-logo {
+  position: absolute;
+  z-index: 2;
+  top: 45.8%;
+  left: 20%;
+  width: 60%;
+  height: 12%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 
-/* Found stickers include celebration rays, leaves, and fruit.
-   Allow a little more space than the original small rabbit artwork. */
-.goat2-found-picture > img,
-.goat2-found-picture--deer > img {
-  width: min(88%, 350px);
-  max-width: 100%;
-  max-height: 100%;
-  height: auto;
+/* Five wooden plates in the first row, four in the second. */
+.feed2-tiles {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  align-items: start;
+  min-width: 0;
+}
+.feed2-tiles--first {
+  top: 60.05%;
+  left: 2.1%;
+  width: 95.8%;
+  height: 16.5%;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.8%;
+}
+.feed2-tiles--second {
+  top: 75.85%;
+  left: 4.5%;
+  width: 91%;
+  height: 17%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5%;
+}
+
+/* Real clickable buttons, styled to look exactly like image-only plates. */
+.feed2-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.feed2-tile-status {
+  flex: 0 0 12.5%;
+  height: 12.5%;
+  font-size: clamp(9px, 3cqw, 16px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.feed2-tile-image {
+  display: block;
+  width: 100%;
+  height: 87.5%;
+  object-fit: contain;
+  object-position: center top;
+  pointer-events: none;
+  user-select: none;
+  transition: filter 120ms ease;
+}
+
+.feed2-tile:hover .feed2-tile-image {
+  filter: brightness(1.06);
+}
+.feed2-tile--selected .feed2-tile-image,
+.feed2-tile--selected:hover .feed2-tile-image {
+  filter: drop-shadow(0 0 2px #ffca05) drop-shadow(0 0 3px #eaaa00);
+}
+.feed2-tile:focus-visible {
+  outline: 3px solid #034125;
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+
+.feed2-footer {
+  position: absolute;
+  z-index: 3;
+  top: 95.15%;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  color: #073d22;
+  font-size: clamp(11px, 3.5cqw, 17px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+}
+
+@media (max-width: 500px) {
+  .feed2-page { padding: 0; background: #f9dfb0; }
+  .feed2-phone { width: 100%; box-shadow: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feed2-tile-image { transition: none; }
+}
+
+
+/* NFC discovery / accessible button polish. */
+.feed2-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 0;
+  background: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+.feed2-back:focus-visible,
+.gi-landing-button:focus-visible {
+  outline: 3px solid #ffbd3a;
+  outline-offset: 3px;
+}
+.feed2-tile--found .feed2-tile-status {
+  color: #006d3b;
+}
+.feed2-tile--found .feed2-tile-image {
+  animation: feed2-unlocked-pop 250ms ease-out;
+}
+@keyframes feed2-unlocked-pop {
+  from { transform: scale(.94); }
+  to { transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feed2-tile--found .feed2-tile-image { animation: none; }
+}
+
+/* Dedicated landing screen: kept separate for future customization. */
+.gi-landing-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 7% 5% 5%;
+  text-align: center;
+}
+.gi-landing-back {
+  align-self: flex-start;
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  padding: 1.5% 2.5%;
+  border: 0;
+  border-radius: 12px;
+  background: #ffe9ba;
+  color: #073d22;
+  font-weight: 900;
+  font-size: clamp(13px, 4cqw, 19px);
+  cursor: pointer;
+}
+.gi-landing-logo {
+  position: absolute;
+  top: 12%;
+  left: 12%;
+  width: 76%;
+  height: 35%;
   object-fit: contain;
 }
-
+.gi-landing-panel {
+  position: absolute;
+  top: 58%;
+  left: 8%;
+  width: 84%;
+  height: 36%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 5%;
+  padding: 5% 7%;
+  border: 3px solid #8f4d18;
+  border-radius: 19px;
+  background: #fff0cb;
+  box-shadow: 0 6px 0 rgba(66, 39, 18, .2);
+}
+.gi-landing-heading {
+  margin: 0;
+  font-size: clamp(20px, 7cqw, 31px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #073d22;
+}
+.gi-landing-progress {
+  margin: 0;
+  font-size: clamp(14px, 4cqw, 20px);
+  font-weight: 800;
+  color: #22513b;
+}
+.gi-landing-button {
+  min-height: 18%;
+  padding: 2% 4%;
+  border: 2px solid #2f2014;
+  border-radius: 13px;
+  background: #00402a;
+  color: #fff4db;
+  font-size: clamp(14px, 5cqw, 22px);
+  font-family: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+.gi-landing-button--reset {
+  background: #ce7b20;
+  color: #28160b;
+}
+.gi-landing-notice {
+  min-height: 1.2em;
+  margin: 0;
+  font-size: clamp(10px, 2.7cqw, 13px);
+  font-weight: 700;
+}
 @media (max-width: 360px) {
-  .goat2-scroll--with-animal {
-    width: 78%;
-    max-height: 32%;
-    height: 32%;
-  }
-  .goat2-scroll--with-animal .goat2-scroll-writing p {
-    font-size: 11px;
-  }
+  .gi-landing-panel { top: 56%; height: 39%; }
 }

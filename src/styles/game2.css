@@ -559,3 +559,40 @@
     min-height: 560px;
   }
 }
+
+
+.goat2-animal-picture {
+  position: absolute;
+  z-index: 2;
+  top: 24%;
+  right: 4%;
+  bottom: 5%;
+  left: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  pointer-events: none;
+}
+
+.goat2-animal-picture > img {
+  display: block;
+  width: min(88%, 325px);
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 1px rgba(19, 77, 50, 0.22));
+}
+
+.goat2-animal-picture--happy > img {
+  width: min(93%, 345px);
+}
+
+/* Sparkles already have a style in the existing game2.css. */
+@media (max-width: 360px) {
+  .goat2-animal-picture > img,
+  .goat2-animal-picture--happy > img {
+    width: 95%;
+  }
+}

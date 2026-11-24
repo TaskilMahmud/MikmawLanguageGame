@@ -11,11 +11,9 @@ import {
   goatIslandAnimals,
   GOAT_ISLAND_TOTAL_ANIMALS,
 } from "../../data/goatIslandAnimals";
-import {
-  getFoundAnimalIds,
-  saveFoundAnimal,
-} from "../../data/goatIslandProgress";
+import { getFoundAnimalIds, saveFoundAnimal } from "../../data/goatIslandProgress";
 import "../../styles/game2.css";
+import "../../styles/goatIslandAnimalImages.css";
 
 export default function AnimalPage({ animalId, found = false }) {
   const navigate = useNavigate();
@@ -26,7 +24,6 @@ export default function AnimalPage({ animalId, found = false }) {
   const [foundIds, setFoundIds] = useState(getFoundAnimalIds);
   const audioRef = useRef(null);
 
-  // Visiting a Found URL records the discovery in this browser.
   const discoveredAnimalId = found ? animal?.id : undefined;
 
   useEffect(() => {
@@ -42,13 +39,9 @@ export default function AnimalPage({ animalId, found = false }) {
     };
   }, []);
 
-  if (!animal) {
-    return <p>Unknown Goat Island animal.</p>;
-  }
+  if (!animal) return <p>Unknown Goat Island animal.</p>;
 
-  const currentIndex = goatIslandAnimals.findIndex(
-    (entry) => entry.id === animal.id
-  );
+  const currentIndex = goatIslandAnimals.findIndex((entry) => entry.id === animal.id);
 
   function stopAudio() {
     if (audioRef.current) {
@@ -67,11 +60,8 @@ export default function AnimalPage({ animalId, found = false }) {
       return;
     }
 
-    const audio = new Audio(
-      `${import.meta.env.BASE_URL}audio/${animal.audioFile}`
-    );
+    const audio = new Audio(`${import.meta.env.BASE_URL}audio/${animal.audioFile}`);
     audioRef.current = audio;
-
     audio.play().catch((error) => {
       if (error.name !== "AbortError") {
         setNotice("Audio could not play. Check the MP3 filename.");
@@ -81,18 +71,13 @@ export default function AnimalPage({ animalId, found = false }) {
 
   function moveAnimal(change) {
     const destination = goatIslandAnimals[currentIndex + change];
-
     if (!destination) {
-      setNotice(
-        change < 0 ? "This is the first animal!" : "More animals coming soon!"
-      );
+      setNotice(change < 0 ? "This is the first animal!" : "More animals coming soon!");
       return;
     }
-
     stopAudio();
-
-    const alreadyFound = getFoundAnimalIds().includes(destination.id);
-    navigate(alreadyFound ? destination.foundPath : destination.questPath);
+    // Never reveal a found animal by simply pressing Next or Previous.
+    navigate(destination.questPath);
   }
 
   function leaveAnimalPage(path) {
@@ -110,7 +95,7 @@ export default function AnimalPage({ animalId, found = false }) {
             onClick={() => leaveAnimalPage("/game2")}
             aria-label="Back to Goat Island landing page"
           >
-            <span aria-hidden="true">←</span> Back
+            <span aria-hidden="true">â†</span> Back
           </button>
 
           <button
@@ -148,23 +133,22 @@ export default function AnimalPage({ animalId, found = false }) {
           </h1>
 
           {found ? (
-            <div
-              className={`goat2-found-picture goat2-found-picture--${animal.id}`}
-            >
-              <img src={animal.image} alt={animal.name} />
-              <span className="goat2-sparkles" aria-hidden="true">
-                ✦ ✦
-              </span>
+            <div className={`goat2-found-picture goat2-found-picture--${animal.id}`}>
+              <img src={animal.foundImage} alt={`Happy ${animal.name}`} />
+              <span className="goat2-sparkles" aria-hidden="true">âœ¦ âœ¦</span>
             </div>
           ) : (
-            <div className="goat2-scroll">
-              <img src={scrollBlank} alt="" aria-hidden="true" />
-              <div className="goat2-scroll-writing">
-                <span className="goat2-paw" aria-hidden="true">✿</span>
-                <p>{animal.clue}</p>
-                <span className="goat2-paw" aria-hidden="true">✿</span>
+            <>
+              <div className="goat2-sad-picture">
+                <img src={animal.sadImage} alt={`Sad ${animal.name}`} />
               </div>
-            </div>
+              <div className="goat2-scroll goat2-scroll--with-animal">
+                <img src={scrollBlank} alt="" aria-hidden="true" />
+                <div className="goat2-scroll-writing">
+                  <p>{animal.clue}</p>
+                </div>
+              </div>
+            </>
           )}
         </section>
 
@@ -172,13 +156,7 @@ export default function AnimalPage({ animalId, found = false }) {
           {notice && (
             <div className="goat2-notice" role="status">
               <span>{notice}</span>
-              <button
-                type="button"
-                onClick={() => setNotice("")}
-                aria-label="Close message"
-              >
-                ×
-              </button>
+              <button type="button" onClick={() => setNotice("")} aria-label="Close message">Ã—</button>
             </div>
           )}
 
@@ -200,18 +178,17 @@ export default function AnimalPage({ animalId, found = false }) {
             >
               <span>Previous<br />Animal</span>
             </button>
-
             <button
               type="button"
               className="goat2-game-button goat2-button-blue"
               onClick={() => {
                 setNotice("");
+                setFoundIds(getFoundAnimalIds());
                 setDictionaryOpen(true);
               }}
             >
               Dictionary
             </button>
-
             <button
               type="button"
               className="goat2-game-button goat2-button-green"
@@ -236,20 +213,13 @@ export default function AnimalPage({ animalId, found = false }) {
               <div className="goat2-dictionary-list">
                 {goatIslandAnimals.map((entry) => {
                   const unlocked = foundIds.includes(entry.id);
-
                   return (
                     <div className="goat2-dictionary-entry" key={entry.id}>
                       {unlocked ? (
-                        <img src={entry.image} alt="" />
+                        <img src={entry.foundImage} alt="" />
                       ) : (
-                        <div
-                          className="goat2-dictionary-locked"
-                          aria-hidden="true"
-                        >
-                          ?
-                        </div>
+                        <div className="goat2-dictionary-locked" aria-hidden="true">?</div>
                       )}
-
                       <div>
                         <strong>{unlocked ? entry.name : "Unknown animal"}</strong>
                         <p>{unlocked ? "Discovered!" : "Not discovered yet"}</p>

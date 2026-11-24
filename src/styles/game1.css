@@ -34,7 +34,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  justify-self: start;
+  justify-self: stretch;
   min-width: 0;
 }
 
@@ -48,8 +48,10 @@
 .game1-stars {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
+  gap: clamp(8px, 1vw, 12px);
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 5px clamp(14px, 2vw, 28px);
   background: rgba(10, 38, 29, 0.65);
   border: 2px solid #d7b37b;
   border-radius: 12px;
@@ -58,6 +60,7 @@
 
 .game1-star {
   display: block;
+  min-width: 0;
   filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
 }
@@ -398,8 +401,8 @@
 /* Gentle entrances only when a new question is mounted.
    The React question keys ensure these never retrigger while answering. */
 @media (prefers-reduced-motion: no-preference) {
-  .game1-image {
-    animation: game1-picture-arrive 420ms cubic-bezier(.2, .75, .25, 1) both;
+  .game1-image[data-image-loaded] {
+    animation: game1-picture-arrive 480ms ease-out;
   }
 
   .question-box {
@@ -414,7 +417,7 @@
   .game1-answer-row:nth-child(2) { animation-delay: 165ms; }
   .game1-answer-row:nth-child(3) { animation-delay: 210ms; }
 
-  .game1-layout--opening :is(.game1-image, .question-box) {
+  .game1-layout--opening .question-box {
     animation-name: game1-opening-arrive;
     animation-duration: 580ms;
   }
@@ -439,8 +442,20 @@
   }
 
   @keyframes game1-picture-arrive {
-    from { opacity: .65; transform: translateY(7px) scale(.988); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
+    from {
+      opacity: .65;
+      transform: translateY(10px) scale(.95);
+    }
+
+    68% {
+      opacity: 1;
+      transform: translateY(-3px) scale(1.02);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
   }
 
   @keyframes game1-question-arrive {
@@ -530,7 +545,7 @@
     height: clamp(240px, 48dvh, 510px);
   }
   .game1-header {
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 12px;
     padding: 12px;
   }

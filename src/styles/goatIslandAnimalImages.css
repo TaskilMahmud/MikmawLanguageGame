@@ -1,0 +1,65 @@
+/* Additional animal visuals: keep the existing forest, title, and controls. */
+.goat2-sad-picture {
+  position: absolute;
+  z-index: 2;
+  top: 22%;
+  left: 6%;
+  width: 88%;
+  height: 54%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.goat2-sad-picture img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 2px rgba(19, 77, 50, 0.22));
+}
+
+/* Keep the location clue readable below the sad animal. */
+.goat2-scroll--with-animal {
+  top: auto;
+  bottom: 2%;
+  width: 71%;
+  max-height: 31%;
+  height: 31%;
+  aspect-ratio: auto;
+}
+
+.goat2-scroll--with-animal .goat2-scroll-writing {
+  height: 70%;
+}
+
+.goat2-scroll--with-animal .goat2-scroll-writing p {
+  font-size: clamp(11px, 3vw, 15px);
+  line-height: 1.1;
+  letter-spacing: -0.4px;
+}
+
+/* Found stickers include celebration rays, leaves, and fruit.
+   Allow a little more space than the original small rabbit artwork. */
+.goat2-found-picture > img,
+.goat2-found-picture--deer > img {
+  width: min(88%, 350px);
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 360px) {
+  .goat2-scroll--with-animal {
+    width: 78%;
+    max-height: 32%;
+    height: 32%;
+  }
+  .goat2-scroll--with-animal .goat2-scroll-writing p {
+    font-size: 11px;
+  }
+}

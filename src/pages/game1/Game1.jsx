@@ -322,6 +322,7 @@ export default function Game1() {
                   key={`image-${questionAnimationKey}`}
                   className="game1-image"
                   src={question.image}
+                  onLoad={(event) => event.currentTarget.setAttribute("data-image-loaded", "")}
                   fetchPriority="high"
                   alt="Question illustration"
                 />

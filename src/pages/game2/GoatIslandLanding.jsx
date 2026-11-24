@@ -12,9 +12,8 @@ export default function GoatIslandLanding() {
   const navigate = useNavigate();
   const [notice, setNotice] = useState("");
   const firstAnimal = goatIslandAnimals[0];
-  const playPath = getFoundAnimalIds().includes(firstAnimal.id)
-    ? firstAnimal.foundPath
-    : firstAnimal.questPath;
+  // Starting a game always shows the first hint; only NFC Found links reveal animals.
+  const playPath = firstAnimal.questPath;
 
   function restartGame() {
     if (
@@ -30,7 +29,6 @@ export default function GoatIslandLanding() {
       setNotice("Could not reset your saved animals.");
       return;
     }
-
     navigate(firstAnimal.questPath);
   }
 
@@ -39,7 +37,7 @@ export default function GoatIslandLanding() {
       <section className="goat2-phone goat-landing" aria-label="Goat Island start screen">
         <header className="goat2-header goat-landing__header">
           <Link className="goat2-game-button goat2-back-button" to="/menu">
-            <span aria-hidden="true">←</span> Back
+            <span aria-hidden="true">â†</span> Back
           </Link>
           <h1 className="goat-landing__logo">
             <img src={goatLogo} alt="Goat Island" />

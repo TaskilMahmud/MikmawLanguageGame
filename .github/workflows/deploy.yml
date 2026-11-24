@@ -3,7 +3,8 @@ name: Deploy React Game
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -16,12 +17,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
 
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # First job: Build and upload the website
+  build:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
@@ -30,7 +29,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22'
           cache: npm
 
       - name: Install dependencies
@@ -47,6 +46,16 @@ jobs:
         with:
           path: dist
 
+  # Second job: Deploy only after the build job finishes
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy website
         id: deployment
         uses: actions/deploy-pages@v4

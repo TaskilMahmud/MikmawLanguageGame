@@ -1,244 +1,108 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import goatLogo from "../../assets/goat-island/goat-logo.webp";
-import forestScene from "../../assets/goat-island/forest-scene.webp";
-import scrollBlank from "../../assets/goat-island/scroll-blank.webp";
-import speakerIcon from "../../assets/goat-island/speaker-icon.webp";
-
 import {
   getGoatIslandAnimal,
   goatIslandAnimals,
   GOAT_ISLAND_TOTAL_ANIMALS,
 } from "../../data/goatIslandAnimals";
-import { getFoundAnimalIds, saveFoundAnimal } from "../../data/goatIslandProgress";
-import "../../styles/game2.css";
-import "../../styles/goatIslandAnimalImages.css";
 
-export default function AnimalPage({ animalId, found = false }) {
-  const navigate = useNavigate();
-  const animal = getGoatIslandAnimal(animalId);
+// These images are included in the ZIP, so you don't need to rename the
+// images you already have in src/assets/goat-island/.
+import background from "../../assets/goat-island/feed-ui/background.png";
+import goatIslandLogo from "../../assets/goat-island/feed-ui/logo.png";
+import rabbitPlate from "../../assets/goat-island/feed-ui/plate-rabbit.png";
+import beaverPlate from "../../assets/goat-island/feed-ui/plate-beaver.png";
+import porcupinePlate from "../../assets/goat-island/feed-ui/plate-porcupine.png";
+import raccoonPlate from "../../assets/goat-island/feed-ui/plate-raccoon.png";
+import eaglePlate from "../../assets/goat-island/feed-ui/plate-eagle.png";
+import foxPlate from "../../assets/goat-island/feed-ui/plate-fox.png";
+import moosePlate from "../../assets/goat-island/feed-ui/plate-moose.png";
+import bearPlate from "../../assets/goat-island/feed-ui/plate-bear.png";
+import deerPlate from "../../assets/goat-island/feed-ui/plate-deer.png";
 
-  const [notice, setNotice] = useState("");
-  const [dictionaryOpen, setDictionaryOpen] = useState(false);
-  const [foundIds, setFoundIds] = useState(getFoundAnimalIds);
-  const audioRef = useRef(null);
+// This stylesheet affects ONLY the new Game 2 screen.
+import "../../styles/feedTheAnimal.css";
 
-  const discoveredAnimalId = found ? animal?.id : undefined;
+// Exactly the 5 + 4 arrangement in your screenshot.
+const firstRow = [
+  { id: "rabbit", image: rabbitPlate, name: "Rabbit" },
+  { id: "beaver", image: beaverPlate, name: "Beaver" },
+  { id: "porcupine", image: porcupinePlate, name: "Porcupine" },
+  { id: "raccoon", image: raccoonPlate, name: "Raccoon" },
+  { id: "eagle", image: eaglePlate, name: "Eagle" },
+];
 
-  useEffect(() => {
-    if (discoveredAnimalId) {
-      setFoundIds(saveFoundAnimal(discoveredAnimalId));
-    }
-  }, [discoveredAnimalId]);
+const secondRow = [
+  { id: "fox", image: foxPlate, name: "Fox" },
+  { id: "moose", image: moosePlate, name: "Moose" },
+  { id: "bear", image: bearPlate, name: "Bear" },
+  { id: "deer", image: deerPlate, name: "Deer" },
+];
 
-  useEffect(() => {
-    return () => {
-      audioRef.current?.pause();
-      audioRef.current = null;
-    };
-  }, []);
-
-  if (!animal) return <p>Unknown Goat Island animal.</p>;
-
-  const currentIndex = goatIslandAnimals.findIndex((entry) => entry.id === animal.id);
-
-  function stopAudio() {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-      audioRef.current = null;
-    }
-  }
-
-  function playPronunciation() {
-    stopAudio();
-    setNotice("");
-
-    if (!animal.audioFile) {
-      setNotice(`Pronunciation for ${animal.name} has not been added yet.`);
-      return;
-    }
-
-    const audio = new Audio(`${import.meta.env.BASE_URL}audio/${animal.audioFile}`);
-    audioRef.current = audio;
-    audio.play().catch((error) => {
-      if (error.name !== "AbortError") {
-        setNotice("Audio could not play. Check the MP3 filename.");
-      }
-    });
-  }
-
-  function moveAnimal(change) {
-    const destination = goatIslandAnimals[currentIndex + change];
-    if (!destination) {
-      setNotice(change < 0 ? "This is the first animal!" : "More animals coming soon!");
-      return;
-    }
-    stopAudio();
-    // Never reveal a found animal by simply pressing Next or Previous.
-    navigate(destination.questPath);
-  }
-
-  function leaveAnimalPage(path) {
-    stopAudio();
-    navigate(path);
-  }
-
+function WoodenRow({ animals, selectedId, rowNumber }) {
   return (
-    <main className="goat2-page">
-      <section className="goat2-phone" aria-label={`${animal.name} game`}>
-        <header className="goat2-header">
-          <button
-            type="button"
-            className="goat2-game-button goat2-back-button"
-            onClick={() => leaveAnimalPage("/game2")}
-            aria-label="Back to Goat Island landing page"
-          >
-            <span aria-hidden="true">â†</span> Back
-          </button>
-
-          <button
-            type="button"
-            className="goat2-logo-button"
-            onClick={() => leaveAnimalPage("/menu")}
-            aria-label="Back to game menu"
-            title="Back to menu"
-          >
-            <img src={goatLogo} alt="Goat Island" />
-          </button>
-
-          <div
-            className="goat2-counter"
-            aria-label={`Animal ${animal.number} of ${GOAT_ISLAND_TOTAL_ANIMALS}`}
-          >
-            {animal.number}/{GOAT_ISLAND_TOTAL_ANIMALS}
-          </div>
-        </header>
-
-        <section
-          className="goat2-scene"
-          aria-label={found ? animal.foundTitle : animal.questTitle}
+    <div className={`feed2-tiles feed2-tiles--${rowNumber}`}>
+      {animals.map((animal) => (
+        <div
+          className={`feed2-tile ${animal.id === selectedId ? "feed2-tile--selected" : ""}`}
+          key={animal.id}
         >
+          <span className="feed2-tile-status">Sad</span>
           <img
-            className="goat2-forest"
-            src={forestScene}
-            alt=""
-            aria-hidden="true"
+            className="feed2-tile-image"
+            src={animal.image}
+            alt={`${animal.name} wooden plate with its Mi’kmaw name`}
             draggable={false}
           />
+        </div>
+      ))}
+    </div>
+  );
+}
 
-          <h1 className="goat2-title">
-            {found ? animal.foundTitle : animal.questTitle}
-          </h1>
+// The sound icon, Back, and arrows are visuals only in this first version.
+// No click handlers or NFC functionality yet, as requested.
+export default function AnimalPage({ animalId = "rabbit", found = false }) {
+  const animal = getGoatIslandAnimal(animalId) || goatIslandAnimals[0];
+  const allAnimals = [...firstRow, ...secondRow];
+  const animalNumber = allAnimals.findIndex((item) => item.id === animal.id) + 1;
+  const heroImage = found ? animal.foundImage : animal.sadImage;
 
-          {found ? (
-            <div className={`goat2-found-picture goat2-found-picture--${animal.id}`}>
-              <img src={animal.foundImage} alt={`Happy ${animal.name}`} />
-              <span className="goat2-sparkles" aria-hidden="true">âœ¦ âœ¦</span>
-            </div>
-          ) : (
-            <>
-              <div className="goat2-sad-picture">
-                <img src={animal.sadImage} alt={`Sad ${animal.name}`} />
-              </div>
-              <div className="goat2-scroll goat2-scroll--with-animal">
-                <img src={scrollBlank} alt="" aria-hidden="true" />
-                <div className="goat2-scroll-writing">
-                  <p>{animal.clue}</p>
-                </div>
-              </div>
-            </>
-          )}
-        </section>
+  return (
+    <main className="feed2-page">
+      <section className="feed2-phone" aria-label="Feed the animal game UI">
+        {/* The full screen background you approved: forest above, cream below. */}
+        <img className="feed2-background" src={background} alt="" draggable={false} />
 
-        <section className="goat2-controls" aria-label="Animal controls">
-          {notice && (
-            <div className="goat2-notice" role="status">
-              <span>{notice}</span>
-              <button type="button" onClick={() => setNotice("")} aria-label="Close message">Ã—</button>
-            </div>
-          )}
+        <header className="feed2-header">
+          <span className="feed2-back" aria-label="Back (visual only)">← Back</span>
+          <h1>Feed the animal</h1>
+          <span className="feed2-progress">
+            {animalNumber} / {GOAT_ISLAND_TOTAL_ANIMALS}
+          </span>
+        </header>
 
-          <button
-            type="button"
-            className="goat2-game-button goat2-button-red"
-            onClick={playPronunciation}
-            aria-label={`Play ${animal.name} pronunciation`}
-          >
-            <img className="goat2-sound-icon" src={speakerIcon} alt="" />
-            <span>{animal.name}</span>
-          </button>
+        <div className="feed2-pronunciation" aria-label={`${animal.name} pronunciation (visual only)`}>
+          <svg className="feed2-sound-icon" viewBox="0 0 40 40" aria-hidden="true">
+            <path fill="currentColor" d="M6 14h8l10-8v28l-10-8H6z" />
+            <path d="M28 13c4 4 4 10 0 14M32 9c7 6 7 16 0 22" fill="none" stroke="currentColor" strokeWidth="3.2" strokeLinecap="round" />
+          </svg>
+          <span>{animal.name}</span>
+        </div>
 
-          <div className="goat2-nav-buttons">
-            <button
-              type="button"
-              className="goat2-game-button goat2-button-yellow"
-              onClick={() => moveAnimal(-1)}
-            >
-              <span>Previous<br />Animal</span>
-            </button>
-            <button
-              type="button"
-              className="goat2-game-button goat2-button-blue"
-              onClick={() => {
-                setNotice("");
-                setFoundIds(getFoundAnimalIds());
-                setDictionaryOpen(true);
-              }}
-            >
-              Dictionary
-            </button>
-            <button
-              type="button"
-              className="goat2-game-button goat2-button-green"
-              onClick={() => moveAnimal(1)}
-            >
-              <span>Next<br />Animal</span>
-            </button>
-          </div>
-        </section>
+        <img className="feed2-hero" src={heroImage} alt={`${found ? "Found" : "Sad"} ${animal.name}`} draggable={false} />
 
-        {dictionaryOpen && (
-          <div className="goat2-modal-backdrop">
-            <section
-              className="goat2-dictionary"
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="goat-dictionary-heading"
-            >
-              <h2 id="goat-dictionary-heading">Animal Dictionary</h2>
-              <p>Discovered: {foundIds.length}/{GOAT_ISLAND_TOTAL_ANIMALS}</p>
+        <span className="feed2-arrow feed2-arrow--left" aria-label="Previous (visual only)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 4-8 8 8 8" /></svg>
+        </span>
+        <span className="feed2-arrow feed2-arrow--right" aria-label="Next (visual only)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8" /></svg>
+        </span>
 
-              <div className="goat2-dictionary-list">
-                {goatIslandAnimals.map((entry) => {
-                  const unlocked = foundIds.includes(entry.id);
-                  return (
-                    <div className="goat2-dictionary-entry" key={entry.id}>
-                      {unlocked ? (
-                        <img src={entry.foundImage} alt="" />
-                      ) : (
-                        <div className="goat2-dictionary-locked" aria-hidden="true">?</div>
-                      )}
-                      <div>
-                        <strong>{unlocked ? entry.name : "Unknown animal"}</strong>
-                        <p>{unlocked ? "Discovered!" : "Not discovered yet"}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+        <img className="feed2-logo" src={goatIslandLogo} alt="Goat Island" draggable={false} />
 
-              <button
-                type="button"
-                className="goat2-game-button goat2-button-blue goat2-modal-close"
-                onClick={() => setDictionaryOpen(false)}
-              >
-                Close
-              </button>
-            </section>
-          </div>
-        )}
+        <WoodenRow animals={firstRow} selectedId={animal.id} rowNumber="first" />
+        <WoodenRow animals={secondRow} selectedId={animal.id} rowNumber="second" />
+
+        <p className="feed2-footer">find the NFC tag</p>
       </section>
     </main>
   );

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 // Game 2 uses only this JSX file and goatIslandAnimalImages.css.
@@ -99,6 +99,40 @@ export function resetFoundAnimals() {
   }
 }
 
+// Match Game 1's confetti colors, stagger, and falling duration.
+// These pieces are fixed so React re-renders don't restart the animation.
+const regularConfettiCount = 22;
+const confettiDurations = [
+  ...Array.from({ length: regularConfettiCount }, (_, index) => 3.2 + (index % 4) * 0.25),
+  2.65, 2.8, 2.7, 2.9, 2.75,
+  1.85, 2.1, 1.95, 2.15, 1.9,
+];
+const foundConfetti = confettiDurations.map((duration, index) => ({
+  left: `${4 + ((index * 43) % 92)}%`,
+  delay: `${(index % 7) * (index < regularConfettiCount ? 0.11 : 0.04)}s`,
+  duration: `${duration}s`,
+  color: ["#e7b339", "#d86d52", "#4c966d", "#7c9ec7", "#cc87a3"][index % 5],
+}));
+
+function FoundConfetti() {
+  return (
+    <div className="feed2-confetti" aria-hidden="true">
+      {foundConfetti.map((piece, index) => (
+        <span
+          key={index}
+          className="feed2-confetti-piece"
+          style={{
+            "--piece-left": piece.left,
+            "--piece-delay": piece.delay,
+            "--piece-duration": piece.duration,
+            "--piece-color": piece.color,
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
 function AnimalRow({ animals, selectedId, foundIds, onSelect, row }) {
   return (
     <div className={`feed2-tiles feed2-tiles--${row}`} role="group" aria-label={`Animal selection row ${row}`}>
@@ -135,14 +169,26 @@ export default function Game2() {
   const selectedIndex = ANIMALS.findIndex((animal) => animal.id === current.id);
 
   const [storedFoundIds, setStoredFoundIds] = useState(getFoundAnimalIds);
+  const [celebrationId, setCelebrationId] = useState(null);
+  const [animalWiggle, setAnimalWiggle] = useState({ id: null, count: 0 });
+  const handledPathRef = useRef(null);
 
   useEffect(() => {
+    // Handle each URL visit once, including in React StrictMode (which runs
+    // effects twice during development). Don't replay confetti on a refresh
+    // or when reopening a tag that has already been found.
+    if (handledPathRef.current === animalId) return;
+    handledPathRef.current = animalId;
+
     if (isKnownAnimal && isFoundLink) {
+      const alreadyFound = getFoundAnimalIds().includes(current.id);
       setStoredFoundIds(saveFoundAnimal(current.id));
+      setCelebrationId(alreadyFound ? null : current.id);
     } else {
       setStoredFoundIds(getFoundAnimalIds());
+      setCelebrationId(null);
     }
-  }, [isFoundLink, isKnownAnimal, current.id]);
+  }, [animalId, isFoundLink, isKnownAnimal, current.id]);
 
   // Keep progress in sync if another tab in this browser opens an NFC link.
   useEffect(() => {
@@ -157,8 +203,16 @@ export default function Game2() {
   const isHappy = foundIds.has(current.id);
 
   function selectAnimal(id) {
+    // A new selection returns the previous animal to its resting pose.
+    setAnimalWiggle((previous) => ({ ...previous, id: null }));
     // Update the visible animal AND the address bar, but do not unlock anything.
     navigate(`/game2/${id}`);
+  }
+
+  function wiggleCurrentAnimal() {
+    // Bump the key each time so consecutive clicks replay the CSS animation.
+    // Clicking the animal does NOT mark it found or change the URL.
+    setAnimalWiggle((previous) => ({ id: current.id, count: previous.count + 1 }));
   }
 
   function moveAnimal(offset) {
@@ -191,13 +245,20 @@ export default function Game2() {
           <span>{current.name}</span>
         </div>
 
-        <img
-          key={`${current.id}-${isHappy ? "happy" : "sad"}`}
-          className="feed2-hero"
-          src={isHappy ? current.happy : current.sad}
-          alt={`${isHappy ? "Happy" : "Sad"} ${current.name}`}
-          draggable={false}
-        />
+        <button
+          key={`${current.id}-${isHappy ? "happy" : "sad"}-${animalWiggle.id === current.id ? animalWiggle.count : "idle"}`}
+          type="button"
+          className={`feed2-hero${animalWiggle.id === current.id ? " feed2-hero--wiggle" : ""}`}
+          onClick={wiggleCurrentAnimal}
+          aria-label={`Make the ${current.name} move left and right`}
+          title={`Tap to wiggle ${current.name}`}
+        >
+          <img
+            src={isHappy ? current.happy : current.sad}
+            alt=""
+            draggable={false}
+          />
+        </button>
 
         <button
           type="button"
@@ -222,6 +283,11 @@ export default function Game2() {
         <AnimalRow animals={ANIMALS.slice(5)} selectedId={current.id} foundIds={foundIds} onSelect={selectAnimal} row="second" />
 
         <p className="feed2-footer" aria-live="polite">{foundIds.size} / {ANIMALS.length} animals found — find the NFC tag</p>
+
+        {/* Confetti plays ONLY after the first scan of each animal's NFC link. */}
+        {isKnownAnimal && isFoundLink && celebrationId === current.id && (
+          <FoundConfetti />
+        )}
       </section>
     </main>
   );

@@ -346,10 +346,10 @@
 }
 .gi-landing-panel {
   position: absolute;
-  top: 58%;
+  top: 63%;
   left: 8%;
   width: 84%;
-  height: 36%;
+  height: 30%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -361,16 +361,9 @@
   background: #fff0cb;
   box-shadow: 0 6px 0 rgba(66, 39, 18, .2);
 }
-.gi-landing-heading {
-  margin: 0;
-  font-size: clamp(20px, 7cqw, 31px);
-  font-weight: 900;
-  line-height: 1.1;
-  color: #073d22;
-}
 .gi-landing-progress {
   margin: 0;
-  font-size: clamp(14px, 4cqw, 20px);
+  font-size: clamp(16px, 5.0cqw, 24px);
   font-weight: 800;
   color: #22513b;
 }
@@ -397,10 +390,160 @@
   font-weight: 700;
 }
 @media (max-width: 360px) {
-  .gi-landing-panel { top: 56%; height: 39%; }
+  .gi-landing-panel { top: 63%; height: 31%; }
 }
 
 /* The arrows are now actual Next / Previous buttons. */
 .feed2-arrow:hover { background: #005b3b; }
 .feed2-arrow:active { transform: scale(.95); }
 .feed2-arrow:focus-visible { outline: 3px solid #ffca3a; outline-offset: 3px; }
+
+
+/* ================================================================
+   GOAT ISLAND LANDING PAGE - BOUNCING CHILD BEHIND THE PANEL
+   Changes ONLY .gi-landing-* classes. Game 1 and Game 2 gameplay
+   keep all their existing styles and behavior.
+   ================================================================ */
+
+/* Lift the Back button and leave a little more room in the upper scene. */
+.gi-landing-content {
+  padding: 2.5% 4% 5%;
+}
+
+.gi-landing-back {
+  position: relative;
+  z-index: 5;
+  padding: 1.1% 2.3%;
+  border-radius: 10px;
+  font-size: clamp(11px, 3.2cqw, 15px);
+}
+
+/* Smaller logo placed higher so the child can stand below it. */
+.gi-landing-logo {
+  z-index: 1;
+  top: 1.5%;
+  left: 20%;
+  width: 60%;
+  height: 26%;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* The child is in FRONT of the background but BEHIND the text panel. */
+.gi-landing-child {
+  position: absolute;
+  z-index: 2;
+  top: 27%;
+  left: 17%;
+  width: 66%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  animation: gi-child-bounce 2.2s ease-in-out infinite;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+/* The smaller cream card sits lower, in front of the bouncing child. */
+.gi-landing-panel {
+  z-index: 3;
+}
+
+@keyframes gi-child-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Honor accessibility settings that request less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .gi-landing-child {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+
+/* ================================================================
+   GAME 2 - CONFETTI ON THE FIRST NFC DISCOVERY
+   Reuses Game 1's five colors, timing, delayed drops and rotations.
+   Scoped to the Goat Island phone so its buttons stay clickable.
+   ================================================================ */
+.feed2-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.feed2-confetti-piece {
+  position: absolute;
+  top: -20px;
+  left: var(--piece-left);
+  width: 7px;
+  height: 11px;
+  border-radius: 2px;
+  background-color: var(--piece-color);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .feed2-confetti-piece {
+    animation: feed2-confetti-drop var(--piece-duration) ease-in var(--piece-delay) 1 both;
+  }
+
+  @keyframes feed2-confetti-drop {
+    0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+    12% { opacity: .68; }
+    72% { opacity: .58; }
+    100% { transform: translate3d(14px, 190cqw, 0) rotate(390deg); opacity: 0; }
+  }
+}
+
+
+/* ================================================================
+   GAME 2 - TAP CENTRAL ANIMAL TO WIGGLE LEFT AND RIGHT
+   The image is a real button; arrows and NFC links are unchanged.
+   ================================================================ */
+.feed2-hero {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+}
+
+.feed2-hero > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.feed2-hero:focus-visible {
+  outline: 3px solid #f5c340;
+  outline-offset: 3px;
+  border-radius: 14px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .feed2-hero--wiggle {
+    animation: feed2-animal-wiggle 720ms ease-in-out 1 both;
+  }
+
+  @keyframes feed2-animal-wiggle {
+    0%, 100% { transform: translateX(0) rotate(0deg) scale(1.08); }
+    18% { transform: translateX(-23px) rotate(-4deg) scale(1.08); }
+    40% { transform: translateX(23px) rotate(4deg) scale(1.08); }
+    61% { transform: translateX(-15px) rotate(-2.5deg) scale(1.08); }
+    80% { transform: translateX(12px) rotate(2deg) scale(1.08); }
+  }
+}

@@ -93,29 +93,30 @@
 .feed2-pronunciation {
   position: absolute;
   z-index: 3;
-  top: 6.55%;
-  left: 26.4%;
-  width: 47.2%;
-  height: 6.12%;
+  top: 6.1%;
+  left: 15%;
+  width: 70%;
+  height: 7.1%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5%;
+  gap: 4%;
+  padding: 0 3%;
   border: min(0.65cqw, 3px) solid #e69c21;
   border-radius: 999px;
   background: #fff0c5;
   box-shadow: 0 2px 0 #fffaf1, 0 4px 3px rgba(80, 50, 15, 0.32);
   color: #043e22;
-  font-size: clamp(16px, 7.2cqw, 34px);
+  font-size: clamp(19px, 7.8cqw, 36px);
   font-weight: 900;
   line-height: 1;
   white-space: nowrap;
 }
 
 .feed2-sound-icon {
-  flex: 0 0 17%;
-  width: 17%;
-  height: 76%;
+  flex: 0 0 13%;
+  width: 13%;
+  height: 73%;
 }
 
 /* Large central animal; applies to ALL nine animals. */
@@ -136,6 +137,12 @@
 
 .feed2-arrow {
   position: absolute;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: inherit;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   z-index: 3;
   top: 25.5%;
   width: 7%;
@@ -392,3 +399,8 @@
 @media (max-width: 360px) {
   .gi-landing-panel { top: 56%; height: 39%; }
 }
+
+/* The arrows are now actual Next / Previous buttons. */
+.feed2-arrow:hover { background: #005b3b; }
+.feed2-arrow:active { transform: scale(.95); }
+.feed2-arrow:focus-visible { outline: 3px solid #ffca3a; outline-offset: 3px; }

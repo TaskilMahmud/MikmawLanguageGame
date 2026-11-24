@@ -2,8 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ANIMALS, getFoundAnimalIds, resetFoundAnimals } from "./Game2";
 
-import background from "../../assets/goat-island/feed-ui/background.png";
-import logo from "../../assets/goat-island/feed-ui/logo.png";
+import background from "../../assets/goat-island/background.png";
+import logo from "../../assets/goat-island/logo.png";
 import "../../styles/goatIslandAnimalImages.css";
 
 // Separate landing page: easy to redesign later. Restart lives here.

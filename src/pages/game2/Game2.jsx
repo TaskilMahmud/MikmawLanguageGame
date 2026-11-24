@@ -147,7 +147,7 @@ function AnimalRow({ animals, selectedId, foundIds, onSelect, row }) {
             aria-pressed={selectedId === animal.id}
             onClick={() => onSelect(animal.id)}
           >
-            <span className="feed2-tile-status">{isHappy ? "Happy" : "Sad"}</span>
+            <span className="feed2-tile-status">{isHappy ? "Happy" : "Hungry"}</span>
             <img className="feed2-tile-image" src={isHappy ? animal.happyPlate : animal.sadPlate} alt="" draggable={false} />
           </button>
         );

@@ -1,4 +1,4 @@
-
+﻿
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -68,8 +68,7 @@ import deerFound from "../../assets/goat-island/Animal-Images/deer_found.webp";
 // ========================================
 // STYLING
 // ========================================
-
-import "../../styles/goatIslandAnimalImages.css";
+import "../../styles/game2.css";
 
 
 // Plate order: 5 in the top row, 4 in the bottom row.
@@ -317,3 +316,4 @@ export default function Game2() {
     </main>
   );
 }
+

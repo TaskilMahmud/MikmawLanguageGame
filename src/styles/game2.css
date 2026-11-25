@@ -1,0 +1,411 @@
+/* ============================================================
+   GOAT ISLAND — GAME 2: FEED THE ANIMALS
+   ------------------------------------------------------------
+   Applies to Game2.jsx only, including normal and NFC-found URLs.
+   Sections: screen frame, header, animal, navigation, plates,
+   progress, confetti, motion preferences, desktop background.
+   Layout coordinates are relative to the 432 x 757 game artwork.
+   ============================================================ */
+
+/* 1. Screen and responsive frame -------------------------------- */
+.feed2-page,
+.feed2-page * {
+  box-sizing: border-box;
+}
+
+.feed2-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden; /* Entire screen fits on phones: no page scrolling. */
+  background: #f9dfb0;
+  font-family: Arial, "Trebuchet MS", sans-serif;
+}
+
+.feed2-phone {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size; /* Child typography scales to frame width. */
+  flex: 0 0 auto;
+  width: min(100vw, 57.067vh);
+  width: min(100vw, 57.067dvh);
+  max-width: none;
+  max-height: 100%;
+  aspect-ratio: 432 / 757;
+  overflow: hidden;
+  background: #f9dfb0;
+  color: #003c21;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feed2-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 2. Header, Back button, and page count ------------------------- */
+.feed2-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: 24% minmax(0, 1fr) 21%;
+  align-items: center;
+  width: 100%;
+  height: 5.35%;
+  padding: 0 3%;
+  background: #ffe9ba;
+  color: #063b22;
+}
+
+.feed2-header h1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: clamp(13px, 4.7cqw, 23px);
+  font-weight: 900;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.feed2-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: clamp(11px, 3.5cqw, 18px);
+  font-weight: 900;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.feed2-back:focus-visible {
+  outline: 3px solid #ffbd3a;
+  outline-offset: 3px;
+}
+
+.feed2-progress {
+  display: grid;
+  place-items: center;
+  justify-self: end;
+  width: 84%;
+  height: 76%;
+  border-radius: 999px;
+  background: #003b21;
+  color: #fff4d4;
+  box-shadow: 0 1px 2px #8c7e59;
+  font-size: clamp(11px, 3.7cqw, 18px);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+/* 3. Animal name, central image, and navigation ------------------ */
+.feed2-pronunciation {
+  position: absolute;
+  top: 6.1%;
+  left: 15%;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4%;
+  width: 70%;
+  height: 7.1%;
+  padding: 0 3%;
+  border: min(0.65cqw, 3px) solid #e69c21;
+  border-radius: 999px;
+  background: #fff0c5;
+  box-shadow: 0 2px 0 #fffaf1, 0 4px 3px rgba(80, 50, 15, 0.32);
+  color: #043e22;
+  font-size: clamp(19px, 7.8cqw, 36px);
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.feed2-sound-icon {
+  flex: 0 0 13%;
+  width: 13%;
+  height: 73%;
+}
+
+/* The central animal is a button: tapping it replays the wiggle. */
+.feed2-hero {
+  position: absolute;
+  top: 13.4%;
+  left: 5%;
+  z-index: 2;
+  display: block;
+  width: 90%;
+  height: 34%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  transform: scale(1.08);
+  transform-origin: center;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.feed2-hero > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+.feed2-hero:focus-visible {
+  outline: 3px solid #f5c340;
+  outline-offset: 3px;
+}
+
+.feed2-arrow {
+  position: absolute;
+  top: 25.5%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 7%;
+  height: 4.5%;
+  margin: 0;
+  padding: 0;
+  border: 2px solid #fff0c8;
+  border-radius: 22%;
+  background: #00402a;
+  color: #fff4d5;
+  box-shadow: 0 2px 0 rgba(56, 37, 14, 0.3);
+  font-family: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.feed2-arrow--left { left: 2%; }
+.feed2-arrow--right { right: 2%; }
+
+.feed2-arrow svg {
+  width: 55%;
+  height: 70%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.feed2-arrow:hover { background: #005b3b; }
+.feed2-arrow:active { transform: scale(0.95); }
+.feed2-arrow:focus-visible {
+  outline: 3px solid #ffca3a;
+  outline-offset: 3px;
+}
+
+.feed2-logo {
+  position: absolute;
+  top: 45.8%;
+  left: 20%;
+  z-index: 2;
+  width: 60%;
+  height: 12%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 4. Animal plate rows and found/hungry labels ------------------- */
+.feed2-tiles {
+  position: absolute;
+  z-index: 3;
+  display: grid;
+  align-items: start;
+  min-width: 0;
+}
+
+.feed2-tiles--first {
+  top: 60.05%;
+  left: 2.1%;
+  width: 95.8%;
+  height: 16.5%;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.8%;
+}
+
+.feed2-tiles--second {
+  top: 75.85%;
+  left: 4.5%;
+  width: 91%;
+  height: 17%;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.5%;
+}
+
+.feed2-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.feed2-tile-status {
+  flex: 0 0 12.5%;
+  height: 12.5%;
+  font-size: clamp(9px, 3cqw, 16px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.feed2-tile--found .feed2-tile-status {
+  color: #006d3b;
+}
+
+.feed2-tile-image {
+  display: block;
+  width: 100%;
+  height: 87.5%;
+  object-fit: contain;
+  object-position: center top;
+  pointer-events: none;
+  user-select: none;
+  transition: filter 120ms ease;
+}
+
+.feed2-tile:hover .feed2-tile-image {
+  filter: brightness(1.06);
+}
+
+.feed2-tile--selected .feed2-tile-image,
+.feed2-tile--selected:hover .feed2-tile-image {
+  filter: drop-shadow(0 0 2px #ffca05) drop-shadow(0 0 3px #eaaa00);
+}
+
+.feed2-tile--found .feed2-tile-image {
+  animation: feed2-unlocked-pop 250ms ease-out;
+}
+
+.feed2-tile:focus-visible {
+  outline: 3px solid #034125;
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+
+@keyframes feed2-unlocked-pop {
+  from { transform: scale(0.94); }
+  to { transform: scale(1); }
+}
+
+.feed2-footer {
+  position: absolute;
+  top: 95.15%;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  margin: 0;
+  color: #073d22;
+  font-size: clamp(11px, 3.5cqw, 17px);
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+}
+
+/* 5. Confetti and tap-to-wiggle animation ------------------------ */
+.feed2-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.feed2-confetti-piece {
+  position: absolute;
+  top: -20px;
+  left: var(--piece-left);
+  width: 7px;
+  height: 11px;
+  border-radius: 2px;
+  background-color: var(--piece-color);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .feed2-confetti-piece {
+    animation: feed2-confetti-drop var(--piece-duration) ease-in var(--piece-delay) 1 both;
+  }
+
+  .feed2-hero--wiggle {
+    animation: feed2-animal-wiggle 720ms ease-in-out 1 both;
+  }
+
+  @keyframes feed2-confetti-drop {
+    0% { transform: translate3d(0, -20px, 0) rotate(0deg); opacity: 0; }
+    12% { opacity: 0.68; }
+    72% { opacity: 0.58; }
+    100% { transform: translate3d(14px, 190cqw, 0) rotate(390deg); opacity: 0; }
+  }
+
+  @keyframes feed2-animal-wiggle {
+    0%, 100% { transform: translateX(0) rotate(0deg) scale(1.08); }
+    18% { transform: translateX(-23px) rotate(-4deg) scale(1.08); }
+    40% { transform: translateX(23px) rotate(4deg) scale(1.08); }
+    61% { transform: translateX(-15px) rotate(-2.5deg) scale(1.08); }
+    80% { transform: translateX(12px) rotate(2deg) scale(1.08); }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feed2-tile-image { transition: none; }
+  .feed2-tile--found .feed2-tile-image { animation: none; }
+}
+
+/* 6. Viewport styles -------------------------------------------- */
+@media (min-width: 501px) {
+  .feed2-page {
+    background-color: #090d0b;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.90)),
+      url("../assets/goat-island/woodland-animals.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 500px) {
+  .feed2-phone { box-shadow: none; }
+}

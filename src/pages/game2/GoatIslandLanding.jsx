@@ -1,4 +1,4 @@
-
+﻿
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ import background from "../../assets/goat-island/background.webp";
 import logo from "../../assets/goat-island/logo.webp";
 import boy from "../../assets/boy.webp";
 
-import "../../styles/goatIslandAnimalImages.css";
+import "../../styles/game2Landing.css";
 
 export default function GoatIslandLanding() {
   const navigate = useNavigate();
@@ -31,13 +31,13 @@ export default function GoatIslandLanding() {
   }
 
   return (
-    <main className="feed2-page">
+    <main className="gi-landing-page">
       <section
-        className="feed2-phone"
+        className="gi-landing-phone"
         aria-label="Goat Island landing page"
       >
         <img
-          className="feed2-background"
+          className="gi-landing-background"
           src={background}
           alt=""
           draggable={false}
@@ -107,3 +107,4 @@ export default function GoatIslandLanding() {
     </main>
   );
 }
+

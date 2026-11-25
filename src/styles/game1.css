@@ -897,3 +897,47 @@
     }
   }
 }
+
+
+
+/* =====================================
+   GAME 1 - CENTER COMPLETION SCREEN
+   ===================================== */
+
+.game1-complete-screen .game1-complete {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  text-align: center;
+  gap: 20px;
+}
+
+/* Center heading and Great Job text */
+.game1-complete > div:first-child {
+  width: 100%;
+  text-align: center;
+}
+
+.game1-complete h1,
+.game1-complete .game1-complete__praise {
+  text-align: center;
+}
+
+/* Center the three stars */
+.game1-complete .game1-stars--complete {
+  justify-self: center;
+  justify-content: center;
+  margin-inline: auto;
+}
+
+/* Center both action buttons */
+.game1-complete .game1-complete__actions {
+  width: min(100%, 432px);
+  margin-inline: auto;
+  justify-self: center;
+}
+
+.game1-complete .game1-complete__actions .wooden-button {
+  width: 100%;
+  min-width: 0;
+}

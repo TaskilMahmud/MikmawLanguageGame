@@ -1,51 +1,76 @@
+
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-// Game 2 uses only this JSX file and goatIslandAnimalImages.css.
-import background from "../../assets/goat-island/background.png";
-import logo from "../../assets/goat-island/logo.png";
+// ========================================
+// GOAT ISLAND BACKGROUND AND LOGO
+// ========================================
 
-import rabbitPlate from "../../assets/goat-island/Plates/plate-rabbit.png";
-import beaverPlate from "../../assets/goat-island/Plates/plate-beaver.png";
-import porcupinePlate from "../../assets/goat-island/Plates/plate-porcupine.png";
-import raccoonPlate from "../../assets/goat-island/Plates/plate-raccoon.png";
-import eaglePlate from "../../assets/goat-island/Plates/plate-eagle.png";
-import foxPlate from "../../assets/goat-island/Plates/plate-fox.png";
-import moosePlate from "../../assets/goat-island/Plates/plate-moose.png";
-import bearPlate from "../../assets/goat-island/Plates/plate-bear.png";
-import deerPlate from "../../assets/goat-island/Plates/plate-deer.png";
+import background from "../../assets/goat-island/background.webp";
+import logo from "../../assets/goat-island/logo.webp";
 
-import rabbitHappyPlate from "../../assets/goat-island/Plates/plate-rabbit-happy.png";
-import beaverHappyPlate from "../../assets/goat-island/Plates/plate-beaver-happy.png";
-import porcupineHappyPlate from "../../assets/goat-island/Plates/plate-porcupine-happy.png";
-import raccoonHappyPlate from "../../assets/goat-island/Plates/plate-raccoon-happy.png";
-import eagleHappyPlate from "../../assets/goat-island/Plates/plate-eagle-happy.png";
-import foxHappyPlate from "../../assets/goat-island/Plates/plate-fox-happy.png";
-import mooseHappyPlate from "../../assets/goat-island/Plates/plate-moose-happy.png";
-import bearHappyPlate from "../../assets/goat-island/Plates/plate-bear-happy.png";
-import deerHappyPlate from "../../assets/goat-island/Plates/plate-deer-happy.png";
+// ========================================
+// HUNGRY ANIMAL PLATES
+// ========================================
 
-import rabbitSad from "../../assets/goat-island/Animal-Images/rabbit_sad.png";
-import beaverSad from "../../assets/goat-island/Animal-Images/beaver_sad.png";
-import porcupineSad from "../../assets/goat-island/Animal-Images/porcupine_sad.png";
-import raccoonSad from "../../assets/goat-island/Animal-Images/raccoon_sad.png";
-import eagleSad from "../../assets/goat-island/Animal-Images/eagle_sad.png";
-import foxSad from "../../assets/goat-island/Animal-Images/fox_sad.png";
-import mooseSad from "../../assets/goat-island/Animal-Images/moose_sad.png";
-import bearSad from "../../assets/goat-island/Animal-Images/bear_sad.png";
-import deerSad from "../../assets/goat-island/Animal-Images/deer_sad.png";
+import rabbitPlate from "../../assets/goat-island/Plates/plate-rabbit.webp";
+import beaverPlate from "../../assets/goat-island/Plates/plate-beaver.webp";
+import porcupinePlate from "../../assets/goat-island/Plates/plate-porcupine.webp";
+import raccoonPlate from "../../assets/goat-island/Plates/plate-raccoon.webp";
+import eaglePlate from "../../assets/goat-island/Plates/plate-eagle.webp";
+import foxPlate from "../../assets/goat-island/Plates/plate-fox.webp";
+import moosePlate from "../../assets/goat-island/Plates/plate-moose.webp";
+import bearPlate from "../../assets/goat-island/Plates/plate-bear.webp";
+import deerPlate from "../../assets/goat-island/Plates/plate-deer.webp";
 
-import rabbitFound from "../../assets/goat-island/Animal-Images/rabbit_found.png";
-import beaverFound from "../../assets/goat-island/Animal-Images/beaver_found.png";
-import porcupineFound from "../../assets/goat-island/Animal-Images/porcupine_found.png";
-import raccoonFound from "../../assets/goat-island/Animal-Images/raccoon_found.png";
-import eagleFound from "../../assets/goat-island/Animal-Images/eagle_found.png";
-import foxFound from "../../assets/goat-island/Animal-Images/fox_found.png";
-import mooseFound from "../../assets/goat-island/Animal-Images/moose_found.png";
-import bearFound from "../../assets/goat-island/Animal-Images/bear_found.png";
-import deerFound from "../../assets/goat-island/Animal-Images/deer_found.png";
+// ========================================
+// HAPPY ANIMAL PLATES
+// ========================================
+
+import rabbitHappyPlate from "../../assets/goat-island/Plates/plate-rabbit-happy.webp";
+import beaverHappyPlate from "../../assets/goat-island/Plates/plate-beaver-happy.webp";
+import porcupineHappyPlate from "../../assets/goat-island/Plates/plate-porcupine-happy.webp";
+import raccoonHappyPlate from "../../assets/goat-island/Plates/plate-raccoon-happy.webp";
+import eagleHappyPlate from "../../assets/goat-island/Plates/plate-eagle-happy.webp";
+import foxHappyPlate from "../../assets/goat-island/Plates/plate-fox-happy.webp";
+import mooseHappyPlate from "../../assets/goat-island/Plates/plate-moose-happy.webp";
+import bearHappyPlate from "../../assets/goat-island/Plates/plate-bear-happy.webp";
+import deerHappyPlate from "../../assets/goat-island/Plates/plate-deer-happy.webp";
+
+// ========================================
+// HUNGRY ANIMAL IMAGES
+// ========================================
+
+import rabbitSad from "../../assets/goat-island/Animal-Images/rabbit_sad.webp";
+import beaverSad from "../../assets/goat-island/Animal-Images/beaver_sad.webp";
+import porcupineSad from "../../assets/goat-island/Animal-Images/porcupine_sad.webp";
+import raccoonSad from "../../assets/goat-island/Animal-Images/raccoon_sad.webp";
+import eagleSad from "../../assets/goat-island/Animal-Images/eagle_sad.webp";
+import foxSad from "../../assets/goat-island/Animal-Images/fox_sad.webp";
+import mooseSad from "../../assets/goat-island/Animal-Images/moose_sad.webp";
+import bearSad from "../../assets/goat-island/Animal-Images/bear_sad.webp";
+import deerSad from "../../assets/goat-island/Animal-Images/deer_sad.webp";
+
+// ========================================
+// HAPPY / FOUND ANIMAL IMAGES
+// ========================================
+
+import rabbitFound from "../../assets/goat-island/Animal-Images/rabbit_found.webp";
+import beaverFound from "../../assets/goat-island/Animal-Images/beaver_found.webp";
+import porcupineFound from "../../assets/goat-island/Animal-Images/porcupine_found.webp";
+import raccoonFound from "../../assets/goat-island/Animal-Images/raccoon_found.webp";
+import eagleFound from "../../assets/goat-island/Animal-Images/eagle_found.webp";
+import foxFound from "../../assets/goat-island/Animal-Images/fox_found.webp";
+import mooseFound from "../../assets/goat-island/Animal-Images/moose_found.webp";
+import bearFound from "../../assets/goat-island/Animal-Images/bear_found.webp";
+import deerFound from "../../assets/goat-island/Animal-Images/deer_found.webp";
+
+// ========================================
+// STYLING
+// ========================================
 
 import "../../styles/goatIslandAnimalImages.css";
+
 
 // Plate order: 5 in the top row, 4 in the bottom row.
 export const ANIMALS = [

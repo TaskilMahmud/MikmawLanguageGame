@@ -37,8 +37,8 @@ export default function Game1Landing() {
             <ol>
               <li>Pick a month.</li>
               <li>Look at the picture and find the blank in the sentence.</li>
-              <li>Tap a word to hear it in Mi’kmaw.</li>
-              <li>Pick the missing word, then tap <strong>Select Answer</strong>.</li>
+              <li>Tap the speaker icon to hear it in Mi’kmaw.</li>
+              <li>Click the <strong>Missing Word</strong>.</li>
             </ol>
             <p>Got it right? Tap <strong>Next Question</strong> to keep going.</p>
             <Link className="wooden-button game1-landing__play" to="/game1/play">

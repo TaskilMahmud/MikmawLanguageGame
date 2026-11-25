@@ -48,13 +48,22 @@ function Confetti() {
   );
 }
 
-function MikmawStar({ filled, index }) {
+function MikmawStar({ filled, index, celebrate = false, size = 34 }) {
+  const popDelayMs = celebrate ? 140 + index * 170 : 0;
+
   return (
     <svg
-      className={`game1-star ${filled ? "game1-star--filled" : "game1-star--empty"}`}
+      className={[
+        "game1-star",
+        filled ? "game1-star--filled" : "game1-star--empty",
+        celebrate ? "game1-star--celebrate" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+      style={celebrate ? { "--star-pop-delay": `${popDelayMs}ms` } : undefined}
       viewBox="0 0 100 100"
-      width="34"
-      height="34"
+      width={size}
+      height={size}
       aria-hidden="true"
     >
       {filled && (
@@ -72,7 +81,7 @@ function MikmawStar({ filled, index }) {
             fill="#df0113"
           />
           <polygon
-            points="50,50 17.5,82.5 28.75,58.8 4,50 28.75,41.2 17.5,17.5"
+            points="50,50 17.5,82.5 28.75,58.8 4,50 28.75,41.2 17.5,17.5 41.2,28.75"
             fill="#161615"
           />
         </g>
@@ -89,18 +98,23 @@ function MikmawStar({ filled, index }) {
   );
 }
 
-function MikmawStarsTracker({ score, total = 3 }) {
+function MikmawStarsTracker({ score, total = 3, variant = "header", celebrate = false }) {
+  const safeTotal = Math.max(1, total);
+  const starSize = variant === "complete" ? 48 : 34;
+
   return (
     <div
-      className="game1-stars"
+      className={`game1-stars game1-stars--${variant}`}
       role="img"
-      aria-label={`${Math.min(score, total)} of ${total} stars earned`}
+      aria-label={`${Math.min(score, safeTotal)} of ${safeTotal} stars earned`}
     >
-      {Array.from({ length: total }, (_, index) => (
+      {Array.from({ length: safeTotal }, (_, index) => (
         <MikmawStar
           key={index}
           index={index}
           filled={index < score}
+          celebrate={celebrate}
+          size={starSize}
         />
       ))}
     </div>
@@ -291,9 +305,18 @@ export default function Game1() {
             >
               <div>
                 <h1 id="game1-complete-title">Game Complete!</h1>
-                <p className="game1-complete__praise">Great Job!</p>
+                <p className="game1-complete__praise">
+                  <span className="game1-complete__emoji" aria-hidden="true">🎉</span>{" "}
+                  Great Job!{" "}
+                  <span className="game1-complete__emoji" aria-hidden="true">🌟</span>
+                </p>
               </div>
-              <p>Score: {score}/{filteredQuestions.length}</p>
+              <MikmawStarsTracker
+                score={score}
+                total={filteredQuestions.length}
+                variant="complete"
+                celebrate
+              />
               <div className="game1-complete__actions">
                 <WoodenButton onClick={restartGame}>Play Again</WoodenButton>
                 {nextMonth && (

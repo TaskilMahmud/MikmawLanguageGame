@@ -1,0 +1,9 @@
+/*
+ * GAME 1 | completed English sentence
+ * A correct selection turns only the answer phrase green.
+ * All other question, feedback, dictionary and Game 2 styles remain unchanged.
+ */
+.game1-screen .question-text .game1-correct-word {
+  color: #16834b;
+  font-weight: 900;
+}

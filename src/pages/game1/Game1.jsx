@@ -5,6 +5,7 @@ import WoodenButton from "../../components/WoodenButton";
 import AnswerButton from "../../components/AnswerButton";
 import QuestionBox from "../../components/QuestionBox";
 import { questions, audioFiles } from "../../data/game1Questions";
+import { loadGame1Progress, saveGame1Progress } from "../../data/game1Progress";
 
 import backgroundImage from "../../assets/background3.webp";
 import happyGirl from "../../assets/game1-happy-girl.webp";
@@ -128,13 +129,17 @@ export default function Game1() {
     ...new Set(questions.map((q) => q.month || "September")),
   ];
 
-  const [selectedMonth, setSelectedMonth] = useState(availableMonths[0]);
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [feedback, setFeedback] = useState(null);
-  const [incorrectAttempts, setIncorrectAttempts] = useState(0);
-  const [score, setScore] = useState(0);
-  const [isComplete, setIsComplete] = useState(false);
+  // Read saved progress ONCE when entering Game 1. Restores the same month,
+  // question, score, and feedback even after leaving or refreshing the page.
+  const [initialProgress] = useState(() => loadGame1Progress(questions));
+  const [selectedMonth, setSelectedMonth] = useState(initialProgress.month);
+  const [currentQuestion, setCurrentQuestion] = useState(initialProgress.questionIndex);
+  const [selectedAnswer, setSelectedAnswer] = useState(initialProgress.selectedAnswer);
+  const [feedback, setFeedback] = useState(initialProgress.feedback);
+  const [incorrectAttempts, setIncorrectAttempts] = useState(initialProgress.incorrectAttempts);
+  const [score, setScore] = useState(initialProgress.score);
+  const [isComplete, setIsComplete] = useState(initialProgress.isComplete);
+  const [completedMonths, setCompletedMonths] = useState(initialProgress.completedMonths);
 
   const audioRef = useRef(null);
 
@@ -153,6 +158,22 @@ export default function Game1() {
   const question = filteredQuestions[currentQuestion];
   const nextQuestionImage = filteredQuestions[currentQuestion + 1]?.image;
   const nextMonth = availableMonths[availableMonths.indexOf(selectedMonth) + 1];
+  const nextMonthName = nextMonth?.match(/\(([^)]+)\)/)?.[1] ?? nextMonth;
+
+  // Save the full active state whenever it changes. This includes clicking
+  // Next Question, changing month, submitting answers, and completing a month.
+  useEffect(() => {
+    saveGame1Progress({
+      month: selectedMonth,
+      questionIndex: currentQuestion,
+      selectedAnswer,
+      feedback,
+      incorrectAttempts,
+      score,
+      isComplete,
+      completedMonths,
+    });
+  }, [selectedMonth, currentQuestion, selectedAnswer, feedback, incorrectAttempts, score, isComplete, completedMonths]);
 
   // A new key remounts only the question visuals when the question changes.
   // Clicking an answer or opening the dictionary won't replay the entrance animations.
@@ -242,6 +263,9 @@ export default function Game1() {
       setFeedback(null);
     } else {
       setIsComplete(true);
+      setCompletedMonths((previous) =>
+        previous.includes(selectedMonth) ? previous : [...previous, selectedMonth]
+      );
     }
   }
 
@@ -276,17 +300,29 @@ export default function Game1() {
 
           <div className="game1-month">
             <label htmlFor="month-select">Month</label>
-            <select
-              id="month-select"
-              value={selectedMonth}
-              onChange={(event) => startMonth(event.target.value)}
-            >
-              {availableMonths.map((month) => (
-                <option key={month} value={month}>
-                  {month}
-                </option>
-              ))}
-            </select>
+            <span className="game1-month__select-wrap">
+              <select
+                id="month-select"
+                value={selectedMonth}
+                onChange={(event) => startMonth(event.target.value)}
+                aria-label="Select a month (completed months have a checkmark)"
+              >
+                {availableMonths.map((month) => (
+                  <option key={month} value={month}>
+                    {month}{completedMonths.includes(month) && month !== selectedMonth ? " ✓" : ""}
+                  </option>
+                ))}
+              </select>
+              {completedMonths.includes(selectedMonth) && (
+                <span
+                  className="game1-month__check"
+                  aria-label="Month completed"
+                  title="Month completed"
+                >
+                  ✓
+                </span>
+              )}
+            </span>
           </div>
         </header>
 
@@ -324,7 +360,7 @@ export default function Game1() {
                     className="game1-landing__play"
                     onClick={() => startMonth(nextMonth)}
                   >
-                    Next Month
+                    Play {nextMonthName}
                   </WoodenButton>
                 )}
               </div>
@@ -354,6 +390,8 @@ export default function Game1() {
                   key={`question-${questionAnimationKey}`}
                   thumbnail={thumbnail}
                   questionText={question.text}
+                  correctSentence={question.correctSentence}
+                  highlightedText={question.highlightedText}
                   feedback={feedback}
                   incorrectAttempts={incorrectAttempts}
                   onNext={handleNextQuestion}

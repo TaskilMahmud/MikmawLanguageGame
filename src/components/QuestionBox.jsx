@@ -2,25 +2,35 @@ import { useState } from "react";
 import WoodenButton from "./WoodenButton";
 import FeedbackMessage from "./FeedbackMessage";
 import { mikmawWords } from "../data/game1Questions";
-/*
-==========================================
-QUESTION BOX COMPONENT
-==========================================
+import "../styles/game1CorrectSentence.css";
 
-Displays:
-- Character thumbnail
-- Current question
-- Correct/incorrect feedback
-- Dictionary and next-question controls
+/**
+ * Displays the full English sentence after a correct answer.
+ * The phrase to highlight is defined in game1Questions.js, not hardcoded here.
+ * On incorrect attempts we continue showing the blank question as before.
+ */
+function CompletedSentence({ sentence, highlightedText }) {
+  if (!sentence) return null;
+  if (!highlightedText) return sentence;
 
-The game logic stays in Game1.jsx.
+  const start = sentence.toLocaleLowerCase().indexOf(highlightedText.toLocaleLowerCase());
+  if (start === -1) return sentence;
 
-==========================================
-*/
+  const end = start + highlightedText.length;
+  return (
+    <>
+      {sentence.slice(0, start)}
+      <span className="game1-correct-word">{sentence.slice(start, end)}</span>
+      {sentence.slice(end)}
+    </>
+  );
+}
 
 export default function QuestionBox({
   thumbnail,
   questionText,
+  correctSentence,
+  highlightedText,
   feedback,
   incorrectAttempts,
   onNext,
@@ -30,12 +40,11 @@ export default function QuestionBox({
   children,
 }) {
   const [showDictionary, setShowDictionary] = useState(false);
+  const answeredCorrectly = feedback === "correct";
 
-  // One card per question in the selected month.
   const entries = dictionaryQuestions.map((q) => ({
     english: q.correctAnswer,
-    mikmaw:
-      mikmawWords[q.correctAnswer.toLowerCase()] || "add word",
+    mikmaw: mikmawWords[q.correctAnswer.toLowerCase()] || "add word",
     image: q.image,
   }));
 
@@ -56,7 +65,16 @@ export default function QuestionBox({
           <div className="question-picture">
             <img src={thumbnail} alt="" />
           </div>
-          <h2 className="question-text">{questionText}</h2>
+          <h2 className="question-text" aria-live="polite" aria-atomic="true">
+            {answeredCorrectly && correctSentence ? (
+              <CompletedSentence
+                sentence={correctSentence}
+                highlightedText={highlightedText}
+              />
+            ) : (
+              questionText
+            )}
+          </h2>
         </div>
 
         <div className="question-choices">
@@ -75,7 +93,7 @@ export default function QuestionBox({
           </div>
 
           <div className="question-next-slot">
-            {feedback === "correct" && (
+            {answeredCorrectly && (
               <WoodenButton className="question-next" onClick={onNext}>
                 {nextLabel}
               </WoodenButton>
@@ -91,14 +109,10 @@ export default function QuestionBox({
   );
 }
 
-/* Dictionary */
 function Dictionary({ entries, onClose }) {
   return (
     <div className="dict-overlay" onClick={onClose}>
-      <div
-        className="dict-panel"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="dict-panel" onClick={(event) => event.stopPropagation()}>
         <button className="dict-close" onClick={onClose}>
           Close
         </button>
@@ -107,16 +121,14 @@ function Dictionary({ entries, onClose }) {
 
         <div className="dict-grid">
           {entries.map((entry, index) => (
-            <DictionaryCard
-              key={`${entry.english}-${index}`}
-              entry={entry}
-            />
+            <DictionaryCard key={`${entry.english}-${index}`} entry={entry} />
           ))}
         </div>
       </div>
     </div>
   );
 }
+
 function DictionaryCard({ entry }) {
   const [flipped, setFlipped] = useState(false);
 

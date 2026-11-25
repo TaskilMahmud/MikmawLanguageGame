@@ -1,0 +1,266 @@
+/*
+==========================================
+GAME 1 QUESTION DATA
+==========================================
+
+Contains:
+- All 21 questions (Ordered by Curriculum Month & Word Sequence)
+- Question images
+- Answer choices
+- Correct answers
+- Audio filenames
+
+Audio files are stored in public/audio/.
+
+To add new questions, update this file.
+Do not put game logic or CSS here.
+
+==========================================
+*/
+
+import questionImage1 from "../assets/questionImage1.webp";
+import questionImage2 from "../assets/questionImage2.webp";
+import questionImage3 from "../assets/questionImage3.webp";
+import questionImage4 from "../assets/questionImage4.webp";
+import questionImage5 from "../assets/questionImage5.webp";
+import questionImage6 from "../assets/questionImage6.webp";
+import questionImage7 from "../assets/questionImage7.webp";
+import questionImage8 from "../assets/questionImage8.webp";
+import questionImage9 from "../assets/questionImage9.webp";
+import questionImage10 from "../assets/questionImage10.webp";
+import questionImage11 from "../assets/questionImage11.webp";
+import questionImage12 from "../assets/questionImage12.webp";
+import questionImage13 from "../assets/questionImage13.webp";
+import questionImage14 from "../assets/questionImage14.webp";
+import questionImage15 from "../assets/questionImage15.webp";
+import questionImage16 from "../assets/questionImage16.webp";
+import questionImage17 from "../assets/questionImage17.webp";
+import questionImage18 from "../assets/questionImage18.webp";
+import questionImage19 from "../assets/questionImage19.webp";
+import questionImage20 from "../assets/questionImage20.webp";
+import questionImage21 from "../assets/questionImage21.webp";
+
+// ========================================
+// AUDIO FILE MAPPING
+// ========================================
+// Capitalization must match the real MP3 files
+// because GitHub Pages is case-sensitive.
+
+export const audioFiles = {
+  "and": "w1-and.mp3",
+  "eat": "w2-eat.mp3",
+  "you": "w3-you.mp3",
+  "is my name": "w4-is_my_name.mp3",
+  "i": "w5-I.mp3",
+  "i like the taste of": "w6-I_like_the_taste_of.mp3",
+  "i am going": "w7-I_am_going.mp3",
+  "i love": "w8-I_love.mp3",
+  "make it": "w9-make_it.mp3",
+  "i am coming from": "w10-i_am_coming_from.mp3",
+  "i see it": "w11-I_see_it.mp3",
+  "i like": "w12-I_like.mp3",
+  "mother": "w13-mother.mp3",
+  "dad": "w14-dad.mp3",
+  "him or her": "w15-him_or_her.mp3",
+  "i love you": "w16-I_love_you.mp3",
+  "i have it": "w17-I_have_it.mp3",
+  "look at this": "w18-look_at_this.mp3",
+  "i am happy": "w19-I_am_happy.mp3",
+  "who": "w20-who.mp3",
+  "i live": "w21-I_live.mp3",
+};
+
+// ========================================
+// ALL 21 QUESTIONS (Exact Curriculum Order)
+// ========================================
+
+export const questions = [
+  // --- WIKUMKEWIKU’S (SEPTEMBER): nin (I), ki’l (you), teluisi (My name is...) ---
+  {
+    text: "____ am a Indian .",
+    image: questionImage4,
+    answers: ["eat", "I", "you"],
+    correctAnswer: "I",
+    month: "Wikumkewiku’s (September)",
+  },
+  {
+    text: "____ and me",
+    image: questionImage3,
+    answers: ["and", "eat", "you"],
+    correctAnswer: "you",
+    month: "Wikumkewiku’s (September)",
+  },
+  {
+    text: "____ Mali",
+    image: questionImage2,
+    answers: ["is my name", "eat", "and"],
+    correctAnswer: "is my name",
+    month: "Wikumkewiku’s (September)",
+  },
+
+  // --- WIKEWIKU’S (OCTOBER): aq (and), mijisi (eat), wiktm (I like the taste of it) ---
+  {
+    text: "You ___ my friend.",
+    image: questionImage6,
+    answers: ["and", "I", "you"],
+    correctAnswer: "and",
+    month: "Wikewiku’s (October)",
+  },
+  {
+    text: "I ____ at Mcdonalds",
+    image: questionImage1,
+    answers: ["and", "eat", "you"],
+    correctAnswer: "eat",
+    month: "Wikewiku’s (October)",
+  },
+  {
+    text: "____ Pizza.",
+    image: questionImage5,
+    answers: ["I like the taste of", "I", "and"],
+    correctAnswer: "I like the taste of",
+    month: "Wikewiku’s (October)",
+  },
+
+  // --- KEPTEKEWIKU’S (NOVEMBER): kesalk (I love...), l'tu (Make it.), eliey (I am going.) ---
+  {
+    text: " ___ my Granddad",
+    image: questionImage8,
+    answers: ["Make it", "I love", "and"],
+    correctAnswer: "I love",
+    month: "Keptekewiku’s (November)",
+  },
+  {
+    text: "I am ____ a house",
+    image: questionImage9,
+    answers: ["make it", "eat", "you"],
+    correctAnswer: "make it",
+    month: "Keptekewiku’s (November)",
+  },
+  {
+    text: "___ to town",
+    image: questionImage7,
+    answers: ["I am going", "I love", "and"],
+    correctAnswer: "I am going",
+    month: "Keptekewiku’s (November)",
+  },
+
+  // --- KESIKEWIKU’S (DECEMBER): nemitu (I see it.), kesatm (I like...), wejiey (I am coming from...) ---
+  {
+    text: "I __ fire",
+    image: questionImage11,
+    answers: ["make it", "I", "I see it"],
+    correctAnswer: "I see it",
+    month: "Kesikewiku’s (December)",
+  },
+  {
+    text: " __ to play",
+    image: questionImage12,
+    answers: ["I like", "I see it", "I am coming from"],
+    correctAnswer: "I like",
+    month: "Kesikewiku’s (December)",
+  },
+  {
+    text: "__ town",
+    image: questionImage10,
+    answers: ["make it", "you", "I am coming from"],
+    correctAnswer: "I am coming from",
+    month: "Kesikewiku’s (December)",
+  },
+
+  // --- PUNAMUJUIKU’S (JANUARY): ta’ta (Dad), kiju (Mother), nekm (him or her) ---
+  {
+    text: " __ is dancing",
+    image: questionImage13,
+    answers: ["Mother", "Dad", "him or her"],
+    correctAnswer: "Dad",
+    month: "Punamujuiku’s (January)",
+  },
+  {
+    text: " I love ___",
+    image: questionImage14,
+    answers: ["Grandma", "Dad", "him or her"],
+    correctAnswer: "Grandma",
+    month: "Punamujuiku’s (January)",
+  },
+  {
+    text: "___ is my friend",
+    image: questionImage15,
+    answers: ["Mother", "Dad", "him or her"],
+    correctAnswer: "him or her",
+    month: "Punamujuiku’s (January)",
+  },
+
+  // --- APUKNAJIT (FEBRUARY): ala’tu (I have it.), ula (Look at this.), kesalul (I love you.) ---
+  {
+    text: "___ Money",
+    image: questionImage16,
+    answers: ["Mother", "I Love you", "I have it"],
+    correctAnswer: "I have it",
+    month: "Apuknajit (February)",
+  },
+  {
+    text: "___ dog",
+    image: questionImage17,
+    answers: ["Look at this", "I Love you", "I am coming from"],
+    correctAnswer: "Look at this",
+    month: "Apuknajit (February)",
+  },
+  {
+    text: "___ grandma",
+    image: questionImage18,
+    answers: ["Look at this", "I love you", "I am coming from"],
+    correctAnswer: "I love you",
+    month: "Apuknajit (February)",
+  },
+
+  // --- SI’KO”KU’S (MARCH): welta’si (I am happy.), wen (who), + I live ---
+  {
+    text: "I'm glad that u came ___",
+    image: questionImage19,
+    answers: ["I am happy", "who", "I am coming from"],
+    correctAnswer: "I am happy",
+    month: "Si’ko”ku’s (March)",
+  },
+  {
+    text: "___ are you?",
+    image: questionImage20,
+    answers: ["who", "I am happy", "Look at this"],
+    correctAnswer: "who",
+    month: "Si’ko”ku’s (March)",
+  },
+  {
+    text: "___ in Eskasoni",
+    image: questionImage21,
+    answers: ["who", "I live", "I am happy"],
+    correctAnswer: "I live",
+    month: "Si’ko”ku’s (March)",
+  },
+];
+
+// ========================================
+// MI'KMAW SPELLINGS DICTIONARY
+// ========================================
+
+export const mikmawWords = {
+  "i": "ni'n",
+  "and": "aqq",
+  "eat": "mijisi",
+  "you": "ki'l",
+  "is my name": "teluisi",
+  "i like the taste of": "wiktm",
+  "i am going": "eliey",
+  "i love": "kesalk",
+  "make it": "l'tu",
+  "i am coming from": "wejiey",
+  "i see it": "nemitu",
+  "i like": "kesam",
+  "mother": "kiju'",
+  "dad": "ta'ta",
+  "him or her": "nekm",
+  "i love you": "kesalul",
+  "i have it": "ala'tu",
+  "look at this": "ula",
+  "i am happy": "welta'si",
+  "who": "wen",
+  "i live": "e'wist",
+};

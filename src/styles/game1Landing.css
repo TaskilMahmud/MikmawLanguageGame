@@ -117,6 +117,74 @@
   background: #427657;
 }
 
+/* Progress UI: scoped to this page; no gameplay styles change. */
+.game1-landing__instructions .game1-landing__saved {
+  padding: 9px 12px;
+  border-left: 4px solid #346549;
+  border-radius: 6px;
+  background: #e2edda;
+  color: #173d2d;
+  font-size: clamp(14px, 1.6vw, 18px);
+  font-weight: 700;
+}
+
+.game1-landing__instructions .game1-landing__reset {
+  justify-self: start;
+  padding: 8px 14px;
+  width: min(100%, 210px);
+  min-height: 52px;
+  border-color: #684322;
+  background: #935d36;
+  color: #fff9e6;
+  font-size: clamp(14px, 1.7vw, 18px);
+  cursor: pointer;
+}
+
+.game1-landing__instructions .game1-landing__reset:hover {
+  background: #aa7046;
+}
+
+
+/* Game 1 month selector: completion check on the right side of the box.
+   All completed months also show a tick in the dropdown options. */
+.game1-month__select-wrap {
+  position: relative;
+  display: block;
+  width: clamp(310px, 27vw, 390px);
+  max-width: 100%;
+  min-width: 0;
+}
+
+.game1-month .game1-month__select-wrap select {
+  display: block;
+  width: 100%;
+  padding-right: 48px;
+}
+
+.game1-month__check {
+  position: absolute;
+  top: 50%;
+  right: 35px;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #23613d;
+  color: #fff9e6;
+  font-size: 13px;
+  font-weight: 900;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .game1-month__select-wrap {
+    flex: 1 1 auto;
+    width: auto;
+  }
+}
+
 @media (max-width: 740px) {
   .game1-landing__welcome {
     grid-template-columns: minmax(0, 1fr);
@@ -140,7 +208,8 @@
     justify-self: center;
   }
 
-  .game1-landing__instructions .game1-landing__play {
+  .game1-landing__instructions .game1-landing__play,
+  .game1-landing__instructions .game1-landing__reset {
     width: 100%;
   }
 }

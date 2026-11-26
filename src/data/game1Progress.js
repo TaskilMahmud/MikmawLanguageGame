@@ -18,6 +18,7 @@ export function defaultGame1Progress(questions) {
     score: 0,
     isComplete: false,
     completedMonths: [],
+    monthScores: {},
   };
 }
 
@@ -72,6 +73,20 @@ export function readGame1Progress(questions) {
       ? Math.max(0, Math.min(saved.score, monthQuestions.length, questionIndex + 1))
       : 0;
 
+    // Keep a high-water mark for each month. This also migrates older saved
+    // progress, which only held the active month's score and completion ticks.
+    const monthScores = {};
+    for (const month of months) {
+      const total = questions.filter((q) => (q.month || "September") === month).length;
+      const rawStars = saved.monthScores?.[month];
+      const storedStars = Number.isInteger(rawStars) && rawStars >= 0
+        ? Math.min(rawStars, total)
+        : 0;
+      const currentStars = month === saved.month ? score : 0;
+      const completedStars = completedMonths.includes(month) ? total : 0;
+      monthScores[month] = Math.max(storedStars, currentStars, completedStars);
+    }
+
     return {
       month: saved.month,
       questionIndex,
@@ -81,6 +96,7 @@ export function readGame1Progress(questions) {
       score,
       isComplete,
       completedMonths,
+      monthScores,
     };
   } catch {
     // Storage can be unavailable in private mode or restricted browsers.

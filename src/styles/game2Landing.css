@@ -1,12 +1,10 @@
 /* ============================================================
-   GOAT ISLAND — GAME 2 LANDING PAGE
-   ------------------------------------------------------------
-   Applies to GoatIslandLanding.jsx only. All selectors use the
-   gi-landing- prefix, so the Game 2 styles cannot conflict.
-   Layout coordinates are relative to the 432 x 757 background.
+   GOAT ISLAND — LANDING PAGE
+   Scoped to the gi-landing- prefix. No effect on gameplay CSS.
+   All internal positions are relative to the 432 × 757 artwork.
    ============================================================ */
 
-/* 1. Screen and responsive frame -------------------------------- */
+/* 1. Fullscreen background and portrait game frame ------------- */
 .gi-landing-page,
 .gi-landing-page * {
   box-sizing: border-box;
@@ -21,8 +19,9 @@
   height: 100dvh;
   min-height: 0;
   padding: 0;
-  overflow: hidden; /* Entire landing view fits on small phones. */
+  overflow: hidden;
   background: #f9dfb0;
+  color: #073d22;
   font-family: Arial, "Trebuchet MS", sans-serif;
 }
 
@@ -31,14 +30,11 @@
   isolation: isolate;
   container-type: inline-size;
   flex: 0 0 auto;
-  width: min(100vw, 57.067vh);
   width: min(100vw, 57.067dvh);
-  max-width: none;
   max-height: 100%;
   aspect-ratio: 432 / 757;
   overflow: hidden;
   background: #f9dfb0;
-  color: #003c21;
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -54,38 +50,32 @@
   user-select: none;
 }
 
-/* 2. Back button, logo, and bouncing child ----------------------- */
 .gi-landing-content {
   position: absolute;
   inset: 0;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2.5% 4% 5%;
+  z-index: 1;
   text-align: center;
 }
 
+/* 2. Top navigation, Goat Island logo and child ---------------- */
 .gi-landing-back {
-  position: relative;
-  z-index: 5;
-  align-self: flex-start;
-  margin: 0;
-  padding: 1.1% 2.3%;
-  border: 0;
+  position: absolute;
+  top: 2.5%;
+  left: 4%;
+  z-index: 6;
+  min-height: clamp(28px, 8.5cqw, 40px);
+  padding: 1.2% 2.8%;
+  border: 1.5px solid #d4b77e;
   border-radius: 10px;
-  background: #ffe9ba;
+  background: #ffedc5;
   color: #073d22;
+  box-shadow: 0 3px 0 rgba(79, 49, 19, 0.19);
   font-family: inherit;
-  font-size: clamp(11px, 3.2cqw, 15px);
+  font-size: clamp(12px, 3.8cqw, 18px);
   font-weight: 900;
   cursor: pointer;
-}
-
-.gi-landing-back:focus-visible,
-.gi-landing-button:focus-visible {
-  outline: 3px solid #ffbd3a;
-  outline-offset: 3px;
+  transition: transform 180ms ease, background-color 180ms ease,
+    box-shadow 180ms ease;
 }
 
 .gi-landing-logo {
@@ -100,94 +90,347 @@
   user-select: none;
 }
 
-/* Draw the child above the landscape, but behind the cream panel. */
-.gi-landing-child {
+/* Wrapper handles enter/exit; the inner image bounces separately. */
+.gi-landing-child-wrap {
   position: absolute;
   top: 27%;
   left: 17%;
   z-index: 2;
-  display: block;
   width: 66%;
-  height: auto;
-  object-fit: contain;
-  pointer-events: none;
-  user-select: none;
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
   transform-origin: center bottom;
-  animation: gi-child-bounce 2.2s ease-in-out infinite;
-  will-change: transform;
+  pointer-events: none;
+  transition: opacity 340ms ease, transform 420ms cubic-bezier(.2,.75,.3,1),
+    visibility 0s linear 0s;
 }
 
-/* 3. Progress card and controls --------------------------------- */
+.gi-landing-child {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  user-select: none;
+  transform-origin: center bottom;
+  animation: gi-landing-bounce 1.7s ease-in-out infinite;
+}
+
+.gi-landing-phone--instructions .gi-landing-child-wrap {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(25px) scale(.8);
+  transition: opacity 290ms ease, transform 380ms ease,
+    visibility 0s linear 380ms;
+}
+
+/* 3. Cream panel and the two transitionable views -------------- */
 .gi-landing-panel {
   position: absolute;
-  top: 63%;
+  top: 63.8%;
   left: 8%;
   z-index: 3;
+  width: 84%;
+  height: 28.3%;
+  overflow: hidden;
+  border: clamp(2px, .7cqw, 3px) solid #965a2b;
+  border-radius: clamp(12px, 4.5cqw, 20px);
+  background: #fff0cb;
+  box-shadow: inset 0 1px 0 #fff9e9, 0 6px 0 rgba(66, 39, 18, .19),
+    0 12px 25px rgba(66, 39, 18, .09);
+  transition: top 510ms cubic-bezier(.22,.76,.24,1),
+    height 510ms cubic-bezier(.22,.76,.24,1),
+    left 510ms cubic-bezier(.22,.76,.24,1),
+    width 510ms cubic-bezier(.22,.76,.24,1),
+    box-shadow 350ms ease;
+}
+
+/* When instructions open, the panel grows into the empty landscape. */
+.gi-landing-phone--instructions .gi-landing-panel {
+  top: 28%;
+  left: 6%;
+  width: 88%;
+  height: 66.9%;
+  box-shadow: inset 0 1px 0 #fff9e9, 0 7px 0 rgba(66, 39, 18, .18),
+    0 16px 28px rgba(49, 33, 18, .15);
+}
+
+.gi-landing-view {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: center;
-  gap: 5%;
-  width: 84%;
-  height: 30%;
-  padding: 5% 7%;
-  border: 3px solid #8f4d18;
-  border-radius: 19px;
-  background: #fff0cb;
-  box-shadow: 0 6px 0 rgba(66, 39, 18, 0.2);
+  min-width: 0;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 0s linear 180ms;
 }
 
+.gi-landing-view--welcome {
+  /* Two buttons on one row, plus a full-width How to Play button. */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto auto;
+  align-content: center;
+  align-items: stretch;
+  column-gap: clamp(8px, 2.6cqw, 12px);
+  row-gap: clamp(8px, 2.2cqw, 11px);
+  padding: clamp(10px, 3cqw, 14px) clamp(12px, 4.3cqw, 20px);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition: opacity 220ms ease 110ms, visibility 0s;
+}
+.gi-landing-phone--instructions .gi-landing-view--welcome {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 180ms ease, visibility 0s linear 180ms;
+}
+
+.gi-landing-view--help {
+  gap: clamp(8px, 2.6cqw, 14px);
+  padding: clamp(13px, 4.5cqw, 24px) clamp(14px, 5.3cqw, 26px);
+  transform: translateY(9px);
+  transition: opacity 200ms ease, transform 320ms ease,
+    visibility 0s linear 200ms;
+}
+
+.gi-landing-phone--instructions .gi-landing-view--help {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition: opacity 280ms ease 220ms, transform 410ms ease 140ms,
+    visibility 0s;
+}
+
+/* 4. Welcome: two-column actions and full-width How to Play ----- */
 .gi-landing-progress {
-  margin: 0;
-  color: #22513b;
-  font-size: clamp(16px, 5cqw, 24px);
-  font-weight: 800;
+  grid-column: 1 / -1;
+  margin: 0 0 clamp(1px, .5cqw, 3px);
+  color: #21533a;
+  font-size: clamp(16px, 5.1cqw, 25px);
+  font-weight: 900;
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
 .gi-landing-button {
-  min-height: 18%;
-  padding: 2% 4%;
-  border: 2px solid #2f2014;
-  border-radius: 13px;
-  background: #00402a;
-  color: #fff4db;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(38px, 10cqw, 49px);
+  margin: 0;
+  padding: 6px 12px;
+  overflow: hidden;
+  border: 2px solid;
+  border-radius: clamp(9px, 3.2cqw, 14px);
   font-family: inherit;
-  font-size: clamp(14px, 5cqw, 22px);
+  font-size: clamp(15px, 4.6cqw, 22px);
   font-weight: 900;
+  line-height: 1.05;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 190ms ease, filter 190ms ease,
+    box-shadow 190ms ease;
+}
+
+.gi-landing-view--welcome .gi-landing-button {
+  min-height: clamp(36px, 9.6cqw, 46px);
+  padding: 5px 8px;
+}
+
+/* Slightly taller Play and Restart buttons; How to Play stays unchanged. */
+.gi-landing-view--welcome .gi-landing-button--play,
+.gi-landing-view--welcome .gi-landing-button--reset {
+  min-height: clamp(44px, 11.5cqw, 54px);
+  padding: 8px 8px;
+}
+
+.gi-landing-button--play {
+  border-color: #073d2a;
+  background: linear-gradient(180deg, #0c6849, #00432d 75%);
+  color: #fff7dc;
+  box-shadow: 0 4px 0 #073421, 0 7px 12px rgba(15, 49, 32, .18);
 }
 
 .gi-landing-button--reset {
-  background: #ce7b20;
-  color: #28160b;
+  border-color: #72401c;
+  background: linear-gradient(180deg, #e39a37, #c97721 75%);
+  color: #2b190d;
+  box-shadow: 0 4px 0 #884614, 0 7px 12px rgba(91, 53, 20, .15);
+}
+
+.gi-landing-button--howto {
+  grid-column: 1 / -1;
+  border-color: #9c7a4d;
+  background: linear-gradient(180deg, #fff8e2, #ead8ad);
+  color: #184a33;
+  box-shadow: 0 4px 0 #b39a72, 0 7px 12px rgba(91, 53, 20, .11);
+}
+
+.gi-landing-button--return {
+  margin-top: auto;
+  border-color: #0e5136;
+  background: linear-gradient(180deg, #166b4e, #065035);
+  color: #fff8df;
+  box-shadow: 0 4px 0 #073b29, 0 7px 14px rgba(15, 49, 32, .17);
+}
+
+/* A quick, subtle shine on hover without hiding the button text. */
+.gi-landing-button::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background: linear-gradient(110deg, transparent 25%,
+    rgba(255,255,255,.2) 48%, transparent 72%);
+  transform: translateX(-135%);
+  transition: transform 440ms ease;
+  pointer-events: none;
 }
 
 .gi-landing-notice {
-  min-height: 1.2em;
+  position: absolute;
+  top: 54.7%;
+  right: 8%;
+  left: 8%;
+  z-index: 5;
   margin: 0;
-  font-size: clamp(10px, 2.7cqw, 13px);
-  font-weight: 700;
+  padding: 7px 10px;
+  border: 1px solid #9bbe8c;
+  border-radius: 10px;
+  background: #e9f5dc;
+  color: #175236;
+  box-shadow: 0 3px 10px rgba(0,0,0,.13);
+  font-size: clamp(10px, 3cqw, 14px);
+  font-weight: 800;
+  line-height: 1.25;
+  transition: opacity 220ms ease, transform 220ms ease,
+    visibility 0s;
 }
 
-/* 4. Child bounce and reduced-motion accessibility --------------- */
-@keyframes gi-child-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+.gi-landing-phone--instructions .gi-landing-notice {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 180ms ease, transform 180ms ease,
+    visibility 0s linear 180ms;
+}
+
+/* 5. How to Play instructions ----------------------------------- */
+.gi-landing-help-heading {
+  display: grid;
+  justify-items: center;
+  gap: clamp(3px, 1.1cqw, 6px);
+}
+
+.gi-landing-help-heading h2 {
+  margin: 0;
+  color: #164a32;
+  font-family: Georgia, serif;
+  font-size: clamp(23px, 7.4cqw, 35px);
+  line-height: 1.08;
+}
+
+.gi-landing-help-heading p {
+  margin: 0;
+  color: #5f4b31;
+  font-size: clamp(11px, 3.2cqw, 16px);
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.gi-landing-help-leaf {
+  font-size: clamp(17px, 5.2cqw, 24px);
+  line-height: 1;
+}
+
+.gi-landing-steps {
+  display: grid;
+  align-content: start;
+  gap: clamp(7px, 2.3cqw, 11px);
+  margin: 0;
+  padding: 0 0 0 1.45em;
+  color: #27452f;
+  font-size: clamp(11px, 3.35cqw, 16px);
+  line-height: 1.31;
+  text-align: left;
+}
+
+.gi-landing-steps li::marker {
+  color: #bc6c24;
+  font-weight: 900;
+}
+
+.gi-landing-steps strong { color: #104c33; }
+
+/* 6. Hover, active, focus and motion preferences ---------------- */
+@media (hover: hover) {
+  .gi-landing-back:hover {
+    background: #fff7df;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgba(79, 49, 19, .2);
+  }
+
+  .gi-landing-button:hover {
+    transform: translateY(-3px) scale(1.015);
+    filter: brightness(1.08);
+  }
+
+  .gi-landing-button:hover::before {
+    transform: translateX(135%);
+  }
+
+  .gi-landing-button--play:hover { box-shadow: 0 7px 0 #073421, 0 12px 15px rgba(15,49,32,.22); }
+  .gi-landing-button--reset:hover { box-shadow: 0 7px 0 #884614, 0 12px 15px rgba(91,53,20,.20); }
+  .gi-landing-button--howto:hover { box-shadow: 0 7px 0 #b39a72, 0 12px 15px rgba(91,53,20,.15); }
+  .gi-landing-button--return:hover { box-shadow: 0 7px 0 #073b29, 0 12px 15px rgba(15,49,32,.2); }
+}
+
+.gi-landing-back:active,
+.gi-landing-button:active {
+  transform: translateY(2px) scale(.985);
+  filter: brightness(.97);
+}
+
+.gi-landing-button:focus-visible,
+.gi-landing-back:focus-visible {
+  outline: 3px solid #ffd04a;
+  outline-offset: 3px;
+}
+
+@keyframes gi-landing-bounce {
+  0%, 100% { transform: translateY(2px); }
+  50% { transform: translateY(-13px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gi-landing-child {
-    animation: none;
-    will-change: auto;
+  .gi-landing-child { animation: none; }
+  .gi-landing-child-wrap,
+  .gi-landing-panel,
+  .gi-landing-view,
+  .gi-landing-button,
+  .gi-landing-button::before,
+  .gi-landing-back {
+    transition-duration: 0.01ms;
   }
 }
 
-/* 5. Responsive layout and woodland backdrop -------------------- */
+/* 7. Desktop backdrop; no scrolling on phones ------------------- */
 @media (min-width: 501px) {
   .gi-landing-page {
     background-color: #090d0b;
     background-image:
-      linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.60)),
+      linear-gradient(rgba(0,0,0,.84), rgba(0,0,0,.64)),
       url("../assets/goat-island/woodland-animals.webp");
     background-position: center;
     background-repeat: no-repeat;
@@ -199,6 +442,19 @@
   .gi-landing-phone { box-shadow: none; }
 }
 
+
+/* Keep all five instructions and the Back button visible on narrow phones. */
 @media (max-width: 360px) {
-  .gi-landing-panel { height: 31%; }
+  .gi-landing-view--help {
+    gap: 7px;
+    padding: 11px 13px;
+  }
+  .gi-landing-help-heading { gap: 3px; }
+  .gi-landing-help-heading h2 { font-size: 23px; }
+  .gi-landing-help-heading p { font-size: 11px; }
+  .gi-landing-steps {
+    gap: 6px;
+    font-size: 11px;
+    line-height: 1.25;
+  }
 }

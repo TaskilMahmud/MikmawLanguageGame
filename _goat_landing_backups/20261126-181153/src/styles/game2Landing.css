@@ -1,0 +1,204 @@
+/* ============================================================
+   GOAT ISLAND — GAME 2 LANDING PAGE
+   ------------------------------------------------------------
+   Applies to GoatIslandLanding.jsx only. All selectors use the
+   gi-landing- prefix, so the Game 2 styles cannot conflict.
+   Layout coordinates are relative to the 432 x 757 background.
+   ============================================================ */
+
+/* 1. Screen and responsive frame -------------------------------- */
+.gi-landing-page,
+.gi-landing-page * {
+  box-sizing: border-box;
+}
+
+.gi-landing-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden; /* Entire landing view fits on small phones. */
+  background: #f9dfb0;
+  font-family: Arial, "Trebuchet MS", sans-serif;
+}
+
+.gi-landing-phone {
+  position: relative;
+  isolation: isolate;
+  container-type: inline-size;
+  flex: 0 0 auto;
+  width: min(100vw, 57.067vh);
+  width: min(100vw, 57.067dvh);
+  max-width: none;
+  max-height: 100%;
+  aspect-ratio: 432 / 757;
+  overflow: hidden;
+  background: #f9dfb0;
+  color: #003c21;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+}
+
+.gi-landing-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* 2. Back button, logo, and bouncing child ----------------------- */
+.gi-landing-content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2.5% 4% 5%;
+  text-align: center;
+}
+
+.gi-landing-back {
+  position: relative;
+  z-index: 5;
+  align-self: flex-start;
+  margin: 0;
+  padding: 1.1% 2.3%;
+  border: 0;
+  border-radius: 10px;
+  background: #ffe9ba;
+  color: #073d22;
+  font-family: inherit;
+  font-size: clamp(11px, 3.2cqw, 15px);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.gi-landing-back:focus-visible,
+.gi-landing-button:focus-visible {
+  outline: 3px solid #ffbd3a;
+  outline-offset: 3px;
+}
+
+.gi-landing-logo {
+  position: absolute;
+  top: 1.5%;
+  left: 20%;
+  z-index: 1;
+  width: 60%;
+  height: 26%;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Draw the child above the landscape, but behind the cream panel. */
+.gi-landing-child {
+  position: absolute;
+  top: 27%;
+  left: 17%;
+  z-index: 2;
+  display: block;
+  width: 66%;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  transform-origin: center bottom;
+  animation: gi-child-bounce 2.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* 3. Progress card and controls --------------------------------- */
+.gi-landing-panel {
+  position: absolute;
+  top: 63%;
+  left: 8%;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 5%;
+  width: 84%;
+  height: 30%;
+  padding: 5% 7%;
+  border: 3px solid #8f4d18;
+  border-radius: 19px;
+  background: #fff0cb;
+  box-shadow: 0 6px 0 rgba(66, 39, 18, 0.2);
+}
+
+.gi-landing-progress {
+  margin: 0;
+  color: #22513b;
+  font-size: clamp(16px, 5cqw, 24px);
+  font-weight: 800;
+}
+
+.gi-landing-button {
+  min-height: 18%;
+  padding: 2% 4%;
+  border: 2px solid #2f2014;
+  border-radius: 13px;
+  background: #00402a;
+  color: #fff4db;
+  font-family: inherit;
+  font-size: clamp(14px, 5cqw, 22px);
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.gi-landing-button--reset {
+  background: #ce7b20;
+  color: #28160b;
+}
+
+.gi-landing-notice {
+  min-height: 1.2em;
+  margin: 0;
+  font-size: clamp(10px, 2.7cqw, 13px);
+  font-weight: 700;
+}
+
+/* 4. Child bounce and reduced-motion accessibility --------------- */
+@keyframes gi-child-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gi-landing-child {
+    animation: none;
+    will-change: auto;
+  }
+}
+
+/* 5. Responsive layout and woodland backdrop -------------------- */
+@media (min-width: 501px) {
+  .gi-landing-page {
+    background-color: #090d0b;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.84), rgba(0, 0, 0, 0.60)),
+      url("../assets/goat-island/woodland-animals.webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
+@media (max-width: 500px) {
+  .gi-landing-phone { box-shadow: none; }
+}
+
+@media (max-width: 360px) {
+  .gi-landing-panel { height: 31%; }
+}

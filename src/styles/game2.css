@@ -388,10 +388,89 @@
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .feed2-tile-image { transition: none; }
-  .feed2-tile--found .feed2-tile-image { animation: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* POP-IN: When an animal first appears */
+  .feed2-hero:not(.feed2-hero--wiggle) > img {
+    animation: feed2-animal-pop-in 700ms ease-out both;
+    transform-origin: center bottom;
+  }
+
+  @keyframes feed2-animal-pop-in {
+    0% {
+      opacity: 0;
+      transform: translateY(35px) scale(0.35);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translateY(-12px) scale(1.15);
+    }
+
+    75% {
+      transform: translateY(4px) scale(0.95);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Existing animal wiggle when clicked */
+  .feed2-hero--wiggle {
+    animation: feed2-animal-wiggle 720ms ease-in-out 1 both;
+  }
+
+  @keyframes feed2-animal-wiggle {
+    0%, 100% {
+      transform: translateX(0) rotate(0deg) scale(1.08);
+    }
+
+    18% {
+      transform: translateX(-23px) rotate(-4deg) scale(1.08);
+    }
+
+    40% {
+      transform: translateX(23px) rotate(4deg) scale(1.08);
+    }
+
+    61% {
+      transform: translateX(-15px) rotate(-2.5deg) scale(1.08);
+    }
+
+    80% {
+      transform: translateX(12px) rotate(2deg) scale(1.08);
+    }
+  }
+
+  /* Existing confetti animation */
+  .feed2-confetti-piece {
+    animation: feed2-confetti-drop
+      var(--piece-duration)
+      ease-in
+      var(--piece-delay)
+      1 both;
+  }
+
+  @keyframes feed2-confetti-drop {
+    0% {
+      transform: translate3d(0, -20px, 0) rotate(0deg);
+      opacity: 0;
+    }
+
+    12% { opacity: 0.68; }
+    72% { opacity: 0.58; }
+
+    100% {
+      transform: translate3d(14px, 190cqw, 0)
+        rotate(390deg);
+      opacity: 0;
+    }
+  }
 }
+
 
 /* 6. Viewport styles -------------------------------------------- */
 @media (min-width: 501px) {

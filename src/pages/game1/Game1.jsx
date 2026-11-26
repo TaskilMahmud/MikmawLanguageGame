@@ -140,6 +140,8 @@ export default function Game1() {
   const [score, setScore] = useState(initialProgress.score);
   const [isComplete, setIsComplete] = useState(initialProgress.isComplete);
   const [completedMonths, setCompletedMonths] = useState(initialProgress.completedMonths);
+  // Best stars earned in each month survive switching months or replaying.
+  const [monthScores, setMonthScores] = useState(initialProgress.monthScores ?? {});
 
   const audioRef = useRef(null);
 
@@ -159,6 +161,7 @@ export default function Game1() {
   const nextQuestionImage = filteredQuestions[currentQuestion + 1]?.image;
   const nextMonth = availableMonths[availableMonths.indexOf(selectedMonth) + 1];
   const nextMonthName = nextMonth?.match(/\(([^)]+)\)/)?.[1] ?? nextMonth;
+  const selectedMonthName = selectedMonth?.match(/\(([^)]+)\)/)?.[1] ?? selectedMonth;
 
   // Save the full active state whenever it changes. This includes clicking
   // Next Question, changing month, submitting answers, and completing a month.
@@ -172,8 +175,9 @@ export default function Game1() {
       score,
       isComplete,
       completedMonths,
+      monthScores,
     });
-  }, [selectedMonth, currentQuestion, selectedAnswer, feedback, incorrectAttempts, score, isComplete, completedMonths]);
+  }, [selectedMonth, currentQuestion, selectedAnswer, feedback, incorrectAttempts, score, isComplete, completedMonths, monthScores]);
 
   // A new key remounts only the question visuals when the question changes.
   // Clicking an answer or opening the dictionary won't replay the entrance animations.
@@ -242,7 +246,12 @@ export default function Game1() {
     if (answer === question.correctAnswer) {
       setSelectedAnswer(answer);
       setFeedback("correct");
-      setScore((previousScore) => previousScore + 1);
+      const earnedScore = score + 1;
+      setScore(earnedScore);
+      setMonthScores((previous) => ({
+        ...previous,
+        [selectedMonth]: Math.max(previous[selectedMonth] ?? 0, earnedScore),
+      }));
       playAudio("congratulatory.mp3");
     } else {
       setFeedback("incorrect");
@@ -340,7 +349,7 @@ export default function Game1() {
               aria-labelledby="game1-complete-title"
             >
               <div>
-                <h1 id="game1-complete-title">Game Complete!</h1>
+                <h1 id="game1-complete-title">{selectedMonthName} Complete!</h1>
                 <p className="game1-complete__praise">
                   <span className="game1-complete__emoji" aria-hidden="true">🎉</span>{" "}
                   Great Job!{" "}
